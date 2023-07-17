@@ -20,7 +20,12 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
-
+  token: {
+    type: String,
+  },
+  resetPasswordExpires: {
+    type: Date,
+  },
   img: {
     type: String,
     required: true,

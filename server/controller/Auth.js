@@ -15,7 +15,7 @@ const sendOtp = (req, res) => {
     if (checkUserPresent) {
       res.status(401).json({
         success: false,
-        massage: "User already present",
+        massage: "User already registered",
       });
     }
 
@@ -46,7 +46,7 @@ const sendOtp = (req, res) => {
 
     console.log(otpBody);
 
-    return res.staus(200).json({
+    return res.status(200).json({
       success: true,
       massage: "OTP sent Successfully",
     });
@@ -106,7 +106,7 @@ const signUp = async (req, res) => {
       });
     }
 
-    // taking  recently otp from db
+    // taking last recently otp from db
     const checkOtp = await OTP.findOne({ email: email })
       .sort({ createdAt: -1 })
       .limit(1);
@@ -141,8 +141,9 @@ const signUp = async (req, res) => {
       img: `api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`,
     });
 
-    res.staus(200).json({
+    res.status(200).json({
       success: true,
+      data: user,
       massage: "User is registered successfully",
     });
   } catch (error) {
@@ -170,6 +171,13 @@ const logIn = async (req, res) => {
 
     // finding object of email
     const user = User.findOne({ email });
+
+    if (!user) {
+      res.status(400).json({
+        success: false,
+        massage: "Please signUp first",
+      });
+    }
     // add role in token
     const payload = {
       eamil: user.email,

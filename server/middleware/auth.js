@@ -3,11 +3,15 @@ import Jwt from "jsonwebtoken";
 
 const auth = (req, res, next) => {
   try {
+    dotenv.config({ path: ".env" });
+
+    // get token
     const token =
       req.body.token ||
       req.cookies.token ||
       req.header("Authorisation").replace("Bearer", "");
 
+    // token empty or not
     if (!token) {
       res.status(400).json({
         success: false,
@@ -15,6 +19,7 @@ const auth = (req, res, next) => {
       });
     }
 
+    // extract payload data from token like account type
     const decode = Jwt.verify(token, process.env.SECRET_KEY);
 
     req.user = decode;
@@ -22,7 +27,7 @@ const auth = (req, res, next) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      massage: "Something went wrong when verifying token",
+      massage: "Something went wrong while verifying token",
     });
   }
 };
