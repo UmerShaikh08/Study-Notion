@@ -10,6 +10,7 @@ const createCourse = async (req, res) => {
     dotenv.config({ path: ".env" });
 
     // get userId from req ,  it added in auth middleware
+    // matlab instructor course create karra he use phele log in kiye hoga , login karte waqt middlwear excecute hua hoga or usme hume req ke andar  decode send kiya tha
     const userId = req.user.id;
 
     // get img from file
