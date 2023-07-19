@@ -1,5 +1,6 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema, model } from "mongoose";
 
+// section of videos
 const SectionSchema = new Schema({
   sectionName: {
     type: String,
@@ -13,3 +14,6 @@ const SectionSchema = new Schema({
     },
   ],
 });
+
+const Section = model("Section", SectionSchema);
+export { Section };

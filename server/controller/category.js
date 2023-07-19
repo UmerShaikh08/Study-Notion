@@ -1,6 +1,6 @@
-import { Tag } from "../model/tag";
+import { Category } from "../model/Category";
 
-const addTags = async (req, res) => {
+const addCategory = async (req, res) => {
   try {
     // get data
     const { name, description } = req.body;
@@ -14,40 +14,45 @@ const addTags = async (req, res) => {
     }
 
     // create entry in db
-    const createTag = await Tag.create({
+    const createCategory = await Category.create({
       name,
       description,
     });
-    console.log(createTag);
+    console.log(createCategory);
 
     // return res
     res.status(200).json({
       success: true,
-      massage: "Tag created successfully",
+      massage: "category created successfully",
     });
   } catch (error) {
     res.status(400).json({
       success: false,
-      massage: "error occuring while creating tag",
+      massage: "error occuring while creating category",
     });
   }
 };
 
 const getAllTags = async (req, res) => {
   try {
-    // get  all tags from db
-    const allTag = await Tag.find({}, { name: true, description: true }); // jo bhi data dere ho usme name hona chahiye or description hona chahiye
-    console.log(addTags);
+    // get  all categories from db
+    const allCategories = await Category.find(
+      {},
+      { name: true, description: true }
+    ); // jo bhi data dere ho usme name hona chahiye or description hona chahiye
+    console.log(allCategories);
 
     // return res
     res.status(200).json({
       success: true,
-      massage: "all tag get successfully",
+      massage: "all categories get successfully",
     });
   } catch (error) {
     res.status(400).json({
       success: false,
-      massage: "error occurs while getting all tag",
+      massage: "error occurs while getting all categories",
     });
   }
 };
+
+export { addCategory, getAllTags };

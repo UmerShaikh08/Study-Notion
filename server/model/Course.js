@@ -16,19 +16,6 @@ const CourseSchema = new Schema({
     required: true,
     ref: "User",
   },
-  WhatYouWeLearn: {
-    type: String,
-  },
-  courseContent: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Section",
-  },
-  RatingAndReviews: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "RatingReviews",
-    },
-  ],
   price: {
     type: Number,
     required: true,
@@ -37,9 +24,29 @@ const CourseSchema = new Schema({
     type: String,
     required: true,
   },
-  tag: {
+  tags: {
+    type: String,
+  },
+  WhatYouWeLearn: {
+    type: String,
+  },
+  // section
+  courseContent: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Section",
+    },
+  ],
+  RatingAndReviews: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "RatingReviews",
+    },
+  ],
+
+  category: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Tag",
+    ref: "Category",
   },
   studentsEnrolled: [
     {

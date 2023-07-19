@@ -20,6 +20,7 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
+  // it is for reset password
   token: {
     type: String,
   },

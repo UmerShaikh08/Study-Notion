@@ -1,25 +1,26 @@
 import { Course } from "../model/Course.js";
 import { User } from "../model/User.js";
-import { Tag } from "../model/tag";
+import { Category } from "../model/Category.js";
 import { imgUploadToCloudinary } from "../utils/imgUploader.js";
 import dotenv from "dotenv";
 
 const createCourse = async (req, res) => {
   try {
-    //confing dotenv
+    //config dotenv
     dotenv.config({ path: ".env" });
 
-    // get userId from req it added in auth middleware
+    // get userId from req ,  it added in auth middleware
     const userId = req.user.id;
 
     // get img from file
     const img = req.files.ImgFile;
+
     // get data
-    const { courseName, courseDescription, WhatYouWeLearn, tag, price } =
+    const { courseName, courseDescription, WhatYouWeLearn, category, price } =
       req.body;
 
     // validate data
-    if (!courseName || !courseDescription || !WhatYouWeLearn || !tag) {
+    if (!courseName || !courseDescription || !WhatYouWeLearn || !category) {
       res.status(400).json({
         success: false,
         massage: "please fields are required",
@@ -37,13 +38,13 @@ const createCourse = async (req, res) => {
       });
     }
 
-    // get tag
-    const tagDetails = await Tag.findById(tag);
-    // validate tag present or not
-    if (!tag) {
+    // get category
+    const categoryDetails = await Category.findById(category);
+    // validate category present or not
+    if (!categoryDetails) {
       res.status(400).json({
         success: false,
-        massage: "Tag in not found",
+        massage: "category in not found",
       });
     }
 
@@ -59,7 +60,7 @@ const createCourse = async (req, res) => {
       courseDescription,
       price,
       thumbnail: thumbnailImg,
-      tag: tagDetails._id,
+      category: categoryDetails._id,
       instructor: Instructor._id,
     });
 
@@ -72,9 +73,9 @@ const createCourse = async (req, res) => {
       { new: true }
     );
 
-    // add new course in Tag course List
-    await Tag.findByIdAndUpdate(
-      { _id: tagDetails._id },
+    // add new course in category course List
+    await Category.findByIdAndUpdate(
+      { _id: categoryDetails._id },
       {
         $push: { course: newCourse._id },
       },
@@ -97,7 +98,7 @@ const createCourse = async (req, res) => {
 const getAllcourses = async (req, res) => {
   try {
     // get  all courses from db
-    const allCourses = await Tag.find(
+    const allCourses = await Category.find(
       {},
       {
         courseName: true,
@@ -120,7 +121,7 @@ const getAllcourses = async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      massage: "error occurs while getting all tag",
+      massage: "error occurs while getting all category",
     });
   }
 };

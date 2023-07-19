@@ -3,11 +3,12 @@ import crypto from "crypto";
 import { mailSender } from "../utils/mailSender.js";
 import bcrypt from "bcrypt";
 
-// forget password
-const resetPasswordToken = async (req, res) => {
+// forget password   or create reset password token and send to user mail
+const CreateResetPasswordToken = async (req, res) => {
   try {
     const { email } = req.body;
 
+    // validate email
     if (!email) {
       res.status(400).json({
         success: false,
@@ -15,8 +16,9 @@ const resetPasswordToken = async (req, res) => {
       });
     }
 
+    // get user from db using email
     const user = await User.findOne({ email: email });
-
+    // validate user
     if (!user) {
       res.status(400).json({
         success: false,
@@ -24,6 +26,7 @@ const resetPasswordToken = async (req, res) => {
       });
     }
 
+    // create token
     const token = await crypto.generateUUID();
 
     const addToken = await User.findOneAndUpdate(
@@ -31,6 +34,7 @@ const resetPasswordToken = async (req, res) => {
       { token: token, resetPasswordExpires: 5 * 60 * 1000 },
       { new: true }
     );
+    console.log(addToken);
 
     const url = `http://localhost:3000/update-password/${token}`;
     const send = mailSender(
@@ -107,3 +111,5 @@ const resetPassword = async (req, res) => {
     });
   }
 };
+
+export { CreateResetPasswordToken, resetPassword };

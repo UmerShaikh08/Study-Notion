@@ -1,5 +1,6 @@
 import mongoose, { Schema, model } from "mongoose";
 
+// video details
 const SubSectionSchema = new Schema({
   title: {
     type: String,
