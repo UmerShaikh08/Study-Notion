@@ -1,5 +1,5 @@
-import { Course } from "../model/Course";
-import { Section } from "../model/Section";
+import { Course } from "../model/Course.js";
+import { Section } from "../model/Section.js";
 
 const createSection = async (req, res) => {
   try {
@@ -25,7 +25,12 @@ const createSection = async (req, res) => {
       { $push: { courseContent: newSection._id } },
       { new: true }
     )
-      .populate("Section")
+      .populate({
+        Path: "courseContent",
+        populate: {
+          path: "subSection",
+        },
+      })
       .exec();
 
     console.log(updateCourse);
@@ -36,7 +41,7 @@ const createSection = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    res.status(400).json({
+    res.status(500).json({
       success: false,
       massag: "error occured while creating section",
     });

@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import { mailSender } from "../utils/mailSender.js";
 
 const OtpSchema = new Schema({
   email: {
@@ -30,7 +31,8 @@ const mailVerification = async (email, otp) => {
   }
 };
 
-OtpSchema.pre("save", async (next) => {
+OtpSchema.pre("save", async function (next) {
+  console.log(this.otp);
   await mailVerification(this.email, this.otp);
   next();
 });

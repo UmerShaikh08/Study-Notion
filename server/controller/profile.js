@@ -1,5 +1,5 @@
-import { Profile } from "../model/Profile";
-import { User } from "../model/User";
+import { Profile } from "../model/Profile.js";
+import { User } from "../model/User.js";
 
 const updateProfile = async (req, res) => {
   try {
@@ -55,9 +55,9 @@ const deleteAccount = async (req, res) => {
 
     // validate id
     if (!userId) {
-      res.status(400).json({
+      res.status(404).json({
         success: false,
-        massage: "user id not get fro delete account",
+        massage: "user not found",
       });
     }
 
@@ -74,7 +74,7 @@ const deleteAccount = async (req, res) => {
     // send res
     res.status(200).json({
       success: true,
-      massage: "profile delted successfully",
+      massage: "profile deleted successfully",
     });
   } catch (error) {
     res.status(400).json({

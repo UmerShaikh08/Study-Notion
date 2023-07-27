@@ -1,7 +1,8 @@
-import { User } from "../model/User";
+import { User } from "../model/User.js";
 import crypto from "crypto";
 import { mailSender } from "../utils/mailSender.js";
 import bcrypt from "bcrypt";
+import { Profile } from "../model/Profile.js";
 
 // forget password   or create reset password token and send to user mail
 const CreateResetPasswordToken = async (req, res) => {
@@ -34,7 +35,7 @@ const CreateResetPasswordToken = async (req, res) => {
       { token: token, resetPasswordExpires: 5 * 60 * 1000 },
       { new: true }
     );
-    console.log(addToken);
+    console.log("Details ", addToken);
 
     const url = `http://localhost:3000/update-password/${token}`;
     const send = mailSender(

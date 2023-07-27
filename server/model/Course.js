@@ -25,7 +25,7 @@ const CourseSchema = new Schema({
     required: true,
   },
   tags: {
-    type: String,
+    type: [String],
   },
   WhatYouWeLearn: {
     type: String,
@@ -54,6 +54,10 @@ const CourseSchema = new Schema({
       required: true,
     },
   ],
+  status: {
+    type: String,
+    enum: ["Draft", "Published"],
+  },
 });
 
 const Course = model("Course", CourseSchema);

@@ -6,18 +6,19 @@ import bcrypt from "bcrypt";
 import JWT from "jsonwebtoken";
 import dotenv from "dotenv";
 
-const sendOtp = (req, res) => {
+const sendOtp = async (req, res) => {
   try {
     const { email } = req.body;
-    const checkUserPresent = User.findOne({ email: email });
+    const checkUserPresent = await User.findOne({ email: email });
 
     // check user already present or not
-    if (checkUserPresent) {
-      res.status(401).json({
-        success: false,
-        massage: "User already registered",
-      });
-    }
+    // if (checkUserPresent) {
+    //   console.log(checkUserPresent);
+    //   res.status(401).json({
+    //     success: false,
+    //     massage: "User already registereddd",
+    //   });
+    // }
 
     // generate otp
     let otp = otpGenerator.generate(6, {
@@ -25,9 +26,10 @@ const sendOtp = (req, res) => {
       lowerCaseAlphabets: false,
       specialChars: false,
     });
+    console.log("hi");
 
     // check otp unique or not
-    let result = OTP.findOne({ otp: otp });
+    let result = await OTP.findOne({ otp: otp });
     // create unique otp to checking in OTP model Db
     while (result) {
       otp = otpGenerator.generate(6, {
@@ -170,7 +172,7 @@ const logIn = async (req, res) => {
     }
 
     // finding object of email
-    const user = User.findOne({ email });
+    const user = User.findOne({ email }).populate("additionalDetails");
 
     if (!user) {
       res.status(400).json({
@@ -219,4 +221,46 @@ const logIn = async (req, res) => {
   }
 };
 
-export { sendOtp, signUp, logIn };
+const changePassword = async (req, res) => {
+  try {
+    // get data
+    const { newPassword, currentPassword } = req.body;
+    const userId = req.user.id;
+
+    // validate data
+    if (!newPassword || !currentPassword) {
+      res.status(403).jsos({
+        success: false,
+        massage: "all fields are required",
+      });
+    }
+
+    // check current password and new password same or not
+    if (newPassword === confirmNewPassword) {
+      res.status(403).json({
+        success: false,
+        massage: "new password and current password are same",
+      });
+    }
+
+    // hash password
+    const hashPassword = await bcrypt.hash(newPassword, 10);
+
+    const updatePassword = await Profile.findByIdAndUpdate(userId, {
+      password: hashPassword,
+    });
+    updatePassword.password = null;
+    console.log(updatePassword);
+    res.status(200).json({
+      success: true,
+      massage: "password change successfully",
+    });
+  } catch (error) {
+    res.status(403).jsos({
+      success: false,
+      massage: "error occured while changing password",
+    });
+  }
+};
+
+export { sendOtp, signUp, logIn, changePassword };

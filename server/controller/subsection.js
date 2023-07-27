@@ -1,6 +1,6 @@
-import { Section } from "../model/Section";
-import { SubSection } from "../model/SubSection";
-import { videoUploader } from "../utils/videoUploader";
+import { Section } from "../model/Section.js";
+import { SubSection } from "../model/SubSection.js";
+import { videoUploader } from "../utils/videoUploader.js";
 import dotenv from "dotenv";
 
 const createSubsection = async (req, res) => {
