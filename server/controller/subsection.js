@@ -17,13 +17,14 @@ const createSubsection = async (req, res) => {
       });
     }
 
-    const videoDetails = videoUploader(file, process.env.FOLDER_NAME);
+    const videoDetails = await videoUploader(file, process.env.FOLDER_NAME);
+    console.log(videoDetails);
 
     const newSubsection = await SubSection.create({
       title,
       timeDuration,
       description,
-      videoUrl: videoDetails.secure_Url,
+      videoUrl: videoDetails.secure_url,
     });
 
     const updateSection = await Section.findByIdAndUpdate(
@@ -38,6 +39,7 @@ const createSubsection = async (req, res) => {
 
     res.status(200).json({
       success: true,
+      updateSection,
       massage: "subsection created successfully",
     });
   } catch (error) {
@@ -54,7 +56,7 @@ const updateSubsection = async (req, res) => {
     const { title, timeDuration, description, subSectionId } = req.body;
 
     const file = req.files.videoFile;
-
+    console.log("file --->", file);
     if (!title || !timeDuration || !description || !subSectionId) {
       res.status(400).json({
         success: false,
@@ -62,21 +64,22 @@ const updateSubsection = async (req, res) => {
       });
     }
 
-    const videoDetails = videoUploader(file, process.env.FOLDER_NAME);
+    const videoDetails = await videoUploader(file, process.env.FOLDER_NAME);
 
-    const newSubsection = await SubSection.findByIdAndUpdate(
-      subSectionId,
+    const newSubsection = await SubSection.findOneAndUpdate(
+      { _id: subSectionId },
       {
         title,
         timeDuration,
         description,
-        videoUrl: videoDetails.secure_Url,
+        videoUrl: videoDetails.secure_url,
       },
       { new: true }
     );
 
     res.status(200).json({
       success: true,
+      newSubsection,
       massage: "subsection updated successfully",
     });
   } catch (error) {
@@ -90,9 +93,9 @@ const updateSubsection = async (req, res) => {
 const deleteSubsection = async (req, res) => {
   try {
     dotenv.config({ path: ".env" });
-    const { subSectionId } = req.body;
+    const { subSectionId, sectionId } = req.body;
 
-    if (!subSectionId) {
+    if (!subSectionId || !sectionId) {
       res.status(400).json({
         success: false,
         massage: "all fields are required",

@@ -1,5 +1,6 @@
 import { Schema, model } from "mongoose";
 import { mailSender } from "../utils/mailSender.js";
+import { otpTemplate } from "../mail/templates/emailVerfication.js";
 
 const OtpSchema = new Schema({
   email: {
@@ -13,17 +14,14 @@ const OtpSchema = new Schema({
   createdAt: {
     type: Date,
     default: Date.now(),
-    expires: 5 * 60,
+    expires: 10 * 60,
   },
 });
 
 const mailVerification = async (email, otp) => {
   try {
-    const info = await mailSender(
-      email,
-      `<h1> OTP is ${otp} </h1>`,
-      "email verification"
-    );
+    const otpPage = otpTemplate(otp);
+    const info = await mailSender(email, otpPage, "Email Verification");
     console.log("mail send successfully --> ", info);
   } catch (error) {
     console.log("error occur in mailVerification ", error);

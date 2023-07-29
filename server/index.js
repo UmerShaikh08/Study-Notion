@@ -8,6 +8,7 @@ import { paymentRoutes } from "./routes/payments.js";
 import { userRoutes } from "./routes/user.js";
 import cor from "cors";
 import fileUpload from "express-fileupload";
+import { connectCloudinary } from "./config/cloudinary.js";
 
 dotenv.config({ path: ".env" });
 
@@ -15,7 +16,7 @@ const app = express();
 
 // db connect
 connectDB();
-
+connectCloudinary();
 // middlewares
 app.use(express.json());
 app.use(cookieParser());
@@ -28,7 +29,7 @@ app.use(
 app.use(
   fileUpload({
     useTempFiles: true,
-    tempFileDir: "/tmp",
+    tempFileDir: "/tmp/",
   })
 );
 

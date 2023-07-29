@@ -1,16 +1,11 @@
 import cloudinary from "cloudinary";
 
-const imgUploadToCloudinary = async (file, folder) => {
+const imgUploadToCloudinary = async (file, options) => {
   try {
-    return await cloudinary.v2.uploader.upload(file.tempFilePath, {
-      folder,
-      resource_type: "auto",
-    });
+    return await cloudinary.v2.uploader.upload(file.tempFilePath, options);
   } catch (error) {
-    res.status(400).json({
-      success: false,
-      massage: "error occured while uplading  img on cloudinary",
-    });
+    console.log(error);
+    throw error;
   }
 };
 

@@ -1,9 +1,9 @@
 import dotenv from "dotenv";
 import Jwt from "jsonwebtoken";
 
-const auth = (req, res, next) => {
+const auth = async (req, res, next) => {
   try {
-    dotenv.config({ path: ".env" });
+    dotenv.config();
 
     // get token
     const token =
@@ -19,12 +19,15 @@ const auth = (req, res, next) => {
       });
     }
 
-    // extract payload data from token like account type
-    const decode = Jwt.verify(token, process.env.SECRET_KEY);
+    console.log(token);
 
+    // extract payload data from token like account type
+    const decode = await Jwt.verify(token, "UMER78");
+    console.log("decode --> ", decode);
     req.user = decode;
     next();
   } catch (error) {
+    console.log(error);
     res.status(400).json({
       success: false,
       massage: "Something went wrong while verifying token",
@@ -34,10 +37,9 @@ const auth = (req, res, next) => {
 
 const isStudent = (req, res, next) => {
   try {
-    const { user } = req.body;
-    console.log(user);
+    const { accountType } = req.user;
 
-    if (user.accountType !== "student") {
+    if (accountType !== "Student") {
       res.status(400).json({
         success: false,
         massage: "this site is protected for student",
@@ -48,16 +50,16 @@ const isStudent = (req, res, next) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      massage: "User role is not matching",
+      massage: "User role is not matching with Student",
     });
   }
 };
 
 const isInstructor = (req, res, next) => {
   try {
-    const { user } = req.body;
-
-    if (user.accountType !== "Instructor") {
+    const { accountType } = req.user;
+    console.log(req.user);
+    if (accountType !== "Instructor") {
       res.status(400).json({
         success: false,
         massage: "this site is protected for Instructor",
@@ -68,16 +70,17 @@ const isInstructor = (req, res, next) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      massage: "User role is not matching",
+      massage: "User role is not matching with Instructor",
     });
   }
 };
 
 const isAdmin = (req, res, next) => {
   try {
-    const { user } = req.body;
+    const { accountType } = req.user;
 
-    if (user.accountType !== "admin") {
+    console.log(accountType);
+    if (accountType !== "Admin") {
       res.status(400).json({
         success: false,
         massage: "this site is protected for Admin",
@@ -88,7 +91,7 @@ const isAdmin = (req, res, next) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      massage: "User role is not matching",
+      massage: "User role is not matching with Admin",
     });
   }
 };

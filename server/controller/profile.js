@@ -1,5 +1,6 @@
 import { Profile } from "../model/Profile.js";
 import { User } from "../model/User.js";
+import { imgUploadToCloudinary } from "../utils/imgUploader.js";
 
 const updateProfile = async (req, res) => {
   try {
@@ -90,7 +91,11 @@ const getAllUserData = async (req, res) => {
     const userId = req.user.id;
 
     // get user details
-    const UserDetails = User.findById(id).populate("additionalDetails").exec(); // because of populate we get profile data (gender , contacr numberr etc)
+    const UserDetails = await User.findById(userId)
+      .populate("additionalDetails")
+      .exec(); // because of populate we get profile data (gender , contacr numberr etc)
+
+    console.log(UserDetails);
     // send res
     res.status(200).json({
       success: true,
@@ -105,4 +110,37 @@ const getAllUserData = async (req, res) => {
   }
 };
 
-export { updateProfile, getAllUserData, deleteAccount };
+const updateProfileImg = async (req, res) => {
+  try {
+    // get data
+    const file = req.files.displayPicture;
+    console.log("file ---> ", file);
+    const { userId } = req.body;
+    console.log(userId);
+    const options = {
+      folder: "Study Notion",
+    };
+    // upload data
+    const response = await imgUploadToCloudinary(file, options);
+    console.log(response);
+
+    // update user
+    const updateUser = await User.findByIdAndUpdate(userId, {
+      imgUrl: response.secureUrl,
+    });
+
+    // return res
+    res.status(200).json({
+      success: true,
+      massage: "profile img updated successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      success: false,
+      massage: "error occured while updating profile img",
+    });
+  }
+};
+
+export { updateProfile, getAllUserData, deleteAccount, updateProfileImg };

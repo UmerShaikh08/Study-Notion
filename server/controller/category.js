@@ -55,7 +55,36 @@ const showAllCategories = async (req, res) => {
   }
 };
 
-const categoryPageDetails = async (req) => {
+const getCategory = async (req, res) => {
+  try {
+    const { categoryId } = req.body;
+    console.log(categoryId);
+    // get  one category  from db
+    const category = await Category.findById(categoryId); // jo bhi data dere ho usme name hona chahiye or description hona chahiye
+    console.log(category);
+
+    if (!category) {
+      res.status(400).json({
+        success: false,
+        massage: "category not found",
+      });
+    }
+
+    // return res
+    res.status(200).json({
+      success: true,
+      category,
+      massage: "one category  get successfully",
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      massage: "error occurs while getting one category",
+    });
+  }
+};
+
+const categoryPageDetails = async (req, res) => {
   try {
     const { categoryId } = req.body;
 
@@ -119,4 +148,4 @@ const categoryPageDetails = async (req) => {
   }
 };
 
-export { addCategory, showAllCategories, categoryPageDetails };
+export { addCategory, showAllCategories, categoryPageDetails, getCategory };

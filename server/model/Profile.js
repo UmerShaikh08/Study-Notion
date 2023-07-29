@@ -4,19 +4,15 @@ const ProfileSchema = new Schema({
   gender: {
     type: String,
     enum: ["male", "female", "other"],
-    required: true,
   },
   contactNumber: {
     type: String,
-    required: true,
   },
   dataOfBirth: {
     type: String,
-    required: true,
   },
   about: {
     type: String,
-    required: true,
   },
 });
 

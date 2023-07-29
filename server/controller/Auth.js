@@ -12,13 +12,13 @@ const sendOtp = async (req, res) => {
     const checkUserPresent = await User.findOne({ email: email });
 
     // check user already present or not
-    // if (checkUserPresent) {
-    //   console.log(checkUserPresent);
-    //   res.status(401).json({
-    //     success: false,
-    //     massage: "User already registereddd",
-    //   });
-    // }
+    if (checkUserPresent) {
+      console.log(checkUserPresent);
+      res.status(401).json({
+        success: false,
+        massage: "User already registereddd",
+      });
+    }
 
     // generate otp
     let otp = otpGenerator.generate(6, {
@@ -56,7 +56,7 @@ const sendOtp = async (req, res) => {
     console.log(error);
     return res.status(401).json({
       success: false,
-      massage: error.massage,
+      massage: "error while sending otp",
     });
   }
 };
@@ -82,8 +82,7 @@ const signUp = async (req, res) => {
       !email ||
       !password ||
       !confirmPassword ||
-      !otp ||
-      !contactNumber
+      !otp
     ) {
       res.status(403).json({
         success: false,
@@ -100,21 +99,22 @@ const signUp = async (req, res) => {
     }
 
     // check user registered or not
-    const checkUserPresent = User.findOne({ email: email });
-    if (checkUserPresent) {
-      return res.status(401).json({
-        success: false,
-        massage: "User already registered",
-      });
-    }
+    // const checkUserPresent = User.findOne({ email: email });
+    // if (checkUserPresent) {
+    //   return res.status(401).json({
+    //     success: false,
+    //     massage: "User already registereddd",
+    //   });
+    // }
 
     // taking last recently otp from db
     const checkOtp = await OTP.findOne({ email: email })
       .sort({ createdAt: -1 })
       .limit(1);
 
+    console.log(otp, "-- > ", checkOtp);
     // validate otp same or not
-    if (otp !== checkOtp) {
+    if (otp !== checkOtp.otp) {
       res.status(400).json({
         success: false,
         massage: "otp not matched",
@@ -125,15 +125,16 @@ const signUp = async (req, res) => {
     let hashPassword = await bcrypt.hash(password, 10);
 
     // creating entry of profile and linking to user.addtionalDetails
-    const profile = Profile.create({
-      gender: null,
+    const profile = await Profile.create({
       contactNumber: null,
       dataOfBirth: null,
       about: null,
     });
 
+    console.log(" profile entery created successfully");
+
     // create entry in db
-    const user = User.create({
+    const user = await User.create({
       firstName,
       lastName,
       email,
@@ -143,12 +144,15 @@ const signUp = async (req, res) => {
       img: `api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`,
     });
 
+    console.log(user, " user entery created successfully");
+
     res.status(200).json({
       success: true,
       data: user,
       massage: "User is registered successfully",
     });
   } catch (error) {
+    console.log("User cannot be registered. Please try again");
     console.log(error);
     res.status(500).json({
       success: false,
@@ -171,8 +175,10 @@ const logIn = async (req, res) => {
       });
     }
 
+    console.log("email -- > ", email);
+    console.log("password -- > ", password);
     // finding object of email
-    const user = User.findOne({ email }).populate("additionalDetails");
+    const user = await User.findOne({ email }).populate("additionalDetails");
 
     if (!user) {
       res.status(400).json({
@@ -180,17 +186,19 @@ const logIn = async (req, res) => {
         massage: "Please signUp first",
       });
     }
+    console.log("user --- > ", user);
     // add role in token
     const payload = {
       eamil: user.email,
       id: user._id,
       accountType: user.accountType,
     };
-
+    console.log("user passwrod -- > ", user.password);
     // generate JWT token after matching password
-    if (await bcrypt.compare(user.password, password)) {
+    if (bcrypt.compare(user.password, password)) {
       //creating token
-      const token = JWT.sign(payload, process.env.SECRET_KEY, {
+      console.log("same password");
+      const token = await JWT.sign(payload, "UMER78", {
         expiresIn: "2h",
       });
 

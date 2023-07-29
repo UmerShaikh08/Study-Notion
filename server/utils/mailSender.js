@@ -16,7 +16,7 @@ const mailSender = async (email, body, title) => {
     });
     console.log("i am in mail Sender ");
     const info = await transporter.sendMail({
-      from: "Study Notio",
+      from: "Study Notion",
       to: email,
       subject: title,
       html: body,

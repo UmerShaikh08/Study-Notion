@@ -17,11 +17,23 @@ const createCourse = async (req, res) => {
     const img = req.files.ImgFile;
 
     // get data
-    const { courseName, courseDescription, WhatYouWeLearn, category, price } =
-      req.body;
+    const {
+      courseName,
+      courseDescription,
+      whatYouWillLearn,
+      category,
+      price,
+      tags,
+    } = req.body;
 
     // validate data
-    if (!courseName || !courseDescription || !WhatYouWeLearn || !category) {
+    if (
+      !courseName ||
+      !courseDescription ||
+      !whatYouWillLearn ||
+      !category ||
+      !price
+    ) {
       res.status(400).json({
         success: false,
         massage: "please fields are required",
@@ -50,19 +62,22 @@ const createCourse = async (req, res) => {
     }
 
     // upload img on cloudinary storage
-    const thumbnailImg = await imgUploadToCloudinary(
-      img,
-      process.env.FOLDER_NAME
-    );
+    const thumbnailImg = await imgUploadToCloudinary(img, {
+      folder: process.env.FOLDER_NAME,
+    });
+
+    console.log(thumbnailImg);
 
     // create new course
     const newCourse = await Course.create({
       courseName,
       courseDescription,
       price,
-      thumbnail: thumbnailImg,
+      thumbnail: thumbnailImg.secure_url,
       category: categoryDetails._id,
       instructor: Instructor._id,
+      whatYouWillLearn,
+      tags,
     });
 
     // add new course in User instructor course List
@@ -96,7 +111,7 @@ const createCourse = async (req, res) => {
   }
 };
 
-const getAllcourses = async (req, res) => {
+const getAllCourses = async (req, res) => {
   try {
     // get  all courses from db
     const allCourses = await Category.find(
@@ -169,4 +184,4 @@ const getCourseDetails = (req, res) => {
     });
   }
 };
-export { createCourse, getAllcourses, getCourseDetails };
+export { createCourse, getAllCourses, getCourseDetails };
