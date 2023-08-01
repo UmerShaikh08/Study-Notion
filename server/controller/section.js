@@ -8,7 +8,7 @@ const createSection = async (req, res) => {
 
     // validate data
     if (!sectionName) {
-      res.status(400).json({
+      return res.status(400).json({
         success: false,
         massag: "section name required",
       });
@@ -35,13 +35,13 @@ const createSection = async (req, res) => {
 
     console.log(updateCourse);
     // send res
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       massag: "new section created successfully",
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       massag: "error occured while creating section",
     });
@@ -53,7 +53,7 @@ const updateSection = async (req, res) => {
     const { sectionName, sectionId } = req.body;
 
     if (!sectionName || !sectionId) {
-      res.status(400).json({
+      return res.status(400).json({
         success: false,
         massag: "section name required",
       });
@@ -67,12 +67,12 @@ const updateSection = async (req, res) => {
       { new: true }
     );
 
-    res.status(400).json({
+    return res.status(400).json({
       success: true,
       massag: "section updated successfully",
     });
   } catch (error) {
-    res.status(400).json({
+    return res.status(400).json({
       success: false,
       massag: "error occured while updating section",
     });
@@ -84,7 +84,7 @@ const deleteSection = async (req, res) => {
     const { courseId, sectionId } = req.body;
 
     if (!sectionId || !courseId) {
-      res.status(400).json({
+      return res.status(400).json({
         success: false,
         massag: "all fields are required",
       });
@@ -99,14 +99,14 @@ const deleteSection = async (req, res) => {
       { new: true }
     );
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       massag: "section successfully deleted",
       updateCourse,
     });
   } catch (error) {
     console.log(error);
-    res.status(400).json({
+    return res.status(400).json({
       success: false,
       massag: "erro occured while deleting section",
     });

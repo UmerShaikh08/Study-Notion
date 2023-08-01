@@ -13,7 +13,7 @@ const auth = async (req, res, next) => {
 
     // token empty or not
     if (!token) {
-      res.status(400).json({
+      return res.status(400).json({
         success: false,
         massage: "token not found",
       });
@@ -28,7 +28,7 @@ const auth = async (req, res, next) => {
     next();
   } catch (error) {
     console.log(error);
-    res.status(400).json({
+    return res.status(400).json({
       success: false,
       massage: "Something went wrong while verifying token",
     });
@@ -40,7 +40,7 @@ const isStudent = (req, res, next) => {
     const { accountType } = req.user;
 
     if (accountType !== "Student") {
-      res.status(400).json({
+      return res.status(400).json({
         success: false,
         massage: "this site is protected for student",
       });
@@ -48,7 +48,7 @@ const isStudent = (req, res, next) => {
 
     next();
   } catch (error) {
-    res.status(400).json({
+    return res.status(400).json({
       success: false,
       massage: "User role is not matching with Student",
     });
@@ -60,7 +60,7 @@ const isInstructor = (req, res, next) => {
     const { accountType } = req.user;
     console.log(req.user);
     if (accountType !== "Instructor") {
-      res.status(400).json({
+      return res.status(400).json({
         success: false,
         massage: "this site is protected for Instructor",
       });
@@ -68,7 +68,7 @@ const isInstructor = (req, res, next) => {
 
     next();
   } catch (error) {
-    res.status(400).json({
+    return res.status(400).json({
       success: false,
       massage: "User role is not matching with Instructor",
     });
@@ -81,7 +81,7 @@ const isAdmin = (req, res, next) => {
 
     console.log(accountType);
     if (accountType !== "Admin") {
-      res.status(400).json({
+      return res.status(400).json({
         success: false,
         massage: "this site is protected for Admin",
       });
@@ -89,7 +89,7 @@ const isAdmin = (req, res, next) => {
 
     next();
   } catch (error) {
-    res.status(400).json({
+    return res.status(400).json({
       success: false,
       massage: "User role is not matching with Admin",
     });

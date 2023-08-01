@@ -16,12 +16,12 @@ const contactUs = async (req, res) => {
       "Study notion"
     );
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       massage: "email send successfully ",
     });
   } catch (error) {
-    res.status(400).json({
+    return res.status(400).json({
       success: false,
       massage: "error occured while user contacting to study notion ",
     });

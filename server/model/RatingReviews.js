@@ -11,7 +11,7 @@ const RatingAndReviewsSchema = new Schema({
     type: Number,
     required: true,
   },
-  reviews: {
+  review: {
     type: String,
     required: true,
   },

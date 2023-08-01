@@ -12,13 +12,13 @@ const capturePayment = async (req, res) => {
 
     // validate user
     if (!userId) {
-      res.status(403).json({
+      return res.status(403).json({
         success: false,
         massage: "please provide valid  user id",
       });
     }
     if (!courseId) {
-      res.status(403).json({
+      return res.status(403).json({
         success: false,
         massage: "please provide valid  course id",
       });
@@ -28,7 +28,7 @@ const capturePayment = async (req, res) => {
 
     // validate couser present or not
     if (!course) {
-      res.status(403).json({
+      return res.status(403).json({
         success: false,
         massage: "course not found",
       });
@@ -39,7 +39,7 @@ const capturePayment = async (req, res) => {
 
     // validate user already enrolled or not
     if (course.studentsEnrolled.includes(UID)) {
-      res.status(403).json({
+      return res.status(403).json({
         success: false,
         massage: "User already enrolled",
       });
@@ -64,7 +64,7 @@ const capturePayment = async (req, res) => {
     const paymentResponse = await instance.orders.create(options);
     console.log(paymentResponse);
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       courseName: course.courseName,
       courseDescription: courseDescription,
@@ -73,7 +73,7 @@ const capturePayment = async (req, res) => {
       amount: paymentResponse.amount,
     });
   } catch (error) {
-    res.status(401).json({
+    return res.status(401).json({
       success: false,
       massage: "error occured while capturing payment",
     });
@@ -108,7 +108,7 @@ const verifySignature = async (req, res) => {
       );
 
       if (!enrolledCourse) {
-        res.status(401).json({
+        return res.status(401).json({
           success: false,
           massage: "course not found ",
         });
@@ -125,7 +125,7 @@ const verifySignature = async (req, res) => {
       );
 
       if (!enrolledUser) {
-        res.status(401).json({
+        return res.status(401).json({
           success: false,
           massage: "User not found ",
         });
@@ -139,18 +139,18 @@ const verifySignature = async (req, res) => {
       );
 
       console.log(emailResponse);
-      res.status(200).json({
+      return res.status(200).json({
         success: true,
         massage: "Signature is Verified and Course Added",
       });
     } catch (error) {
-      res.status(401).json({
+      return res.status(401).json({
         success: false,
         massage: "error occured while updating user when verify signature ",
       });
     }
   } else {
-    res.status(401).json({
+    return res.status(401).json({
       success: false,
       massage: "Invalid request",
     });

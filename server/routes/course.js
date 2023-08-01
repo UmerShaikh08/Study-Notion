@@ -21,17 +21,39 @@ import {
   deleteSubsection,
   updateSubsection,
 } from "../controller/subsection.js";
-import { createCourse, getAllCourses } from "../controller/course.js";
+import {
+  createCourse,
+  editCourse,
+  getAllCourses,
+  getCourseDetails,
+  getCourseFullDetails,
+  getEnrolledCourses,
+  getInstructorCourses,
+} from "../controller/course.js";
 
 const courseRoutes = Router();
 
 // ***************************************************************************************************************************************
-//                                                              Category Routes
+//                                                              Course Routes
 // ***************************************************************************************************************************************
 
 courseRoutes.post("/createCourse", auth, isInstructor, createCourse);
+courseRoutes.post("/editCourse", auth, isInstructor, editCourse);
 courseRoutes.get("/getAllCourses", auth, isInstructor, getAllCourses);
-// courseRoutes.post("/createCourse", auth, isInstructor, addCategory);
+courseRoutes.post("/getCoursesDetails", auth, isInstructor, getCourseDetails);
+courseRoutes.get("/getEnrolledCourse", auth, isStudent, getEnrolledCourses);
+courseRoutes.get(
+  "/getInstructorCourses",
+  auth,
+  isInstructor,
+  getInstructorCourses
+);
+courseRoutes.post(
+  "/getCourseFullDetails",
+  auth,
+  isInstructor,
+  getCourseFullDetails
+);
 
 // ***************************************************************************************************************************************
 //                                                              Category Routes

@@ -7,7 +7,7 @@ const addCategory = async (req, res) => {
 
     // validate data
     if (!name || !description) {
-      res.status(400).json({
+      return res.status(400).json({
         success: false,
         massage: "All fields are required",
       });
@@ -21,12 +21,12 @@ const addCategory = async (req, res) => {
     console.log(createCategory);
 
     // return res
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       massage: "category created successfully",
     });
   } catch (error) {
-    res.status(400).json({
+    return res.status(400).json({
       success: false,
       massage: "error occuring while creating category",
     });
@@ -43,12 +43,12 @@ const showAllCategories = async (req, res) => {
     console.log(allCategories);
 
     // return res
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       massage: "all categories get successfully",
     });
   } catch (error) {
-    res.status(400).json({
+    return res.status(400).json({
       success: false,
       massage: "error occurs while getting all categories",
     });
@@ -64,20 +64,20 @@ const getCategory = async (req, res) => {
     console.log(category);
 
     if (!category) {
-      res.status(400).json({
+      return res.status(400).json({
         success: false,
         massage: "category not found",
       });
     }
 
     // return res
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       category,
       massage: "one category  get successfully",
     });
   } catch (error) {
-    res.status(400).json({
+    return res.status(400).json({
       success: false,
       massage: "error occurs while getting one category",
     });
@@ -97,7 +97,7 @@ const categoryPageDetails = async (req, res) => {
     // handle case where category not found
     if (!selectCategory) {
       console.log("Category not found");
-      res.status(404).json({
+      return res.status(404).json({
         success: false,
         massage: "category not found",
       });
@@ -106,7 +106,7 @@ const categoryPageDetails = async (req, res) => {
     // handle the case their are no course
     if (selectCategory.course.length === 0) {
       console.log("no course found for the selected category");
-      res.status(404).json({
+      return res.status(404).json({
         success: false,
         massage: "no course found for the selected category",
       });
@@ -135,13 +135,13 @@ const categoryPageDetails = async (req, res) => {
       .sort((a, b) => b.sold - a.sold)
       .slice(0, 10);
 
-    res.status(200).json({
+    return res.status(200).json({
       selectedCourses,
       differentCourses,
       mostSellingCourses,
     });
   } catch (error) {
-    res.status(404).json({
+    return res.status(404).json({
       success: false,
       massage: "internal server error in category page",
     });

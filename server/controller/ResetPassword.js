@@ -11,7 +11,7 @@ const CreateResetPasswordToken = async (req, res) => {
 
     // validate email
     if (!email) {
-      res.status(400).json({
+      return res.status(400).json({
         success: false,
         massage: "please fill the bracket",
       });
@@ -21,7 +21,7 @@ const CreateResetPasswordToken = async (req, res) => {
     const user = await User.findOne({ email: email });
     // validate user
     if (!user) {
-      res.status(400).json({
+      return res.status(400).json({
         success: false,
         massage: "please enter valid email",
       });
@@ -44,13 +44,13 @@ const CreateResetPasswordToken = async (req, res) => {
       `Reset password link :- ${url}`
     );
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       massage: "password reset successfully",
     });
   } catch (error) {
     console.log(error);
-    res.status(400).json({
+    return res.status(400).json({
       success: false,
       massage: "Something went wrong  while reset",
     });
@@ -64,7 +64,7 @@ const resetPassword = async (req, res) => {
 
     // check password same or not
     if (password !== confirmPassword) {
-      res.status(400).json({
+      return res.status(400).json({
         success: false,
         massage: "password not matching",
       });
@@ -75,7 +75,7 @@ const resetPassword = async (req, res) => {
 
     // check user present or not based on token
     if (!userDetails) {
-      res.status(400).json({
+      return res.status(400).json({
         success: false,
         massage: "Token is invalid",
       });
@@ -83,7 +83,7 @@ const resetPassword = async (req, res) => {
 
     // check date is expired or not
     if (userDetails.resetPasswordExpires < Date.now()) {
-      res.status(400).json({
+      return res.status(400).json({
         success: false,
         massage: "Token is expired. Regenerate  token",
       });
@@ -101,12 +101,12 @@ const resetPassword = async (req, res) => {
     console.log("password updated --> ", updatePassword);
 
     // send response
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       massage: "password reset successfully",
     });
   } catch (error) {
-    res.status(400).json({
+    return res.status(400).json({
       success: false,
       massage: "Something went wrong during reset password",
     });

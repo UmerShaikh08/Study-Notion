@@ -11,7 +11,7 @@ const createSubsection = async (req, res) => {
     const file = req.files.videoFile;
 
     if (!sectionId || !title || !timeDuration || !description) {
-      res.status(400).json({
+      return res.status(400).json({
         success: false,
         massage: "all fields are required",
       });
@@ -37,13 +37,13 @@ const createSubsection = async (req, res) => {
       .populate("subSection")
       .exec();
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       updateSection,
       massage: "subsection created successfully",
     });
   } catch (error) {
-    res.status(400).json({
+    return res.status(400).json({
       success: false,
       massage: "error occured while creating subsection",
     });
@@ -58,7 +58,7 @@ const updateSubsection = async (req, res) => {
     const file = req.files.videoFile;
     console.log("file --->", file);
     if (!title || !timeDuration || !description || !subSectionId) {
-      res.status(400).json({
+      return res.status(400).json({
         success: false,
         massage: "all fields are required",
       });
@@ -77,13 +77,13 @@ const updateSubsection = async (req, res) => {
       { new: true }
     );
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       newSubsection,
       massage: "subsection updated successfully",
     });
   } catch (error) {
-    res.status(400).json({
+    return res.status(400).json({
       success: false,
       massage: "error occured while updating subsection",
     });
@@ -96,7 +96,7 @@ const deleteSubsection = async (req, res) => {
     const { subSectionId, sectionId } = req.body;
 
     if (!subSectionId || !sectionId) {
-      res.status(400).json({
+      return res.status(400).json({
         success: false,
         massage: "all fields are required",
       });
@@ -106,12 +106,12 @@ const deleteSubsection = async (req, res) => {
       new: true,
     });
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       massage: "subsection deleted successfully",
     });
   } catch (error) {
-    res.status(400).json({
+    return res.status(400).json({
       success: false,
       massage: "error occured while deleting subsection",
     });

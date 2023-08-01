@@ -14,7 +14,7 @@ const sendOtp = async (req, res) => {
     // check user already present or not
     if (checkUserPresent) {
       console.log(checkUserPresent);
-      res.status(401).json({
+      return res.status(401).json({
         success: false,
         massage: "User already registereddd",
       });
@@ -37,11 +37,11 @@ const sendOtp = async (req, res) => {
         lowerCaseAlphabets: false,
         specialChars: false,
       });
-      result = OTP.findOne({ otp: otp });
+      result = await OTP.findOne({ otp: otp });
     }
 
     // create entry in db for otp
-    const otpBody = OTP.create({
+    const otpBody = await OTP.create({
       email,
       otp,
     });
@@ -84,7 +84,7 @@ const signUp = async (req, res) => {
       !confirmPassword ||
       !otp
     ) {
-      res.status(403).json({
+      return res.status(403).json({
         success: false,
         massaage: "All fields are required",
       });
@@ -92,20 +92,20 @@ const signUp = async (req, res) => {
 
     // validate password same or not
     if (password !== confirmPassword) {
-      res.status(403).json({
+      return res.status(403).json({
         success: false,
         massaage: "password and confirm password does not match",
       });
     }
 
     // check user registered or not
-    // const checkUserPresent = User.findOne({ email: email });
-    // if (checkUserPresent) {
-    //   return res.status(401).json({
-    //     success: false,
-    //     massage: "User already registereddd",
-    //   });
-    // }
+    const checkUserPresent = await User.findOne({ email: email });
+    if (checkUserPresent) {
+      return res.status(401).json({
+        success: false,
+        massage: "User already registereddd",
+      });
+    }
 
     // taking last recently otp from db
     const checkOtp = await OTP.findOne({ email: email })
@@ -115,7 +115,7 @@ const signUp = async (req, res) => {
     console.log(otp, "-- > ", checkOtp);
     // validate otp same or not
     if (otp !== checkOtp.otp) {
-      res.status(400).json({
+      return res.status(400).json({
         success: false,
         massage: "otp not matched",
       });
@@ -146,7 +146,7 @@ const signUp = async (req, res) => {
 
     console.log(user, " user entery created successfully");
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       data: user,
       massage: "User is registered successfully",
@@ -154,7 +154,7 @@ const signUp = async (req, res) => {
   } catch (error) {
     console.log("User cannot be registered. Please try again");
     console.log(error);
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       massage: "User cannot be registered. Please try again",
     });
@@ -169,7 +169,7 @@ const logIn = async (req, res) => {
 
     // validate data
     if (!email || !password) {
-      res.status(400).json({
+      return res.status(400).json({
         success: false,
         massage: "All fields are required. Please try again",
       });
@@ -181,7 +181,7 @@ const logIn = async (req, res) => {
     const user = await User.findOne({ email }).populate("additionalDetails");
 
     if (!user) {
-      res.status(400).json({
+      return res.status(400).json({
         success: false,
         massage: "Please signUp first",
       });
@@ -216,13 +216,13 @@ const logIn = async (req, res) => {
         massage: "login successfully",
       });
     } else {
-      res.status(400).json({
+      return res.status(400).json({
         success: false,
         massage: "password is incorrect",
       });
     }
   } catch (error) {
-    res.status(400).json({
+    return res.status(400).json({
       success: false,
       massage: "You cannot login. Please try again",
     });
@@ -237,7 +237,7 @@ const changePassword = async (req, res) => {
 
     // validate data
     if (!newPassword || !currentPassword) {
-      res.status(403).jsos({
+      return res.status(403).jsos({
         success: false,
         massage: "all fields are required",
       });
@@ -245,7 +245,7 @@ const changePassword = async (req, res) => {
 
     // check current password and new password same or not
     if (newPassword === confirmNewPassword) {
-      res.status(403).json({
+      return res.status(403).json({
         success: false,
         massage: "new password and current password are same",
       });
@@ -259,12 +259,12 @@ const changePassword = async (req, res) => {
     });
     updatePassword.password = null;
     console.log(updatePassword);
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       massage: "password change successfully",
     });
   } catch (error) {
-    res.status(403).jsos({
+    return res.status(403).jsos({
       success: false,
       massage: "error occured while changing password",
     });

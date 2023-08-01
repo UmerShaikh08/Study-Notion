@@ -39,7 +39,7 @@ const UserSchema = new Schema({
   courses: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Courses",
+      ref: "Course",
     },
   ],
   additionalDetails: {

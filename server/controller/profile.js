@@ -13,7 +13,7 @@ const updateProfile = async (req, res) => {
 
     // validate data
     if (!contactNumber || !gender || !userId) {
-      res.status(400).json({
+      return res.status(400).json({
         success: false,
         massage: "contact number and gender required",
       });
@@ -36,13 +36,13 @@ const updateProfile = async (req, res) => {
     );
 
     // send res
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       massage: "profile updated successfully",
       updatedProfile,
     });
   } catch (error) {
-    res.status(400).json({
+    return res.status(400).json({
       success: false,
       massage: "error occured while updating profile",
     });
@@ -56,7 +56,7 @@ const deleteAccount = async (req, res) => {
 
     // validate id
     if (!userId) {
-      res.status(404).json({
+      return res.status(404).json({
         success: false,
         massage: "user not found",
       });
@@ -73,12 +73,12 @@ const deleteAccount = async (req, res) => {
     const deleteUser = await User.findByIdAndDelete(userId);
 
     // send res
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       massage: "profile deleted successfully",
     });
   } catch (error) {
-    res.status(400).json({
+    return res.status(400).json({
       success: false,
       massage: "error occured while deleting  profile",
     });
@@ -97,13 +97,13 @@ const getAllUserData = async (req, res) => {
 
     console.log(UserDetails);
     // send res
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       massage: "user data fetched successfully",
       UserDetails,
     });
   } catch (error) {
-    res.status(400).json({
+    return res.status(400).json({
       success: false,
       massage: "error occured while getting all user , profile data",
     });
@@ -130,13 +130,13 @@ const updateProfileImg = async (req, res) => {
     });
 
     // return res
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       massage: "profile img updated successfully",
     });
   } catch (error) {
     console.log(error);
-    res.status(400).json({
+    return res.status(400).json({
       success: false,
       massage: "error occured while updating profile img",
     });
