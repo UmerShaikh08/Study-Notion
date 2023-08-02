@@ -1,18 +1,23 @@
 import { Router } from "express";
 import {
   deleteAccount,
-  getAllUserData,
+  getUserData,
   updateProfile,
   updateProfileImg,
 } from "../controller/profile.js";
 import { auth } from "../middleware/auth.js";
+import {
+  CreateResetPasswordToken,
+  resetPassword,
+} from "../controller/ResetPassword.js";
 
 const profileRoutes = Router();
 
 profileRoutes.put("/updateProfile", auth, updateProfile);
-profileRoutes.delete("/deleteAccount", auth, deleteAccount);
-profileRoutes.get("/getAllUserData", auth, getAllUserData);
-
 profileRoutes.put("/updateProfileImg", updateProfileImg);
+profileRoutes.get("/getUserData", auth, getUserData);
+profileRoutes.post("/resetPasswordToken", CreateResetPasswordToken);
+profileRoutes.post("/resetPassword", resetPassword);
+profileRoutes.delete("/deleteAccount", auth, deleteAccount);
 
 export { profileRoutes };

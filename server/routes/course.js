@@ -23,6 +23,7 @@ import {
 } from "../controller/subsection.js";
 import {
   createCourse,
+  deleteCourse,
   editCourse,
   getAllCourses,
   getCourseDetails,
@@ -39,6 +40,7 @@ const courseRoutes = Router();
 
 courseRoutes.post("/createCourse", auth, isInstructor, createCourse);
 courseRoutes.post("/editCourse", auth, isInstructor, editCourse);
+courseRoutes.delete("/deleteCourse", auth, isInstructor, deleteCourse);
 courseRoutes.get("/getAllCourses", auth, isInstructor, getAllCourses);
 courseRoutes.post("/getCoursesDetails", auth, isInstructor, getCourseDetails);
 courseRoutes.get("/getEnrolledCourse", auth, isStudent, getEnrolledCourses);

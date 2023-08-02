@@ -387,6 +387,46 @@ const getInstructorCourses = async (req, res) => {
   }
 };
 
+const deleteCourse = async (req, res) => {
+  try {
+    // get course Id
+    const { courseId } = req.body;
+
+    // get user id
+    const userId = req.user.id;
+
+    // get user data
+    const userData = await User.findById(userId);
+
+    // check instructor is valid or not
+    if (!userData.courses.includes(courseId)) {
+      return res.status(400).json({
+        success: false,
+        massage: "This instructor not created this course",
+      });
+    }
+
+    // delete course
+    const deletedCourse = await Course.findByIdAndDelete(courseId);
+
+    // remove course from instructor course list
+    await User.findByIdAndUpdate(userId, {
+      $pull: { courses: courseId },
+    });
+
+    return res.status(200).json({
+      success: true,
+      massage: "course deleted successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({
+      success: false,
+      massage: "Intructor is not valid",
+    });
+  }
+};
+
 export {
   createCourse,
   getAllCourses,
@@ -395,4 +435,5 @@ export {
   editCourse,
   getEnrolledCourses,
   getInstructorCourses,
+  deleteCourse,
 };

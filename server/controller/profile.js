@@ -85,7 +85,7 @@ const deleteAccount = async (req, res) => {
   }
 };
 
-const getAllUserData = async (req, res) => {
+const getUserData = async (req, res) => {
   try {
     // get user id
     const userId = req.user.id;
@@ -143,4 +143,4 @@ const updateProfileImg = async (req, res) => {
   }
 };
 
-export { updateProfile, getAllUserData, deleteAccount, updateProfileImg };
+export { updateProfile, getUserData, deleteAccount, updateProfileImg };
