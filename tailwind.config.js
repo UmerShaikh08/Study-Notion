@@ -133,6 +133,9 @@ module.exports = {
       },
     },
     extend: {
+      backgroundImage: {
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+      },
       maxWidth: {
         maxContent: "1260px",
         maxContentTab: "650px",

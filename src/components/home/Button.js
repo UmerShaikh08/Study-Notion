@@ -5,7 +5,7 @@ export const CTAButton = ({ children, linkTo, active }) => {
   return (
     <Link to={linkTo}>
       <div
-        className={`text-center  mt-9 w-fit  rounded-xl font-bold py-3 px-6   border-[2px] border-richblack-900 transition-all duration-200 hover:scale-95 hover:shadow-none
+        className={`text-center  text-[13px] sm:text-[16px] mt-9 w-fit  rounded-xl font-bold py-3 px-6   border-[2px] border-richblack-900 transition-all duration-200 hover:scale-95 hover:shadow-none
          ${
            active
              ? "bg-yellow-50 text-black"
