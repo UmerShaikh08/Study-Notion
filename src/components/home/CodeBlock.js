@@ -22,14 +22,14 @@ const CodeBlock = ({
         <div className="text-richblack-300 font-bold ">{description}</div>
 
         <div className="flex gap-7 mt-7 flex-row">
-          <CTAButton active={btn1.active} linkTo={btn1.linkto}>
+          <CTAButton active={btn1.active} linkTo={btn1.linkto} shadow={true}>
             <div className="flex gap-2 items-center flex-nowrap">
               {btn1.btnText}
               <FaArrowRight />
             </div>
           </CTAButton>
 
-          <CTAButton active={btn2.active} linkTo={btn2.linkto}>
+          <CTAButton active={btn2.active} linkTo={btn2.linkto} shadow={true}>
             {btn2.btnText}
           </CTAButton>
         </div>
@@ -52,7 +52,7 @@ const CodeBlock = ({
         </div>
 
         <div
-          className={`w-[90%] flex flex-col gap-2 font-bold font-mono ${codeColor} pr-2`}
+          className={`w-[90%] flex flex-col gap-2 font-bold font-mono ${codeColor} pr-2 text-sm md:text-base`}
         >
           <TypeAnimation
             sequence={[code, 2000, ""]}
