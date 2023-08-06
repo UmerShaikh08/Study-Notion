@@ -5,7 +5,6 @@ import { useState } from "react";
 import Banner from "../assets/Images/banner.mp4";
 import { Highlight } from "../components/home/Highlight";
 import CodeBlock from "../components/home/CodeBlock";
-import NavButton from "../components/home/NavButton";
 import LearnLanguageSection from "../components/home/LearnLanguageSection";
 import TimeLineSection from "../components/home/TimeLineSection";
 import BecomeInstructor from "../components/home/BecomeInstructor";

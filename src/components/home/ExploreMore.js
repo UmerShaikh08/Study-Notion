@@ -54,9 +54,10 @@ const ExploreMore = () => {
         })}
       </nav>
       <div className="lg:absolute top-[70%]  flex flex-col md:flex-wrap lg:flex-row items-center gap-10">
-        {courses.map((course) => {
+        {courses.map((course, idx) => {
           return (
             <CourseCard
+              key={idx}
               cardData={course}
               currentCard={currentCard}
               setCurrentCard={setCurrentCard}
