@@ -1,11 +1,7 @@
 import React from "react";
 import { FooterLink2 } from "../../data/footer-links";
 import { Link } from "react-router-dom";
-
-// Images
 import Logo from "../../assets/Logo/Logo-Full-Light.png";
-
-// Icons
 import { FaFacebook, FaGoogle, FaTwitter, FaYoutube } from "react-icons/fa";
 
 const BottomFooter = ["Privacy Policy", "Cookie Policy", "Terms"];
@@ -19,8 +15,9 @@ const Resources = [
   "Videos",
   "Workspaces",
 ];
-const Plans = ["Paid memberships", "For students", "Business solutions"];
+
 const Community = ["Forums", "Chapters", "Events"];
+const Plans = ["Paid memberships", "For students", "Business solutions"];
 
 const Footer = () => {
   return (
@@ -52,7 +49,6 @@ const Footer = () => {
                 <FaTwitter />
                 <FaYoutube />
               </div>
-              <div></div>
             </div>
 
             <div className="w-[48%] lg:w-[30%] mb-7 lg:pl-0">
@@ -173,7 +169,7 @@ const Footer = () => {
           </div>
 
           <div className="text-center">
-            Made with ❤️ CodeHelp © 2023 Studynotion
+            Made with ❤️ Umer © 2023 Studynotion
           </div>
         </div>
       </div>

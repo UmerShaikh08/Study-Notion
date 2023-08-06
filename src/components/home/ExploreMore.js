@@ -37,7 +37,7 @@ const ExploreMore = () => {
           Learn to Build Anything You Can Imagine
         </div>
       </div>
-      <nav className="w-[70%]  hidden lg:flex flex-row justify-between text-white  bg-richblack-800 py-2 px-[2rem]  rounded-full shadow-sm shadow-richblack-400   ">
+      <nav className="w-[70%] mb-[8rem] hidden lg:flex flex-row justify-between text-white  bg-richblack-800 py-2 px-[2rem]  rounded-full shadow-sm shadow-richblack-400   ">
         {tabs.map((ele, index) => {
           return (
             <ul
@@ -53,7 +53,7 @@ const ExploreMore = () => {
           );
         })}
       </nav>
-      <div className=" bottom-[-80%] flex flex-col md:flex-wrap lg:flex-row items-center gap-10">
+      <div className="lg:absolute top-[70%]  flex flex-col md:flex-wrap lg:flex-row items-center gap-10">
         {courses.map((course) => {
           return (
             <CourseCard

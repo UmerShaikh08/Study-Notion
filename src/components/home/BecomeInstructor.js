@@ -6,7 +6,7 @@ import { FaArrowRight } from "react-icons/fa";
 
 const BecomeInstructor = () => {
   return (
-    <div className="w-11/12 max-w-maxContent mt-[3rem] flex flex-col lg:flex-row items-center text-white mx-auto gap-4">
+    <div className="w-11/12 max-w-maxContent mt-[3rem] mb-[3rem] flex flex-col lg:flex-row items-center text-white mx-auto gap-4">
       <div className=" shadow-[-20px_-20px_white] ">
         <img src={Instructor} />
       </div>

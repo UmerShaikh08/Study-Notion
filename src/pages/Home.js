@@ -121,7 +121,7 @@ const Home = () => {
       <div className=" bg-pure-greys-5 text-richblack-900">
         <div className="bg_home h-[333px] flex justify-center mb-[4rem]">
           <div className="w-11/12 max-w-maxContent flex  lg:flex-row items-center justify-center">
-            <div className="flex gap-3 items-center flex-col md:flex-row">
+            <div className="lg:mt-[10rem] flex gap-3 items-center flex-col md:flex-row">
               <CTAButton active={true} linkTo={"/singup"}>
                 <div className="flex flex-row items-center gap-3 mx-auto ">
                   Explore Full Catelog
