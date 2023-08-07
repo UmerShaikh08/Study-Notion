@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { UseSelector, useSelector } from "react-redux/es/hooks/useSelector";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import ProfileDashboard from "../../pages/ProfileDashboard";
+import { IoIosArrowDown } from "react-icons/io";
+import { AiOutlineCaretDown } from "react-icons/ai";
 
 const Navbar = () => {
   const [currTab, setCurrTab] = useState(NavbarLinks[0].title);
@@ -16,10 +18,20 @@ const Navbar = () => {
   const { user } = useSelector((store) => store.profile);
   const { totalItems } = useSelector((store) => store.cart);
   const { token } = useSelector((store) => store.auth);
-  console.log(user);
+
+  const SubLinks = [
+    {
+      title: "python",
+      link: "category/python",
+    },
+    {
+      title: "c++",
+      link: "category/c++",
+    },
+  ];
 
   return (
-    <nav className="w-[100%] flex flex-row justify-around items-center font-inter bg-richblack-800  border-richblack-700 border-b-2 py-2">
+    <nav className="hidden  w-[100%] md:flex flex-row justify-around items-center font-inter bg-richblack-800  border-richblack-700 border-b-2 py-2">
       <Link to={"/"}>
         {" "}
         <img
@@ -30,9 +42,29 @@ const Navbar = () => {
           className=" saturate-200"
         />
       </Link>
-      <div className="lg:w-[25%]  flex justify-between items-center">
+      <div className="md:w-[50%] lg:w-[30%]  flex justify-between items-center">
         {NavbarLinks.map((ele, index) => {
-          return (
+          return ele.title === "Catalog" ? (
+            <div className="realtive flex flex-col group" key={index}>
+              <div className=" text-richblack-5 flex flex-row gap-2 items-center cursor-pointer">
+                <p>{ele.title}</p>
+                <IoIosArrowDown size={20} />
+              </div>
+              <div className=" absolute p-3 top-[8%] left-[35%]  invisible opacity-0 bg-richblack-5 flex flex-col lg:w-[300px] rounded-md transition-all duration-300   group-hover:opacity-100 group-hover:visible z-10">
+                <div className=" absolute top-[-2%] left-[56%] rounded-sm bg-richblack-5 h-[2rem] w-[2rem] rotate-45 -z-10 "></div>
+
+                {SubLinks.map((element, index) => {
+                  return (
+                    <Link to={element.link} key={index}>
+                      <div className="mx-3 py-[0.5rem] px-[1rem] rounded-md text-lg hover:bg-richblack-50 ">
+                        {element.title}
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          ) : (
             <Link to={ele.path} key={index}>
               {" "}
               <div
@@ -64,8 +96,17 @@ const Navbar = () => {
       ) : (
         ""
       )}
-      {token !== null ? (
-        <ProfileDashboard />
+      {token === null ? (
+        <div className="relative flex flex-col group ">
+          <div className="flex gap-2 items-center">
+            <div className="bg-richblack-300 h-6 w-6 rounded-full "> </div>
+            <AiOutlineCaretDown className="text-richblack-300" />
+          </div>
+          <div className=" invisible absolute text-richblack-100 top-6 bg-richblack-800 group-open:visible  ">
+            <div>dashbord</div>
+            <div>Log out</div>
+          </div>
+        </div>
       ) : (
         <div className="text-richblack-100 flex flex-row gap-4 ">
           <Link to={"/login"}>

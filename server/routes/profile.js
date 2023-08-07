@@ -13,6 +13,10 @@ import {
 
 const profileRoutes = Router();
 
+// ***************************************************************************************************************************************
+//                                                              profile Routes
+// ***************************************************************************************************************************************
+
 profileRoutes.put("/updateProfile", auth, updateProfile);
 profileRoutes.put("/updateProfileImg", updateProfileImg);
 profileRoutes.get("/getUserData", auth, getUserData);
