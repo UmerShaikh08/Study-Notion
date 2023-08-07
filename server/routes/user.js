@@ -14,8 +14,10 @@ const userRoutes = Router();
 
 // route for the sign up
 userRoutes.post("/signUp", signUp);
+
 // route form the login
 userRoutes.post("/login", logIn);
+
 // route for sent otp
 userRoutes.post("/sendOtp", sendOtp);
 
