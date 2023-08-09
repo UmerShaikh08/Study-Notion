@@ -12,13 +12,13 @@ const sendOtp = async (req, res) => {
     const checkUserPresent = await User.findOne({ email: email });
 
     // check user already present or not
-    if (checkUserPresent) {
-      console.log(checkUserPresent);
-      return res.status(401).json({
-        success: false,
-        massage: "User already registereddd",
-      });
-    }
+    // if (checkUserPresent) {
+    //   console.log(checkUserPresent);
+    //   return res.status(401).json({
+    //     success: false,
+    //     massage: "User already registereddd",
+    //   });
+    // }
 
     // generate otp
     let otp = otpGenerator.generate(6, {
@@ -195,7 +195,7 @@ const logIn = async (req, res) => {
     };
     console.log("user passwrod -- > ", user.password);
     // generate JWT token after matching password
-    if (bcrypt.compare(user.password, password)) {
+    if (await bcrypt.compare(password, user.password)) {
       //creating token
       console.log("same password");
       const token = await JWT.sign(payload, "UMER78", {

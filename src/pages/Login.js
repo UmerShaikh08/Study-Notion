@@ -13,8 +13,8 @@ const Login = () => {
     console.log(data);
   };
   return (
-    <div className="w-11/12 max-w-maxContent flex flex-col-reverse md:flex-row items-center my-auto gap-20 mb-[3rem]">
-      <div className=" w-[90%]   md:w-[35%] font-inter text-richblack-5 flex flex-col  lg:gap-10 mx-auto ">
+    <div className="w-11/12 max-w-maxContent flex flex-col-reverse md:flex-row items-center my-auto gap-20 ">
+      <div className=" w-11/12 max-w-[450px] font-inter text-richblack-5 flex flex-col  lg:gap-10 mx-auto ">
         <div className="flex flex-col gap-3">
           <div className="text-richblack-5 text-3xl font-semibold ">
             Welcome Back
@@ -29,7 +29,7 @@ const Login = () => {
           </div>
         </div>
         <form
-          className="flex flex-col gap-8` gap-8"
+          className="flex flex-col gap-8` gap-8 mt-5"
           onSubmit={handleSubmit(submitDetails)}
         >
           <div className="flex flex-col ">
@@ -44,7 +44,7 @@ const Login = () => {
               name="email"
               {...register("email")}
               placeholder="Enter email address"
-              className="w-[90% ] bg-richblack-700 h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
+              className="w-full bg-richblack-700 h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
             ></input>
           </div>
 
@@ -60,7 +60,7 @@ const Login = () => {
               required
               placeholder="Enter Password"
               autoComplete="off"
-              className="w-[90% ]  bg-richblack-700 h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none"
+              className="w-full bg-richblack-700 h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none"
             ></input>
             <Link to={"/forgot-password"}>
               {" "}

@@ -16,8 +16,13 @@ const profileRoutes = Router();
 profileRoutes.put("/updateProfile", auth, updateProfile);
 profileRoutes.put("/updateProfileImg", updateProfileImg);
 profileRoutes.get("/getUserData", auth, getUserData);
+profileRoutes.delete("/deleteAccount", auth, deleteAccount);
+
+// ***************************************************************************************************************************************
+//                                                             reset password routes
+// ***************************************************************************************************************************************
+
 profileRoutes.post("/resetPasswordToken", CreateResetPasswordToken);
 profileRoutes.post("/resetPassword", resetPassword);
-profileRoutes.delete("/deleteAccount", auth, deleteAccount);
 
 export { profileRoutes };

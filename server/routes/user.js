@@ -24,11 +24,4 @@ userRoutes.post("/sendOtp", sendOtp);
 // route for the changing the password
 userRoutes.put("/changePassword", auth, changePassword);
 
-// ***************************************************************************************************************************************
-//                                                             reset password routes
-// ***************************************************************************************************************************************
-
-userRoutes.post("/createResetPasswordToken", auth, CreateResetPasswordToken);
-userRoutes.put("/resetPassword", auth, resetPassword);
-
 export { userRoutes };
