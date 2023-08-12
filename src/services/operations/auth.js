@@ -31,6 +31,7 @@ const generatePasswordToken = (email, setEmailSend) => {
     } catch (error) {
       toast.error("failed send link");
       console.log("erroe occured generating token", error);
+      dispatch(setLoading(false));
     }
   };
 };
@@ -47,6 +48,7 @@ const resetPassword = (data, setIsResetCompleted) => {
       );
 
       if (!response.data.success) {
+        dispatch(setLoading(false));
         throw new Error(response.data.message);
       }
 
@@ -57,6 +59,7 @@ const resetPassword = (data, setIsResetCompleted) => {
     } catch (error) {
       console.log("error --->", error);
       toast.error("error occured during password");
+      dispatch(setLoading(false));
     }
   };
 };
@@ -64,19 +67,23 @@ const resetPassword = (data, setIsResetCompleted) => {
 const login = (data) => {
   return async (dispatch) => {
     try {
+      dispatch(setLoading(true));
       const response = await apiConnector("POST", endpointes.LOGIN_API, data);
       if (!response.data.success) {
+        dispatch(setLoading(false));
         throw new Error(response.data.massage);
       }
 
       console.log(response);
       toast.success("successfully login");
       dispatch(setToken(response.data.token));
+      dispatch(setLoading(false));
 
       localStorage.setItem("token", JSON.stringify(response.data.token));
     } catch (error) {
       toast.error("failed to login");
       console.log("error--->", error);
+      dispatch(setLoading(false));
     }
   };
 };
@@ -84,20 +91,24 @@ const login = (data) => {
 const sendOtp = (data, navigate) => {
   return async (dispatch) => {
     try {
+      dispatch(setLoading(true));
       const { email } = data;
       const response = await apiConnector("POST", endpointes.SEND_OTP, {
         email,
       });
       console.log("hi");
       if (!response.data.success) {
+        dispatch(setLoading(false));
         throw new Error("otp not send");
       }
 
       toast.success("otp send successfully");
+      dispatch(setLoading(false));
       navigate("/verify-otp");
     } catch (error) {
-      console.log("error", error);
+      console.log("error", error.response.data.massage);
       toast.error("could not send otp");
+      dispatch(setLoading(false));
       navigate("/signup");
     }
   };
@@ -106,18 +117,20 @@ const sendOtp = (data, navigate) => {
 const singup = (data, navigate) => {
   return async (dispatch) => {
     try {
+      dispatch(setLoading(true));
       console.log("singup sending data-->", data);
       const response = await apiConnector("POST", endpointes.SIGN_UP, data);
       console.log("heelo");
-      if (response.data.success) {
+      if (!response.data.success) {
         throw new Error("signup failed");
       }
 
       console.log("response --->", response);
       toast.success("signup successfully");
+
       navigate("/login");
     } catch (error) {
-      console.log(error);
+      console.log("error", error.response.data.massage);
       toast.error("sign up failed");
       navigate("/signup");
     }

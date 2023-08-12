@@ -12,13 +12,13 @@ const sendOtp = async (req, res) => {
     const checkUserPresent = await User.findOne({ email: email });
 
     // check user already present or not
-    // if (checkUserPresent) {
-    //   console.log(checkUserPresent);
-    //   return res.status(401).json({
-    //     success: false,
-    //     massage: "User already registereddd",
-    //   });
-    // }
+    if (checkUserPresent) {
+      console.log(checkUserPresent);
+      return res.status(401).json({
+        success: false,
+        massage: "User already registereddd",
+      });
+    }
 
     // generate otp
     let otp = otpGenerator.generate(6, {

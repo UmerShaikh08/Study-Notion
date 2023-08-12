@@ -5,11 +5,12 @@ import { BsArrowLeft } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { setSignup } from "../Storage/Slices/authSlice";
 import { singup } from "../services/operations/auth";
+import Loader from "../components/common/Loader";
 
 const Otp = () => {
   const [otp, setOtp] = useState("");
   const dispatch = useDispatch();
-  const { signupData } = useSelector((store) => store.auth);
+  const { signupData, loading } = useSelector((store) => store.auth);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -51,7 +52,9 @@ const Otp = () => {
       )
     );
   };
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <div className="text-richblack-5 w-[80%]  sm:w-[50%] md:w-[38%] lg:w-[28%]  text-inter mx-auto my-auto flex flex-col gap-10">
       <h1 className="text-3xl font-semibold">Verify email</h1>
       <p className="text-richblack-100">

@@ -8,24 +8,33 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { REACT_APP_INSTRUCTOR, REACT_APP_STUDENT } from "../data";
 import { sendOtp } from "../services/operations/auth";
-import { useDispatch } from "react-redux";
-import { setSignup } from "../Storage/Slices/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import authSlice, { setSignup } from "../Storage/Slices/authSlice";
+import Loader from "../components/common/Loader";
+import { toast } from "react-hot-toast";
 
 const Signup = () => {
   const { register, handleSubmit } = useForm();
   const [userType, setUserType] = useState(REACT_APP_STUDENT);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { loading } = useSelector((store) => store.auth);
 
   const submitDetails = (data) => {
     data.accountType = userType;
-
+    console.log(data);
+    if (data.password !== data.confirmPassword) {
+      toast.error("password and confirm password not same");
+      return;
+    }
     dispatch(setSignup(data));
     dispatch(sendOtp(data, navigate));
 
     console.log(data);
   };
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <div className="w-11/12  flex flex-col-reverse md:flex-row items-center mx-auto md:mx-0 gap-20 my-auto">
       <div className=" w-11/12 max-w-[450px]     font-inter text-richblack-5 flex flex-col  mx-auto ">
         <div className="flex flex-col gap-3">

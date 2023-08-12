@@ -1,20 +1,24 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { BsArrowLeft } from "react-icons/bs";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { generatePasswordToken } from "../services/operations/auth";
+import Loader from "../components/common/Loader";
 
 const ForgotPassword = () => {
   const [emailSend, setEmailSend] = useState(false);
   const [email, setEmail] = useState("");
   const dispatch = useDispatch();
+  const { loading } = useSelector((store) => store.auth);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     dispatch(generatePasswordToken(email, setEmailSend));
   };
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <div className=" w-[80%]  sm:w-[50%] md:w-[38%] lg:w-[28%] flex flex-col mx-auto my-auto text-richblack-5 font-inter gap-5">
       <h1 className="text-3xl font-bold">
         {!emailSend ? "Reset your password" : "Check email"}
