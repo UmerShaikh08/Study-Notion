@@ -16,7 +16,7 @@ const sendOtp = async (req, res) => {
       console.log(checkUserPresent);
       return res.status(401).json({
         success: false,
-        massage: "User already registereddd",
+        massage: "User already registered...",
       });
     }
 
@@ -26,7 +26,6 @@ const sendOtp = async (req, res) => {
       lowerCaseAlphabets: false,
       specialChars: false,
     });
-    console.log("hi");
 
     // check otp unique or not
     let result = await OTP.findOne({ otp: otp });

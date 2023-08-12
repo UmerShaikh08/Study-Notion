@@ -107,7 +107,7 @@ const sendOtp = (data, navigate) => {
       navigate("/verify-otp");
     } catch (error) {
       console.log("error", error.response.data.massage);
-      toast.error("could not send otp");
+      toast.error(error.response.data.massage);
       dispatch(setLoading(false));
       navigate("/signup");
     }

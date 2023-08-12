@@ -3,7 +3,7 @@ import { CTAButton } from "../components/home/Button";
 import { Link, useNavigate } from "react-router-dom";
 import signupImg from "../assets/Images/signup.webp";
 import frame from "../assets/Images/frame.png";
-import { PiStarOfDavidBold } from "react-icons/pi";
+import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { REACT_APP_INSTRUCTOR, REACT_APP_STUDENT } from "../data";
@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import authSlice, { setSignup } from "../Storage/Slices/authSlice";
 import Loader from "../components/common/Loader";
 import { toast } from "react-hot-toast";
+import { isStrongPassword } from "../custom hooks/useStrongPassoword";
 
 const Signup = () => {
   const { register, handleSubmit } = useForm();
@@ -19,12 +20,19 @@ const Signup = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { loading } = useSelector((store) => store.auth);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const submitDetails = (data) => {
     data.accountType = userType;
+
+    if (!isStrongPassword(data.password)) {
+      return;
+    }
+
     console.log(data);
     if (data.password !== data.confirmPassword) {
-      toast.error("password and confirm password not same");
+      toast.error("Password Not Match");
       return;
     }
     dispatch(setSignup(data));
@@ -82,7 +90,7 @@ const Signup = () => {
             </div>
           </div>
 
-          <div className="flex flex-col gap-10 mt-5">
+          <div className="flex flex-col gap-4 mt-5">
             <div className="flex w-full flex-row gap-7">
               <div className="flex flex-col w-full">
                 <label htmlFor="firstName">
@@ -129,33 +137,79 @@ const Signup = () => {
             </div>
 
             <div className="flex w-full gap-4  lg:flex-row">
-              <div className="flex w-full flex-col">
+              <div className="relative flex w-full flex-col">
                 <label htmlFor="password">
                   Create Password <span className="text-red-200">*</span>
                 </label>
                 <input
                   required
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   id="password"
                   name="password"
                   {...register("password")}
                   placeholder="Enter Password "
-                  className="w-full bg-richblack-700 h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
+                  className="  w-full bg-richblack-700 h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3  bottom-[15%] bg-transparent text-richblack-5 hover:text-richblack-3 focus:outline-none"
+                >
+                  {showPassword ? (
+                    <AiFillEye size={20} />
+                  ) : (
+                    <AiFillEyeInvisible size={20} />
+                  )}
+                </button>
               </div>
-              <div className="w-full flex flex-col">
+              <div className="relative w-full flex flex-col">
                 <label htmlFor="confirmPassword">
-                  Confirm Password <span className="text-red-200">*</span>
+                  Confirm Password{" "}
+                  <span className="hidden sm:inline-block text-red-200">*</span>
                 </label>
                 <input
                   required
-                  type="password"
+                  type={showConfirmPassword ? "text" : "password"}
                   id="confirmpassword"
                   name="confirmpassword"
                   {...register("confirmPassword")}
                   placeholder="Enter last Name"
                   className="w-full bg-richblack-700 h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="absolute right-3  bottom-[15%] bg-transparent text-richblack-5 hover:text-richblack-3 focus:outline-none"
+                >
+                  {showConfirmPassword ? (
+                    <AiFillEye size={20} />
+                  ) : (
+                    <AiFillEyeInvisible size={20} />
+                  )}
+                </button>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap gap-x-3 text-gradientGreen-200">
+              <div className="flex flex-row gap-2">
+                <p>✓</p>
+                <p>one lowercase character</p>
+              </div>
+              <div className="flex flex-row gap-2">
+                <p>✓</p>
+                <p>one special character</p>
+              </div>
+              <div className="flex flex-row gap-2">
+                <p>✓</p>
+                <p>one uppercase character</p>
+              </div>
+              <div className="flex flex-row gap-2">
+                <p>✓</p>
+                <p>8 character minimum</p>
+              </div>
+              <div className="flex flex-row gap-2">
+                <p>✓</p>
+                <p>one number</p>
               </div>
             </div>
             <button
