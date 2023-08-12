@@ -18,7 +18,7 @@ const Signup = () => {
   const dispatch = useDispatch();
 
   const submitDetails = (data) => {
-    data.userType = userType;
+    data.accountType = userType;
 
     dispatch(setSignup(data));
     dispatch(sendOtp(data, navigate));
@@ -135,7 +135,7 @@ const Signup = () => {
                 />
               </div>
               <div className="w-full flex flex-col">
-                <label htmlFor="confirmpassword">
+                <label htmlFor="confirmPassword">
                   Confirm Password <span className="text-red-200">*</span>
                 </label>
                 <input
@@ -143,7 +143,7 @@ const Signup = () => {
                   type="password"
                   id="confirmpassword"
                   name="confirmpassword"
-                  {...register("confirmpassword")}
+                  {...register("confirmPassword")}
                   placeholder="Enter last Name"
                   className="w-full bg-richblack-700 h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
                 />
