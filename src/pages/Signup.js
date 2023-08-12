@@ -1,19 +1,28 @@
 import React from "react";
 import { CTAButton } from "../components/home/Button";
-import { Link, redirect } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import signupImg from "../assets/Images/signup.webp";
 import frame from "../assets/Images/frame.png";
 import { PiStarOfDavidBold } from "react-icons/pi";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { REACT_APP_INSTRUCTOR, REACT_APP_STUDENT } from "../data";
+import { sendOtp } from "../services/operations/auth";
+import { useDispatch } from "react-redux";
+import { setSignup } from "../Storage/Slices/authSlice";
 
 const Signup = () => {
   const { register, handleSubmit } = useForm();
   const [userType, setUserType] = useState(REACT_APP_STUDENT);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const submitDetails = (data) => {
     data.userType = userType;
+
+    dispatch(setSignup(data));
+    dispatch(sendOtp(data, navigate));
+
     console.log(data);
   };
   return (
@@ -140,7 +149,10 @@ const Signup = () => {
                 />
               </div>
             </div>
-            <button className=" w-full bg-yellow-50 text-black py-2  rounded-md ">
+            <button
+              type="sumbit"
+              className=" w-full bg-yellow-50 text-black py-2  rounded-md "
+            >
               Sing In
             </button>
           </div>

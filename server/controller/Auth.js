@@ -51,6 +51,7 @@ const sendOtp = async (req, res) => {
     return res.status(200).json({
       success: true,
       massage: "OTP sent Successfully",
+      otp,
     });
   } catch (error) {
     console.log(error);
@@ -189,7 +190,7 @@ const logIn = async (req, res) => {
     console.log("user --- > ", user);
     // add role in token
     const payload = {
-      eamil: user.email,
+      email: user.email,
       id: user._id,
       accountType: user.accountType,
     };
@@ -211,8 +212,11 @@ const logIn = async (req, res) => {
       };
 
       // adding token in cookie
-      res.cookie("token", token, options).status(200).json({
+      res.cookie("token", token);
+      return res.status(200).json({
         success: true,
+        user,
+        token,
         massage: "login successfully",
       });
     } else {

@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { BsArrowLeft } from "react-icons/bs";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { resetPassword } from "../services/operations.js/auth";
+import { resetPassword } from "../services/operations/auth";
 
 const UpdatePassword = () => {
   const { register, handleSubmit } = useForm();
@@ -17,7 +17,7 @@ const UpdatePassword = () => {
     console.log(data);
 
     const token = location.pathname.split("/").at(-1);
-    data.token = "1ede0793-e507-48ae-9088-6be1dd170653";
+    data.token = token;
 
     dispatch(resetPassword(data, setIsResetCompleted));
   };
