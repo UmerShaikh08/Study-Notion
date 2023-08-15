@@ -22,7 +22,7 @@ const Otp = () => {
   }, []);
 
   const submitData = (data) => {
-    data.preventDefault(0);
+    data.preventDefault();
 
     const {
       accountType,
@@ -75,7 +75,6 @@ const Otp = () => {
               className="w-[48px]  lg:w-[50px] mx-auto border-0 bg-richblack-800 rounded-[0.5rem] text-richblack-5 aspect-square text-center focus:border-0 focus:outline-2 focus:outline-yellow-50"
             />
           )}
-          //   inputStyle={"text-richblack-700 rounded-lg w-20"}
         />
         <button
           type="submit"
@@ -85,10 +84,10 @@ const Otp = () => {
         </button>
       </form>
       <div>
-        <Link to={"/login"}>
+        <Link to={"/signup"}>
           <div className="flex flex-row items-center">
             <BsArrowLeft />
-            Back to login
+            Back to signup
           </div>
         </Link>
         <div>resend it</div>

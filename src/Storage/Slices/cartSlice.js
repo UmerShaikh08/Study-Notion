@@ -18,7 +18,7 @@ const cartSlice = createSlice({
       state.items.pop();
     },
     clearItems(state, action) {
-      state.items.clear();
+      state.items.length = 0;
     },
   },
 });

@@ -7,6 +7,7 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 import ProfileDashboard from "../../pages/ProfileDashboard";
 import { IoIosArrowDown } from "react-icons/io";
 import { AiOutlineCaretDown } from "react-icons/ai";
+import ProfileDropdown from "../auth/ProfileDropdrown";
 
 const Navbar = () => {
   const [currTab, setCurrTab] = useState(NavbarLinks[0].title);
@@ -82,48 +83,41 @@ const Navbar = () => {
           );
         })}
       </div>
-      {user && user.accountType !== "Instructor" ? (
-        <Link to={"dashbord/cart"} className="relative flex">
-          <AiOutlineShoppingCart size={25} className="text-richblack-200 " />
-          {totalItems > 0 ? (
-            <div className=" absolute right-[-30%] bottom-[-20%] w-[1.3rem] h-[1.3rem] rounded-full bg-richblack-700 text-sm text-yellow-100 text-center ">
-              {" "}
-              <p className="mx-auto"> {totalItems}</p>
-            </div>
-          ) : (
-            ""
-          )}
-        </Link>
-      ) : (
-        ""
-      )}
+      <div className="flex flex-row gap-5">
+        {user && user.accountType !== "Instructor" ? (
+          <Link to={"dashbord/cart"} className="relative flex">
+            <AiOutlineShoppingCart size={25} className="text-richblack-200 " />
+            {totalItems > 0 ? (
+              <div className=" absolute right-[-30%] bottom-[-20%] w-[1.3rem] h-[1.3rem] rounded-full bg-richblack-700 text-sm text-yellow-100 text-center ">
+                {" "}
+                <p className="mx-auto"> {totalItems}</p>
+              </div>
+            ) : (
+              ""
+            )}
+          </Link>
+        ) : (
+          ""
+        )}
 
-      {token === null ? (
-        <div className="relative flex flex-col group ">
-          <div className="flex gap-2 items-center">
-            <div className="bg-richblack-300 h-6 w-6 rounded-full "> </div>
-            <AiOutlineCaretDown className="text-richblack-300" />
+        {token !== null ? (
+          <ProfileDropdown />
+        ) : (
+          <div className="text-richblack-100 flex flex-row gap-4 ">
+            <Link to={"/login"}>
+              <div className="border border-richblack-700 bg-richblack-800 py-2 px-3 rounded-lg transition-all duration-200 hover:scale-90 ">
+                Log in
+              </div>
+            </Link>
+            <Link to={"/signup"}>
+              {" "}
+              <div className="border border-richblack-700 bg-richblack-800 py-2 px-3 rounded-lg transition-all duration-200 hover:scale-90 ">
+                Sign up
+              </div>
+            </Link>
           </div>
-          <div className=" invisible absolute text-richblack-100 top-6 bg-richblack-800 group-open:visible  ">
-            <div>dashbord</div>
-            <div>Log out</div>
-          </div>
-        </div>
-      ) : (
-        <div className="text-richblack-100 flex flex-row gap-4 ">
-          <Link to={"/login"}>
-            <div className="border border-richblack-700 bg-richblack-800 py-2 px-3 rounded-lg transition-all duration-200 hover:scale-90 ">
-              Log in
-            </div>
-          </Link>
-          <Link to={"/signup"}>
-            {" "}
-            <div className="border border-richblack-700 bg-richblack-800 py-2 px-3 rounded-lg transition-all duration-200 hover:scale-90 ">
-              Sign up
-            </div>
-          </Link>
-        </div>
-      )}
+        )}
+      </div>
     </nav>
   );
 };

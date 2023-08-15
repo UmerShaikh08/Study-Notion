@@ -12,13 +12,13 @@ const sendOtp = async (req, res) => {
     const checkUserPresent = await User.findOne({ email: email });
 
     // check user already present or not
-    if (checkUserPresent) {
-      console.log(checkUserPresent);
-      return res.status(401).json({
-        success: false,
-        massage: "User already registered...",
-      });
-    }
+    // if (checkUserPresent) {
+    //   console.log(checkUserPresent);
+    //   return res.status(401).json({
+    //     success: false,
+    //     massage: "User already registered...",
+    //   });
+    // }
 
     // generate otp
     let otp = otpGenerator.generate(6, {
@@ -56,7 +56,7 @@ const sendOtp = async (req, res) => {
     console.log(error);
     return res.status(401).json({
       success: false,
-      massage: "error while sending otp",
+      massage: "Failed send OTP",
     });
   }
 };
@@ -86,7 +86,7 @@ const signUp = async (req, res) => {
     ) {
       return res.status(403).json({
         success: false,
-        massaage: "All fields are required",
+        massage: "All fields are required",
       });
     }
 
@@ -94,23 +94,30 @@ const signUp = async (req, res) => {
     if (password !== confirmPassword) {
       return res.status(403).json({
         success: false,
-        massaage: "password and confirm password does not match",
+        massage: "password and confirm password does not match",
       });
     }
 
     // check user registered or not
-    const checkUserPresent = await User.findOne({ email: email });
-    if (checkUserPresent) {
-      return res.status(401).json({
-        success: false,
-        massage: "User already registereddd",
-      });
-    }
+    // const checkUserPresent = await User.findOne({ email: email });
+    // if (checkUserPresent) {
+    //   return res.status(401).json({
+    //     success: false,
+    //     massage: "User already registereddd",
+    //   });
+    // }
 
     // taking last recently otp from db
     const checkOtp = await OTP.findOne({ email: email })
       .sort({ createdAt: -1 })
       .limit(1);
+
+    if (checkOtp == null) {
+      return res.status(400).json({
+        success: false,
+        massage: "otp is expired",
+      });
+    }
 
     console.log(otp, "-- > ", checkOtp);
     // validate otp same or not
@@ -132,7 +139,10 @@ const signUp = async (req, res) => {
     });
 
     console.log(" profile entery created successfully");
-
+    console.log(
+      "my img link ",
+      `https://api.dicebear.com/5.x/initials/svg?seed=${firstName}%20${lastName}`
+    );
     // create entry in db
     const user = await User.create({
       firstName,
@@ -141,8 +151,9 @@ const signUp = async (req, res) => {
       password: hashPassword,
       accountType,
       additionalDetails: profile._id,
-      img: `api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`,
+      img: `https://api.dicebear.com/5.x/initials/svg?seed=${firstName}%20${lastName}`,
     });
+    console.log(user.img);
 
     console.log(user, " user entery created successfully");
 

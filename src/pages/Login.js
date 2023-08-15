@@ -1,6 +1,6 @@
 import React from "react";
 import { CTAButton } from "../components/home/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import loginPage from "../assets/Images/login.webp";
 import frame from "../assets/Images/frame.png";
 import { PiStarOfDavidBold } from "react-icons/pi";
@@ -11,10 +11,11 @@ import { login } from "../services/operations/auth";
 const Login = () => {
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const submitDetails = (data) => {
     console.log(data);
-    dispatch(login(data));
+    dispatch(login(data, navigate));
   };
   return (
     <div className="w-11/12 max-w-maxContent flex flex-col-reverse md:flex-row items-center my-auto gap-20 ">

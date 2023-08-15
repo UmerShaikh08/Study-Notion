@@ -7,7 +7,8 @@ import {
   setToken,
 } from "../../Storage/Slices/authSlice";
 import { toast } from "react-hot-toast";
-import { Navigate } from "react-router-dom";
+import { setUser } from "../../Storage/Slices/profileSlice";
+import { clearItems } from "../../Storage/Slices/cartSlice";
 
 const generatePasswordToken = (email, setEmailSend) => {
   return async (dispatch) => {
@@ -22,7 +23,7 @@ const generatePasswordToken = (email, setEmailSend) => {
       console.log("Response---> ", response);
 
       if (!response.data.success) {
-        throw new Error(response.data.message);
+        throw new Error(response.error.massage);
       }
 
       toast.success("reset password link send successfully");
@@ -58,13 +59,13 @@ const resetPassword = (data, setIsResetCompleted) => {
       dispatch(setLoading(false));
     } catch (error) {
       console.log("error --->", error);
-      toast.error("error occured during password");
+      toast.error("Please try again");
       dispatch(setLoading(false));
     }
   };
 };
 
-const login = (data) => {
+const login = (data, navigate) => {
   return async (dispatch) => {
     try {
       dispatch(setLoading(true));
@@ -76,10 +77,14 @@ const login = (data) => {
 
       console.log(response);
       toast.success("successfully login");
+
       dispatch(setToken(response.data.token));
+      dispatch(setUser(response.data.user));
       dispatch(setLoading(false));
 
+      localStorage.setItem("user", JSON.stringify(response.data.user));
       localStorage.setItem("token", JSON.stringify(response.data.token));
+      navigate("/dashboard/my-profile");
     } catch (error) {
       toast.error("failed to login");
       console.log("error--->", error);
@@ -96,7 +101,7 @@ const sendOtp = (data, navigate) => {
       const response = await apiConnector("POST", endpointes.SEND_OTP, {
         email,
       });
-      console.log("hi");
+      console.log(response);
       if (!response.data.success) {
         dispatch(setLoading(false));
         throw new Error("otp not send");
@@ -104,11 +109,13 @@ const sendOtp = (data, navigate) => {
 
       toast.success("otp send successfully");
       dispatch(setLoading(false));
+
       navigate("/verify-otp");
     } catch (error) {
-      console.log("error", error.response.data.massage);
-      toast.error(error.response.data.massage);
+      console.log("error", error);
+      toast.error(error);
       dispatch(setLoading(false));
+
       navigate("/signup");
     }
   };
@@ -122,6 +129,7 @@ const singup = (data, navigate) => {
       const response = await apiConnector("POST", endpointes.SIGN_UP, data);
       console.log("heelo");
       if (!response.data.success) {
+        dispatch(setLoading(false));
         throw new Error("signup failed");
       }
 
@@ -130,11 +138,24 @@ const singup = (data, navigate) => {
 
       navigate("/login");
     } catch (error) {
-      console.log("error", error.response.data.massage);
+      console.log("error", error);
       toast.error("sign up failed");
+      dispatch(setLoading(false));
       navigate("/signup");
     }
   };
 };
+
+export function logout(navigate) {
+  return (dispatch) => {
+    dispatch(setToken(null));
+    dispatch(setUser(null));
+    dispatch(clearItems());
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    toast.success("Logged Out");
+    navigate("/");
+  };
+}
 
 export { generatePasswordToken, resetPassword, login, sendOtp, singup };

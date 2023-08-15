@@ -25,7 +25,7 @@ export const isStrongPassword = (password) => {
 
   // Check for at least one digit
   const digitRegex = /\d/;
-  if (!uppercaseRegex.test(password)) {
+  if (!digitRegex.test(password)) {
     toast.error("Enter atleast one number");
     return false;
   }

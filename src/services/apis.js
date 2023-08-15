@@ -7,3 +7,7 @@ export const endpointes = {
   SEND_OTP: BASE_URL + "/auth/sendOtp",
   SIGN_UP: BASE_URL + "/auth/signup",
 };
+
+export const profile = {
+  GET_USER_DETAILS: BASE_URL + "profile/getUserData",
+};

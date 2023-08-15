@@ -7,6 +7,8 @@ import Signup from "./pages/Signup";
 import ForgotPassword from "./pages/ForgotPassword";
 import UpdatePassword from "./pages/UpdatePassword";
 import Otp from "./pages/Otp";
+import OpenRoute from "./components/auth/OpenRoute";
+import About from "./pages/About";
 
 function App() {
   return (
@@ -14,11 +16,53 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element=<Home /> />
-        <Route path="/login" element=<Login /> />
-        <Route path="/signup" element=<Signup /> />
-        <Route path="/forgot-password" element=<ForgotPassword /> />
-        <Route path="/update-password/:id" element=<UpdatePassword /> />
-        <Route path="/verify-otp" element=<Otp /> />
+
+        <Route
+          path="/login"
+          element={
+            <OpenRoute>
+              <Login />{" "}
+            </OpenRoute>
+          }
+        />
+
+        <Route
+          path="/signup"
+          element={
+            <OpenRoute>
+              <Signup />{" "}
+            </OpenRoute>
+          }
+        />
+
+        <Route
+          path="/forgot-password"
+          element={
+            <OpenRoute>
+              <ForgotPassword />{" "}
+            </OpenRoute>
+          }
+        />
+
+        <Route
+          path="/update-password/:id"
+          element={
+            <OpenRoute>
+              <UpdatePassword />{" "}
+            </OpenRoute>
+          }
+        />
+
+        <Route
+          path="/verify-otp"
+          element={
+            <OpenRoute>
+              <Otp />{" "}
+            </OpenRoute>
+          }
+        />
+
+        <Route path="/about" element=<About /> />
       </Routes>
     </div>
   );

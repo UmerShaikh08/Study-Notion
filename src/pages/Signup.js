@@ -9,7 +9,7 @@ import { useState } from "react";
 import { REACT_APP_INSTRUCTOR, REACT_APP_STUDENT } from "../data";
 import { sendOtp } from "../services/operations/auth";
 import { useDispatch, useSelector } from "react-redux";
-import authSlice, { setSignup } from "../Storage/Slices/authSlice";
+import authSlice, { setLoading, setSignup } from "../Storage/Slices/authSlice";
 import Loader from "../components/common/Loader";
 import { toast } from "react-hot-toast";
 import { isStrongPassword } from "../custom hooks/useStrongPassoword";
@@ -190,25 +190,35 @@ const Signup = () => {
               </div>
             </div>
 
-            <div className="flex flex-wrap gap-x-3 text-gradientGreen-200">
+            <div className="flex flex-wrap gap-x-3  text-gradientGreen-200 ">
               <div className="flex flex-row gap-2">
-                <p>✓</p>
+                <p className="text-richblack-900 bg-gradientGreen-200 rounded-full my-auto h-4  w-4 flex items-center justify-center">
+                  ✓
+                </p>
                 <p>one lowercase character</p>
               </div>
               <div className="flex flex-row gap-2">
-                <p>✓</p>
+                <p className="text-richblack-900 bg-gradientGreen-200 rounded-full my-auto h-4 w-4 flex items-center justify-center">
+                  ✓
+                </p>
                 <p>one special character</p>
               </div>
               <div className="flex flex-row gap-2">
-                <p>✓</p>
+                <p className="text-richblack-900 bg-gradientGreen-200 rounded-full my-auto h-4  w-4 flex items-center justify-center">
+                  ✓
+                </p>
                 <p>one uppercase character</p>
               </div>
               <div className="flex flex-row gap-2">
-                <p>✓</p>
+                <p className="text-richblack-900 bg-gradientGreen-200 rounded-full my-auto h-4  w-4 flex items-center justify-center">
+                  ✓
+                </p>
                 <p>8 character minimum</p>
               </div>
               <div className="flex flex-row gap-2">
-                <p>✓</p>
+                <p className="text-richblack-900 bg-gradientGreen-200 rounded-full my-auto h-4  w-4 flex items-center justify-center">
+                  ✓
+                </p>
                 <p>one number</p>
               </div>
             </div>
