@@ -134,6 +134,10 @@ module.exports = {
       red: {
         200: "#eb445a",
       },
+
+      gradientGolden: {
+        500: "#996709",
+      },
     },
     extend: {
       backgroundImage: {

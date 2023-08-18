@@ -9,6 +9,7 @@ import { userRoutes } from "./routes/user.js";
 import cor from "cors";
 import fileUpload from "express-fileupload";
 import { connectCloudinary } from "./config/cloudinary.js";
+import { ContactUs } from "./routes/contactUs.js";
 
 dotenv.config({ path: ".env" });
 
@@ -37,6 +38,7 @@ app.use("/api/vi/course", courseRoutes);
 app.use("/api/vi/profile", profileRoutes);
 app.use("/api/vi/payment", paymentRoutes);
 app.use("/api/vi/auth", userRoutes);
+app.use("/api/vi/Contact", ContactUs);
 
 app.get("/", (req, res) => {
   res.json({

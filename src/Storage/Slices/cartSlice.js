@@ -5,6 +5,7 @@ const initialState = {
   totalItems: localStorage.getItem("totalItems")
     ? localStorage.getItem("totalItems")
     : 0,
+  loading: false,
 };
 
 const cartSlice = createSlice({
@@ -19,6 +20,9 @@ const cartSlice = createSlice({
     },
     clearItems(state, action) {
       state.items.length = 0;
+    },
+    setLoading(state, action) {
+      state.loading = action.payload;
     },
   },
 });

@@ -11,3 +11,7 @@ export const endpointes = {
 export const profile = {
   GET_USER_DETAILS: BASE_URL + "profile/getUserData",
 };
+
+export const contactUsEndPointes = {
+  CONTACT_US: BASE_URL + "/Contact/contact-us",
+};

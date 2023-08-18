@@ -25,7 +25,7 @@ const mailSender = async (email, body, title) => {
     console.log("kjasd", info);
     return info;
   } catch (error) {
-    console.log("problem in mailSender ", error.massage);
+    console.log("problem in mailSender ---> ", error);
     throw error;
   }
 };

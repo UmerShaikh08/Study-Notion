@@ -5,6 +5,7 @@ import {
   resetPassword,
 } from "../controller/ResetPassword.js";
 import { auth } from "../middleware/auth.js";
+import { contactUs } from "../controller/contactUs.js";
 
 const userRoutes = Router();
 

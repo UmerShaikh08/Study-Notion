@@ -9,6 +9,9 @@ import UpdatePassword from "./pages/UpdatePassword";
 import Otp from "./pages/Otp";
 import OpenRoute from "./components/auth/OpenRoute";
 import About from "./pages/About";
+import MyProfile from "./components/Dashboard/MyProfile";
+import Logout from "./components/Dashboard/Logout";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   return (
@@ -63,6 +66,15 @@ function App() {
         />
 
         <Route path="/about" element=<About /> />
+
+        <Route path="/dashboard" element=<Dashboard />>
+          {" "}
+          <Route path="/dashboard/my-profile" element=<MyProfile /> />
+          <Route path="/dashboard/logout" element=<Logout /> />
+          <Route path="/dashboard/purchase-history" element=<Logout /> />
+          <Route path="/dashboard/enrolled-courses" element=<Logout /> />
+          <Route path="/dashboard/cart" element=<Logout /> />
+        </Route>
       </Routes>
     </div>
   );

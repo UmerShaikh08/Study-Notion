@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import logo from "../../assets/Logo/Logo-Full-Light.png";
-import { NavbarLinks } from "../../data/navbar-links";
+import { NavbarLinks } from "../../Data/navbar-links";
 import { Link } from "react-router-dom";
 import { UseSelector, useSelector } from "react-redux/es/hooks/useSelector";
 import { AiOutlineShoppingCart } from "react-icons/ai";

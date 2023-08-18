@@ -2,14 +2,21 @@ import { mailSender } from "../utils/mailSender.js";
 
 const contactUs = async (req, res) => {
   try {
-    const { firstName, lastName, email, massage, userId } = req.body;
+    const { firstName, lastName, email, message, phoneNo, countryCode } =
+      req.body;
 
+    console.log("body --->", req.body);
     const sendToStudyNotion = await mailSender(
       "umershaikh10000@gmail.com",
-      `<h1>User name ${firstName}  ${lastName} massage :- ${massage} </h1> `,
-      help
+      `<h1>User name ${firstName}  ${lastName}  </h1> 
+       <h6> Phone :- ${countryCode}  ${phoneNo} </h6>
+       <h6> Email :- ${email} </h6>
+       <p>${message}</p>
+      `,
+      "help"
     );
 
+    console.log("done ---> ", sendToStudyNotion);
     const sendToUser = await mailSender(
       email,
       "<h1> thanks to contacting for us</h1>",
@@ -21,6 +28,7 @@ const contactUs = async (req, res) => {
       massage: "email send successfully ",
     });
   } catch (error) {
+    console.log(error);
     return res.status(400).json({
       success: false,
       massage: "error occured while user contacting to study notion ",
