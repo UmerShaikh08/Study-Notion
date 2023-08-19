@@ -1,0 +1,13 @@
+import React from "react";
+import TimeLineSection from "../home/TimeLineSection";
+
+const PersonalDetails = ({ title, name }) => {
+  return (
+    <div>
+      <div className="text-richblack-500 ">{title}</div>
+      <div className="text-richblack-5 text-sm font-medium">{name}</div>
+    </div>
+  );
+};
+
+export default PersonalDetails;

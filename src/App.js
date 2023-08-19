@@ -12,6 +12,7 @@ import About from "./pages/About";
 import MyProfile from "./components/Dashboard/MyProfile";
 import Logout from "./components/Dashboard/Logout";
 import Dashboard from "./pages/Dashboard";
+import Setting from "./components/Dashboard/setting/Setting";
 
 function App() {
   return (
@@ -74,6 +75,7 @@ function App() {
           <Route path="/dashboard/purchase-history" element=<Logout /> />
           <Route path="/dashboard/enrolled-courses" element=<Logout /> />
           <Route path="/dashboard/cart" element=<Logout /> />
+          <Route path="/dashboard/setting" element=<Setting /> />
         </Route>
       </Routes>
     </div>
