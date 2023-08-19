@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   deleteAccount,
   getUserData,
+  updatePassword,
   updateProfile,
   updateProfileImg,
 } from "../controller/profile.js";
@@ -14,7 +15,8 @@ import {
 const profileRoutes = Router();
 
 profileRoutes.put("/updateProfile", auth, updateProfile);
-profileRoutes.put("/updateProfileImg", updateProfileImg);
+profileRoutes.post("/updatePassword", auth, updatePassword);
+profileRoutes.put("/updateProfileImg", auth, updateProfileImg);
 profileRoutes.get("/getUserData", auth, getUserData);
 profileRoutes.delete("/deleteAccount", auth, deleteAccount);
 

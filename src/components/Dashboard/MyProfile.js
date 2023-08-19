@@ -36,8 +36,8 @@ const MyProfile = () => {
     },
     {
       title: "Date Of Birth",
-      name: user?.additionalDetails?.dataOfBirth
-        ? user?.additionalDetails?.dataOfBirth
+      name: user?.additionalDetails?.dateOfBirth
+        ? user?.additionalDetails?.dateOfBirth
         : "Add Date Of Birth",
     },
   ];

@@ -209,8 +209,8 @@ const logIn = async (req, res) => {
     if (await bcrypt.compare(password, user.password)) {
       //creating token
       console.log("same password");
-      const token = await JWT.sign(payload, "UMER78", {
-        expiresIn: "2h",
+      const token = JWT.sign(payload, "UMER78", {
+        expiresIn: "24h",
       });
 
       user.toObject();
@@ -222,13 +222,19 @@ const logIn = async (req, res) => {
       };
 
       // adding token in cookie
-      res.cookie("token", token);
-      return res.status(200).json({
+      return res.cookie("token", token, options).status(200).json({
         success: true,
-        user,
         token,
-        massage: "login successfully",
+        user,
+        message: `User Login Success`,
       });
+
+      // return res.status(200).json({
+      //   success: true,
+      //   user,
+      //   token,
+      //   massage: "login successfully",
+      // });
     } else {
       return res.status(400).json({
         success: false,

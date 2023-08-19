@@ -19,7 +19,6 @@ const Navbar = () => {
   const { user } = useSelector((store) => store.profile);
   const { totalItems } = useSelector((store) => store.cart);
   const { token } = useSelector((store) => store.auth);
-  console.log(user);
 
   const SubLinks = [
     {

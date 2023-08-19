@@ -9,7 +9,9 @@ const auth = async (req, res, next) => {
     const token =
       req.body.token ||
       req.cookies.token ||
-      req.header("Authorisation").replace("Bearer", "");
+      (req.headers.authorization &&
+        req.headers.authorization.replace("Bearer ", "")) ||
+      "";
 
     // token empty or not
     if (!token) {

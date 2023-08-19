@@ -1,12 +1,20 @@
 import { Profile } from "../model/Profile.js";
 import { User } from "../model/User.js";
 import { imgUploadToCloudinary } from "../utils/imgUploader.js";
+import bcrypt from "bcrypt";
 
 const updateProfile = async (req, res) => {
   try {
     // get data
-    const { dateOfBirt = "", contactNumber, gender, about = "" } = req.body;
-
+    const {
+      dateOfBirt = "",
+      contactNumber,
+      gender,
+      about = "",
+      firstName,
+      lastName,
+    } = req.body;
+    console.log(req.body);
     // get userId from req ,  it added in auth middleware
     // matlab instructor course create karra he use phele log in kiye hoga , login karte waqt middlwear excecute hua hoga or usme hume req ke andar  decode send kiya tha
     const userId = req.user.id;
@@ -21,6 +29,19 @@ const updateProfile = async (req, res) => {
 
     // get user and extract profile id from User.additionDetails
     const userDetails = await User.findById(userId);
+
+    // updating first name and last name
+    if (firstName && lastName) {
+      const updateUserName = await User.findByIdAndUpdate(
+        userId,
+        {
+          firstName,
+          lastName,
+        },
+        { new: true }
+      );
+    }
+
     const id = userDetails.additionalDetails;
 
     // update profile based on profile id
@@ -45,6 +66,45 @@ const updateProfile = async (req, res) => {
     return res.status(400).json({
       success: false,
       massage: "error occured while updating profile",
+    });
+  }
+};
+
+const updatePassword = async (req, res) => {
+  try {
+    // get data
+    const { password, confirmPassword } = req.body;
+    const userId = req.user.id;
+
+    // check password same or not
+    if (password !== confirmPassword) {
+      return res.status(400).json({
+        success: false,
+        massage: "password not matching",
+      });
+    }
+    console.log("password ---> ", password);
+    // hash password
+    const hashPassword = await bcrypt.hash(password, 10);
+    console.log("hashpass ---> ", hashPassword);
+    // update password in db
+    const updatePassword = await User.findByIdAndUpdate(
+      userId,
+      { password: hashPassword },
+      { new: true }
+    );
+    console.log("password updated --> ", updatePassword);
+
+    // send response
+    return res.status(200).json({
+      success: true,
+      massage: "password updated successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({
+      success: false,
+      massage: "Something went wrong during update password",
     });
   }
 };
@@ -113,9 +173,9 @@ const getUserData = async (req, res) => {
 const updateProfileImg = async (req, res) => {
   try {
     // get data
-    const file = req.files.displayPicture;
+    const file = req.files.image;
     console.log("file ---> ", file);
-    const { userId } = req.body;
+    const userId = req.user.id;
     console.log(userId);
     const options = {
       folder: "Study Notion",
@@ -143,4 +203,10 @@ const updateProfileImg = async (req, res) => {
   }
 };
 
-export { updateProfile, getUserData, deleteAccount, updateProfileImg };
+export {
+  updateProfile,
+  getUserData,
+  deleteAccount,
+  updateProfileImg,
+  updatePassword,
+};

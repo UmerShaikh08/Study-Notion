@@ -1,5 +1,4 @@
 import React from "react";
-import TimeLineSection from "../home/TimeLineSection";
 
 const PersonalDetails = ({ title, name }) => {
   return (

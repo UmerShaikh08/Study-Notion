@@ -9,7 +9,10 @@ export const endpointes = {
 };
 
 export const profile = {
-  GET_USER_DETAILS: BASE_URL + "profile/getUserData",
+  GET_USER_DETAILS: BASE_URL + "/profile/getUserData",
+  UPDATE_USER_DETAILS: BASE_URL + "/profile/updateProfile",
+  UPDATE_PASSWORD: BASE_URL + "/profile/updatePassword",
+  UPALOAD_IMG: BASE_URL + "/profile/updateProfileImg",
 };
 
 export const contactUsEndPointes = {

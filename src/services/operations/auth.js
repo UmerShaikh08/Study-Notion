@@ -53,7 +53,7 @@ const resetPassword = (data, setIsResetCompleted) => {
         throw new Error(response.data.message);
       }
 
-      console.log(" Reset password Resonse--->", response);
+      console.log(" Reset password Response--->", response);
       toast.success("password reset successfully");
       setIsResetCompleted(true);
       dispatch(setLoading(false));

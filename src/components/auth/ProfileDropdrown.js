@@ -17,7 +17,6 @@ const ProfileDropdown = () => {
   useOutsideClick(ref, () => setOpen(false));
 
   if (!user) return null;
-  console.log("uswe---->", user.img);
 
   return (
     <button className="relative" onClick={() => setOpen(true)}>
