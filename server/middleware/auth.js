@@ -10,10 +10,10 @@ const auth = async (req, res, next) => {
       req.body.token ||
       req.cookies.token ||
       (req.headers.authorization &&
-        req.headers.authorization.replace("Bearer ", "")) ||
-      "";
+        req.headers.authorization.replace("Bearer ", ""));
 
-    // token empty or not
+    console.log("hi");
+    // check token empty or not
     if (!token) {
       return res.status(400).json({
         success: false,

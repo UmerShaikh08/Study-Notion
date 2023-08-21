@@ -182,17 +182,18 @@ const updateProfileImg = async (req, res) => {
     };
     // upload data
     const response = await imgUploadToCloudinary(file, options);
-    console.log(response);
+    console.log("cloudinary img -->", response);
 
     // update user
     const updateUser = await User.findByIdAndUpdate(userId, {
-      imgUrl: response.secureUrl,
+      img: response.secure_url,
     });
 
     // return res
     return res.status(200).json({
       success: true,
       massage: "profile img updated successfully",
+      img: response.secure_url,
     });
   } catch (error) {
     console.log(error);

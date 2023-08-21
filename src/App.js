@@ -13,10 +13,12 @@ import MyProfile from "./components/Dashboard/MyProfile";
 import Logout from "./components/Dashboard/Logout";
 import Dashboard from "./pages/Dashboard";
 import Setting from "./components/Dashboard/setting/Setting";
+import PrivateRoute from "./components/auth/PrivateRoute";
+import EnrolledCourse from "./components/Dashboard/EnrolledCourse";
 
 function App() {
   return (
-    <div className="w-screen  min-h-screen bg-richblack-900 flex flex-col font-inter">
+    <div className="w-screen min-h-screen bg-richblack-900 flex flex-col font-inter">
       <Navbar />
       <Routes>
         <Route path="/" element=<Home /> />
@@ -68,14 +70,23 @@ function App() {
 
         <Route path="/about" element=<About /> />
 
-        <Route path="/dashboard" element=<Dashboard />>
+        <Route
+          path="/dashboard"
+          element=<PrivateRoute>
+            {" "}
+            <Dashboard />
+          </PrivateRoute>
+        >
           {" "}
           <Route path="/dashboard/my-profile" element=<MyProfile /> />
           <Route path="/dashboard/logout" element=<Logout /> />
           <Route path="/dashboard/purchase-history" element=<Logout /> />
-          <Route path="/dashboard/enrolled-courses" element=<Logout /> />
           <Route path="/dashboard/cart" element=<Logout /> />
           <Route path="/dashboard/setting" element=<Setting /> />
+          <Route
+            path="/dashboard/enrolled-courses"
+            element=<EnrolledCourse />
+          />
         </Route>
       </Routes>
     </div>

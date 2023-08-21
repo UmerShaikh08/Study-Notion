@@ -7,11 +7,13 @@ import { PiStarOfDavidBold } from "react-icons/pi";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { login } from "../services/operations/auth";
+import { setLoading } from "../Storage/Slices/authSlice";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  dispatch(setLoading(false));
 
   const submitDetails = (data) => {
     console.log(data);

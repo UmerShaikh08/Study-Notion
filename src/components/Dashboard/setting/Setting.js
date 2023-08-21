@@ -2,6 +2,7 @@ import React from "react";
 import ProfileInfo from "./ProfileInfo";
 import PassChange from "./PassChange";
 import ProfileImg from "./ProfileImg";
+import DeleteAccount from "./DeleteAccount";
 
 const Setting = () => {
   return (
@@ -9,6 +10,7 @@ const Setting = () => {
       <ProfileImg />
       <ProfileInfo />
       <PassChange />
+      <DeleteAccount />
     </div>
   );
 };

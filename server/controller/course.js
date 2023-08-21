@@ -24,15 +24,17 @@ const createCourse = async (req, res) => {
       category,
       price,
       tags,
+      courseDuration,
     } = req.body;
 
     // validate data
     if (
-      !courseName ||
-      !courseDescription ||
-      !whatYouWillLearn ||
-      !category ||
-      !price
+      (!courseName ||
+        !courseDescription ||
+        !whatYouWillLearn ||
+        !category ||
+        !price,
+      !courseDuration)
     ) {
       return res.status(400).json({
         success: false,
@@ -78,6 +80,7 @@ const createCourse = async (req, res) => {
       instructor: Instructor._id,
       whatYouWillLearn,
       tags,
+      courseDuration,
     });
 
     // add new course in User instructor course List
@@ -113,109 +116,71 @@ const createCourse = async (req, res) => {
 
 const editCourse = async (req, res) => {
   try {
-    //config dotenv
-    dotenv.config({ path: ".env" });
+    const { courseId } = req.body;
+    const updates = req.body;
+    console.log("updates ---> ", updates);
+    const course = await Course.findById(courseId);
 
-    // get userId from req ,  it added in auth middleware
-    // matlab instructor course create karra he use phele log in kiye hoga , login karte waqt middlwear excecute hua hoga or usme hume req ke andar  decode send kiya tha
-    const userId = req.user.id;
-
-    // get img from file
-    const img = req.files.ImgFile;
-
-    // get data
-    const {
-      courseName,
-      courseDescription,
-      whatYouWillLearn,
-      category,
-      price,
-      tags,
-      courseId,
-    } = req.body;
-
-    // validate data
-    if (
-      !courseName ||
-      !courseDescription ||
-      !whatYouWillLearn ||
-      !category ||
-      !price ||
-      !courseId
-    ) {
-      return res.status(400).json({
-        success: false,
-        massage: "please fields are required",
-      });
+    if (!course) {
+      return res.status(404).json({ error: "Course not found" });
     }
 
-    // get Instructor
-    const Instructor = await User.findById(userId);
-
-    // validate instructor present or not
-    if (!Instructor) {
-      return res.status(400).json({
-        success: false,
-        massage: "Instructor in not found",
+    // If Thumbnail Image is found, update it
+    if (req.files) {
+      console.log("thumbnail update");
+      const thumbnail = req.files.thumbnailImage;
+      const options = {
+        folder: "Study Notion",
+      };
+      const thumbnailImage = await imgUploadToCloudinary(thumbnail, {
+        options,
       });
+      course.thumbnail = thumbnailImage.secure_url;
     }
 
-    // get category
-    const categoryDetails = await Category.findById(category);
-    // validate category present or not
-    if (!categoryDetails) {
-      return res.status(400).json({
-        success: false,
-        massage: "category in not found",
-      });
+    // Update only the fields that are present in the request body
+    for (const key in updates) {
+      if (updates.hasOwnProperty(key)) {
+        if (key === "tag" || key === "instructions") {
+          course[key] = JSON.parse(updates[key]);
+        } else {
+          course[key] = updates[key];
+        }
+      }
     }
 
-    // upload img on cloudinary storage
-    const thumbnailImg = await imgUploadToCloudinary(img, {
-      folder: process.env.FOLDER_NAME,
-    });
+    await course.save();
 
-    console.log(thumbnailImg);
+    const updatedCourse = await Course.findOne({
+      _id: courseId,
+    })
+      .populate({
+        path: "instructor",
+        populate: {
+          path: "additionalDetails",
+        },
+      })
+      .populate("category")
+      .populate("RatingAndReviews")
+      .populate({
+        path: "courseContent",
+        populate: {
+          path: "subSection",
+        },
+      })
+      .exec();
 
-    // create new course
-    const newCourse = await Course.findByIdAndUpdate(courseId, {
-      courseName,
-      courseDescription,
-      price,
-      thumbnail: thumbnailImg.secure_url,
-      category: categoryDetails._id,
-      instructor: Instructor._id,
-      whatYouWillLearn,
-      tags,
-    });
-
-    // add edited course in User instructor course List
-    await User.findByIdAndUpdate(
-      { _id: Instructor._id },
-      {
-        $push: { courses: newCourse._id },
-      },
-      { new: true }
-    );
-
-    // add edited course in category course List
-    await Category.findByIdAndUpdate(
-      { _id: categoryDetails._id },
-      {
-        $push: { course: newCourse._id },
-      },
-      { new: true }
-    );
-
-    // return res
-    return res.status(400).json({
+    res.json({
       success: true,
-      massage: "edit course successfully",
+      message: "Course updated successfully",
+      data: updatedCourse,
     });
   } catch (error) {
-    return res.status(400).json({
+    console.error(error);
+    res.status(500).json({
       success: false,
-      massage: "failed to edit course",
+      message: "Internal server error",
+      error: error.message,
     });
   }
 };
@@ -329,7 +294,10 @@ const getEnrolledCourses = async (req, res) => {
     const userId = req.user.id;
 
     // get user data and populate enrolled courses
-    const studentData = await User.findById(userId).populate("courses");
+    const studentData = await User.findById(userId).populate({
+      path: "courses",
+      populate: { path: "courseContent" },
+    });
 
     // check user student or not
     if (studentData.accountType !== "Student") {
@@ -341,10 +309,10 @@ const getEnrolledCourses = async (req, res) => {
 
     // return response
 
-    return res.status(400).json({
+    return res.status(200).json({
       success: true,
       massage: "enrolled course fetched successfully ",
-      studentData,
+      courses: studentData?.courses,
     });
   } catch (error) {
     console.log(error);

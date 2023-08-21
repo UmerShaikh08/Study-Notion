@@ -4,9 +4,7 @@
 
 html , body {
   overflow-x: hidden;
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+
 }
 
 
@@ -101,3 +99,25 @@ html , body {
     transform: rotate(360deg);
   }
 }
+
+
+/* slide bar */
+
+
+.wrapper {
+  border: none;
+  
+}
+
+.container {
+  background-color:#2C333F;
+  height: 8px;
+  border-radius: 9999px;
+}
+
+.barCompleted {
+height: 8px;
+background-color: red;
+}
+
+

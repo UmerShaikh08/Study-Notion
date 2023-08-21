@@ -13,8 +13,11 @@ import { clearItems } from "../../Storage/Slices/cartSlice";
 const generatePasswordToken = (email, setEmailSend) => {
   return async (dispatch) => {
     try {
+      // show loader
       dispatch(setLoading(true));
       console.log(email);
+
+      // call db for creating password token
       const response = await apiConnector(
         "POST",
         endpointes.RESETPASSTOKEN_API,
@@ -22,12 +25,15 @@ const generatePasswordToken = (email, setEmailSend) => {
       );
       console.log("Response---> ", response);
 
+      // check req
       if (!response.data.success) {
         throw new Error(response.error.massage);
       }
 
+      //  display success toast
       toast.success("reset password link send successfully");
       setEmailSend(true);
+
       dispatch(setLoading(false));
     } catch (error) {
       toast.error("failed send link");
@@ -41,18 +47,23 @@ const resetPassword = (data, setIsResetCompleted) => {
   console.log(data);
   return async (dispatch) => {
     try {
+      // show loader
       dispatch(setLoading(true));
+
+      // db call for reset password
       const response = await apiConnector(
         "POST",
         endpointes.RESET_PASSWORD_API,
         data
       );
 
+      //  check req
       if (!response.data.success) {
         dispatch(setLoading(false));
         throw new Error(response.data.message);
       }
 
+      //  display success toast
       console.log(" Reset password Response--->", response);
       toast.success("password reset successfully");
       setIsResetCompleted(true);
@@ -68,7 +79,10 @@ const resetPassword = (data, setIsResetCompleted) => {
 const login = (data, navigate) => {
   return async (dispatch) => {
     try {
+      // show loader
       dispatch(setLoading(true));
+
+      // call db for login
       const response = await apiConnector("POST", endpointes.LOGIN_API, data);
       if (!response.data.success) {
         dispatch(setLoading(false));
@@ -78,6 +92,7 @@ const login = (data, navigate) => {
       console.log(response);
       toast.success("successfully login");
 
+      // set user
       dispatch(setToken(response.data.token));
       dispatch(setUser(response.data.user));
       dispatch(setLoading(false));

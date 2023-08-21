@@ -13,8 +13,13 @@ export const profile = {
   UPDATE_USER_DETAILS: BASE_URL + "/profile/updateProfile",
   UPDATE_PASSWORD: BASE_URL + "/profile/updatePassword",
   UPALOAD_IMG: BASE_URL + "/profile/updateProfileImg",
+  DELETE_ACCOUNT: BASE_URL + "/profile/deleteAccount",
 };
 
 export const contactUsEndPointes = {
   CONTACT_US: BASE_URL + "/Contact/contact-us",
+};
+
+export const course = {
+  GET_ENROLLED_COURSES: BASE_URL + "/course/getEnrolledCourse",
 };

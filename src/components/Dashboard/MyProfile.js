@@ -12,7 +12,7 @@ const MyProfile = () => {
   const personalDetails = [
     {
       title: "First Name",
-      name: user.firstName ? user.firstName : "Add First Name",
+      name: user?.firstName ? user?.firstName : "Add First Name",
     },
     {
       title: "Last Name",
