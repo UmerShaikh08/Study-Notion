@@ -15,6 +15,9 @@ import Dashboard from "./pages/Dashboard";
 import Setting from "./components/Dashboard/setting/Setting";
 import PrivateRoute from "./components/auth/PrivateRoute";
 import EnrolledCourse from "./components/Dashboard/EnrolledCourse";
+import Cart from "./components/Dashboard/cart/Cart";
+import StudentRoute from "./components/auth/StudentRoute";
+import InstructorRoute from "./components/auth/InstructorRoute";
 
 function App() {
   return (
@@ -79,14 +82,23 @@ function App() {
         >
           {" "}
           <Route path="/dashboard/my-profile" element=<MyProfile /> />
-          <Route path="/dashboard/logout" element=<Logout /> />
-          <Route path="/dashboard/purchase-history" element=<Logout /> />
-          <Route path="/dashboard/cart" element=<Logout /> />
           <Route path="/dashboard/setting" element=<Setting /> />
+          <Route path="/dashboard/logout" element=<Logout /> />
+          {/* Student routes */}
+          <Route
+            path="/dashboard/cart"
+            element=<StudentRoute>
+              {" "}
+              <Cart />{" "}
+            </StudentRoute>
+          />
           <Route
             path="/dashboard/enrolled-courses"
-            element=<EnrolledCourse />
+            element=<StudentRoute>
+              <EnrolledCourse />
+            </StudentRoute>
           />
+          {/* instructor routes */}
         </Route>
       </Routes>
     </div>

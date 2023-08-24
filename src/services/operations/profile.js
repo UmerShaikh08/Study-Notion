@@ -3,7 +3,7 @@ import { setLoading, setUser } from "../../Storage/Slices/profileSlice";
 import apiConnector from "../apiConnector";
 import { course, profile } from "../apis";
 import { setToken } from "../../Storage/Slices/authSlice";
-import { clearItems } from "../../Storage/Slices/cartSlice";
+import { clearCart } from "../../Storage/Slices/cartSlice";
 
 export const deleteAccount = (token, nevigate) => {
   return async (dispatch) => {
@@ -31,7 +31,7 @@ export const deleteAccount = (token, nevigate) => {
       // remove all details of user from broweser
       dispatch(setToken(null));
       dispatch(setUser(null));
-      dispatch(clearItems());
+      dispatch(clearCart());
       localStorage.removeItem("token");
       localStorage.removeItem("user");
       toast.success("Account Deleted Successfully");

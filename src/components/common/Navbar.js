@@ -84,7 +84,7 @@ const Navbar = () => {
       </div>
       <div className="flex flex-row gap-5">
         {user && user.accountType !== "Instructor" ? (
-          <Link to={"dashbord/cart"} className="relative flex">
+          <Link to={"dashboard/cart"} className="relative flex">
             <AiOutlineShoppingCart size={25} className="text-richblack-200 " />
             {totalItems > 0 ? (
               <div className=" absolute right-[-30%] bottom-[-20%] w-[1.3rem] h-[1.3rem] rounded-full bg-richblack-700 text-sm text-yellow-100 text-center ">
@@ -98,11 +98,12 @@ const Navbar = () => {
         ) : (
           ""
         )}
-
+        {/* user  login */}
         {token !== null ? (
           <ProfileDropdown />
         ) : (
           <div className="text-richblack-100 flex flex-row gap-4 ">
+            {" "}
             <Link to={"/login"}>
               <div className="border border-richblack-700 bg-richblack-800 py-2 px-3 rounded-lg transition-all duration-200 hover:scale-90 ">
                 Log in

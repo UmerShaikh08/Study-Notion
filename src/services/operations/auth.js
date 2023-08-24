@@ -8,7 +8,7 @@ import {
 } from "../../Storage/Slices/authSlice";
 import { toast } from "react-hot-toast";
 import { setUser } from "../../Storage/Slices/profileSlice";
-import { clearItems } from "../../Storage/Slices/cartSlice";
+import { clearCart } from "../../Storage/Slices/cartSlice";
 
 const generatePasswordToken = (email, setEmailSend) => {
   return async (dispatch) => {
@@ -165,7 +165,7 @@ export function logout(navigate) {
   return (dispatch) => {
     dispatch(setToken(null));
     dispatch(setUser(null));
-    dispatch(clearItems());
+    dispatch(clearCart());
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     toast.success("Logged Out");

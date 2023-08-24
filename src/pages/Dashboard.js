@@ -3,7 +3,6 @@ import Sidebar from "../components/Dashboard/Sidebar";
 import { Outlet } from "react-router-dom";
 import Loader from "../components/common/Loader";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoading } from "../Storage/Slices/profileSlice";
 
 const Dashboard = () => {
   const { loading: profileLoading } = useSelector((store) => store.profile);
