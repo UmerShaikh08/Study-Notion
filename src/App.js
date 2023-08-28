@@ -18,6 +18,7 @@ import EnrolledCourse from "./components/Dashboard/EnrolledCourse";
 import Cart from "./components/Dashboard/cart/Cart";
 import StudentRoute from "./components/auth/StudentRoute";
 import InstructorRoute from "./components/auth/InstructorRoute";
+import AddCourse from "./components/Dashboard/New Course/AddCourse";
 
 function App() {
   return (
@@ -99,6 +100,12 @@ function App() {
             </StudentRoute>
           />
           {/* instructor routes */}
+          <Route
+            path="/dashboard/add-course"
+            element=<InstructorRoute>
+              <AddCourse />
+            </InstructorRoute>
+          />
         </Route>
       </Routes>
     </div>

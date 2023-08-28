@@ -5,7 +5,7 @@ import { REACT_APP_INSTRUCTOR } from "../../data";
 
 const InstructorRoute = ({ children }) => {
   const { user } = useSelector((store) => store.profile);
-  console.log(user);
+
   if (user.accountType === REACT_APP_INSTRUCTOR) {
     return children;
   } else {

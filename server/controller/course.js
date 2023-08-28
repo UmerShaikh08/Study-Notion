@@ -15,7 +15,7 @@ const createCourse = async (req, res) => {
 
     // get img from file
     const img = req.files.ImgFile;
-
+    console.log(req.body);
     // get data
     const {
       courseName,
@@ -24,17 +24,18 @@ const createCourse = async (req, res) => {
       category,
       price,
       tags,
-      courseDuration,
+      courseDuration = "0",
+      requirements,
     } = req.body;
 
     // validate data
     if (
-      (!courseName ||
-        !courseDescription ||
-        !whatYouWillLearn ||
-        !category ||
-        !price,
-      !courseDuration)
+      !courseName ||
+      !courseDescription ||
+      !whatYouWillLearn ||
+      !category ||
+      !price ||
+      !requirements
     ) {
       return res.status(400).json({
         success: false,
@@ -81,6 +82,7 @@ const createCourse = async (req, res) => {
       whatYouWillLearn,
       tags,
       courseDuration,
+      requirements,
     });
 
     // add new course in User instructor course List
@@ -102,11 +104,12 @@ const createCourse = async (req, res) => {
     );
 
     // return res
-    return res.status(400).json({
+    return res.status(200).json({
       success: true,
       massage: "new course created successfully",
     });
   } catch (error) {
+    console.log(error);
     return res.status(400).json({
       success: false,
       massage: "failed to create course",

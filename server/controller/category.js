@@ -45,6 +45,7 @@ const showAllCategories = async (req, res) => {
     // return res
     return res.status(200).json({
       success: true,
+      data: allCategories,
       massage: "all categories get successfully",
     });
   } catch (error) {

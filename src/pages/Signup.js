@@ -1,6 +1,5 @@
 import React from "react";
-import { CTAButton } from "../components/home/Button";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import signupImg from "../assets/Images/signup.webp";
 import frame from "../assets/Images/frame.png";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
@@ -9,7 +8,7 @@ import { useState } from "react";
 import { REACT_APP_INSTRUCTOR, REACT_APP_STUDENT } from "../data";
 import { sendOtp } from "../services/operations/auth";
 import { useDispatch, useSelector } from "react-redux";
-import authSlice, { setLoading, setSignup } from "../Storage/Slices/authSlice";
+import { setSignup } from "../Storage/Slices/authSlice";
 import Loader from "../components/common/Loader";
 import { toast } from "react-hot-toast";
 import { isStrongPassword } from "../custom hooks/useStrongPassoword";

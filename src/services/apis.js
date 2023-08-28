@@ -21,5 +21,11 @@ export const contactUsEndPointes = {
 };
 
 export const course = {
+  CREATE_COURSE: BASE_URL + "/course/createCourse",
   GET_ENROLLED_COURSES: BASE_URL + "/course/getEnrolledCourse",
+  EDIT_COURSE: BASE_URL + "/course/editCourse",
+};
+
+export const category = {
+  GET_ALL_CATEGORIES: BASE_URL + "/course/showAllCategories",
 };
