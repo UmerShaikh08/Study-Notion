@@ -1,10 +1,5 @@
-import { useState } from "react";
-
 const useNewFormData = () => {
-  const [formData, setFormData] = useState(new FormData());
-
-  const updateFormData = ({ data }) => {
-    console.log("i am in use new form hook -->", data);
+  const updateFormData = async ({ data }) => {
     const updatedFormData = new FormData();
     updatedFormData.append("courseName", data.courseName);
     updatedFormData.append("courseDescription", data.courseDescription);
@@ -15,11 +10,10 @@ const useNewFormData = () => {
     updatedFormData.append("whatYouWillLearn", data.whatYouWillLearn);
     updatedFormData.append("requirements", JSON.stringify(data.requirements));
 
-    setFormData(updatedFormData);
+    return updatedFormData;
   };
 
   return {
-    formData,
     updateFormData,
   };
 };

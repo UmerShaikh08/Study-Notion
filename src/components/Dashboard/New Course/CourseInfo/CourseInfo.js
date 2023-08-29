@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
 import Requirement from "./Requirement";
 import { setCourse, setStep } from "../../../../Storage/Slices/courseSlice";
-import useOldFormData from "./hooks/useOldFormData";
+import useEditFormData from "./hooks/useEditFormData";
 import { createCourse } from "../../../../services/operations/courses";
 import useNewFormData from "./hooks/useNewFormData";
 
@@ -21,8 +21,8 @@ const CourseInfo = () => {
   const { course, editCourse } = useSelector((store) => store.course);
   const { token } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
-  // const OldFormdata = useOldFormData({}, {});
-  const { formData, updateFormData } = useNewFormData();
+  const { updateFormData } = useNewFormData();
+  const { editFormData } = useEditFormData();
 
   const {
     register,
@@ -40,7 +40,7 @@ const CourseInfo = () => {
       setLoading(true);
 
       const response = await getAllCategories();
-      console.log(response);
+
       if (response.length > 0) setCategory(response);
 
       setLoading(false);
@@ -89,8 +89,8 @@ const CourseInfo = () => {
       const isForm = isFromUpdated(values);
 
       if (isForm) {
-        // const formData = OldFormdata(values, data);
-        const result = await dispatch(editCourse(formData, token));
+        const FormData = editFormData({ data, values });
+        const result = await dispatch(editCourse(FormData, token));
         if (result) {
           setStep(2);
           dispatch(setCourse(result));
@@ -101,13 +101,10 @@ const CourseInfo = () => {
       return;
     }
 
-    await updateFormData({
-      ...formData,
-      data,
-    });
-    console.log(formData.getAll("courseName"));
+    //  it return FromData which have all details about new course
+    const newCourseFormData = await updateFormData({ data });
+    const result = await createCourse(newCourseFormData, token);
 
-    const result = await createCourse(formData, token);
     if (result) {
       setStep(2);
       dispatch(setCourse(result));
@@ -179,8 +176,9 @@ const CourseInfo = () => {
         <select
           id="category"
           name="category"
+          defaultValue={""}
           className=" w-full bg-richblack-700 h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
-          {...register("category")}
+          {...register("category", { required: true })}
         >
           <option disabled value={""}>
             Choose a Category
