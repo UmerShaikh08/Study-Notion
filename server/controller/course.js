@@ -26,6 +26,7 @@ const createCourse = async (req, res) => {
       tags,
       courseDuration = "0",
       requirements,
+      status,
     } = req.body;
 
     // validate data
@@ -35,13 +36,16 @@ const createCourse = async (req, res) => {
       !whatYouWillLearn ||
       !category ||
       !price ||
-      !requirements
+      !requirements ||
+      !status
     ) {
       return res.status(400).json({
         success: false,
         massage: "please fields are required",
       });
     }
+
+    const requirementsArray = JSON.parse(requirements);
 
     // get Instructor
     const Instructor = await User.findById(userId);
@@ -82,7 +86,8 @@ const createCourse = async (req, res) => {
       whatYouWillLearn,
       tags,
       courseDuration,
-      requirements,
+      requirements: requirementsArray,
+      status,
     });
 
     // add new course in User instructor course List
@@ -107,6 +112,7 @@ const createCourse = async (req, res) => {
     return res.status(200).json({
       success: true,
       massage: "new course created successfully",
+      data: newCourse,
     });
   } catch (error) {
     console.log(error);

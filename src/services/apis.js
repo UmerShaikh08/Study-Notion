@@ -26,6 +26,12 @@ export const course = {
   EDIT_COURSE: BASE_URL + "/course/editCourse",
 };
 
+export const section = {
+  CREATE_SECTION: BASE_URL + "/course/createSection",
+  UPDATE_SECTION: BASE_URL + "/course/updateSection",
+  DELETE_SECTION: BASE_URL + "/course/deleteSection",
+};
+
 export const category = {
   GET_ALL_CATEGORIES: BASE_URL + "/course/showAllCategories",
 };

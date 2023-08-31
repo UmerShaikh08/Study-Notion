@@ -3,7 +3,7 @@ import OTPInput from "react-otp-input";
 import { Link, useNavigate } from "react-router-dom";
 import { BsArrowLeft } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-import { setSignup } from "../Storage/Slices/authSlice";
+import { setSignup } from "../Redux/Slices/authSlice";
 import { singup } from "../services/operations/auth";
 import Loader from "../components/common/Loader";
 

@@ -1,3 +1,5 @@
+import { COURSE_STATUS } from "../../../../../utils/constants";
+
 const useNewFormData = () => {
   const updateFormData = async ({ data }) => {
     const updatedFormData = new FormData();
@@ -9,6 +11,7 @@ const useNewFormData = () => {
     updatedFormData.append("ImgFile", data.thumbnail);
     updatedFormData.append("whatYouWillLearn", data.whatYouWillLearn);
     updatedFormData.append("requirements", JSON.stringify(data.requirements));
+    updatedFormData.append("status", COURSE_STATUS.DRAFT);
 
     return updatedFormData;
   };

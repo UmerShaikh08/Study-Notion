@@ -2,27 +2,28 @@ import { toast } from "react-hot-toast";
 import apiConnector from "../apiConnector";
 import { course } from "../apis";
 
-const editCourse = async (data, token) => {
-  console.log(data);
-  let response;
+const EditCourse = async (data, token) => {
   try {
-    response = await apiConnector("POST", course.EDIT_COURSE, data, {
+    const response = await apiConnector("POST", course.EDIT_COURSE, data, {
+      "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${token}`,
     });
-
+    console.log("jo");
     if (!response.data.success) {
       toast.error("failed to edit course");
       throw new Error("failed to edit course");
     }
 
     toast.success("edited course successfully");
+    const ans = response?.data?.data;
+    console.log("response ---> ", response);
+    return ans;
   } catch (error) {
     console.log(error);
     toast.error("failed to edit course");
   }
-
-  return response?.data?.data;
 };
+
 const createCourse = async (data, token) => {
   const toastId = toast.loading("loading...");
   console.log(data);
@@ -48,4 +49,4 @@ const createCourse = async (data, token) => {
   return response?.data?.data;
 };
 
-export { editCourse, createCourse };
+export { EditCourse, createCourse };

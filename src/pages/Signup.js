@@ -8,7 +8,7 @@ import { useState } from "react";
 import { REACT_APP_INSTRUCTOR, REACT_APP_STUDENT } from "../data";
 import { sendOtp } from "../services/operations/auth";
 import { useDispatch, useSelector } from "react-redux";
-import { setSignup } from "../Storage/Slices/authSlice";
+import { setSignup } from "../Redux/Slices/authSlice";
 import Loader from "../components/common/Loader";
 import { toast } from "react-hot-toast";
 import { isStrongPassword } from "../custom hooks/useStrongPassoword";

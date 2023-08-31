@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateProfileImg } from "../../../services/operations/profile";
-import { setLoading } from "../../../Storage/Slices/profileSlice";
+import { setLoading } from "../../../Redux/Slices/profileSlice";
 import { AiOutlineUpload } from "react-icons/ai";
 
 const ProfileImg = () => {

@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { RxCross2 } from "react-icons/rx";
+import { useSelector } from "react-redux";
 
-const Tags = ({ register, setValue, name }) => {
+const Tags = ({ register, setValue, name, errors }) => {
+  const { course } = useSelector((store) => store.course);
   const [tag, setTag] = useState("");
-  const [tagList, setTagList] = useState([]);
+  const [tagList, setTagList] = useState(
+    course?.tags?.length > 0 ? course?.tags : []
+  );
 
   // tag handlers
   const handleTagList = (e) => {
@@ -63,6 +67,11 @@ const Tags = ({ register, setValue, name }) => {
           handleTagList(e);
         }}
       />
+      {errors.tags && (
+        <span className="ml-2 text-xs tracking-wide text-yellow-100">
+          Course Tags are required
+        </span>
+      )}
     </div>
   );
 };

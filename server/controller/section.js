@@ -38,6 +38,7 @@ const createSection = async (req, res) => {
     return res.status(200).json({
       success: true,
       massag: "new section created successfully",
+      course: updateCourse,
     });
   } catch (error) {
     console.log(error);
@@ -50,9 +51,9 @@ const createSection = async (req, res) => {
 
 const updateSection = async (req, res) => {
   try {
-    const { sectionName, sectionId } = req.body;
-
-    if (!sectionName || !sectionId) {
+    const { sectionName, sectionId, courseId } = req.body;
+    console.log(req.body);
+    if (!sectionName || !sectionId || !courseId) {
       return res.status(400).json({
         success: false,
         massag: "section name required",
@@ -67,7 +68,30 @@ const updateSection = async (req, res) => {
       { new: true }
     );
 
-    return res.status(400).json({
+    if (!updateSection) {
+      return res.status(400).json({
+        success: false,
+        massag: "section not updated",
+      });
+    }
+
+    const course = await Course.findById(courseId)
+      .populate({
+        path: "courseContent",
+        populate: {
+          path: "subSection",
+        },
+      })
+      .exec();
+    if (!course) {
+      return res.status(400).json({
+        success: false,
+        massag: "course not found",
+      });
+    }
+
+    return res.status(200).json({
+      course,
       success: true,
       massag: "section updated successfully",
     });
@@ -82,6 +106,7 @@ const updateSection = async (req, res) => {
 const deleteSection = async (req, res) => {
   try {
     const { courseId, sectionId } = req.body;
+    console.log(req.body);
 
     if (!sectionId || !courseId) {
       return res.status(400).json({
@@ -97,12 +122,19 @@ const deleteSection = async (req, res) => {
       { _id: courseId },
       { $pull: { courseContent: sectionId } },
       { new: true }
-    );
+    )
+      .populate({
+        path: "courseContent",
+        populate: {
+          path: "subSection",
+        },
+      })
+      .exec();
 
     return res.status(200).json({
       success: true,
       massag: "section successfully deleted",
-      updateCourse,
+      course: updateCourse,
     });
   } catch (error) {
     console.log(error);

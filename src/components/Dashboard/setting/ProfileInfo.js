@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { updateProfile } from "../../../services/operations/profile";
 import { useNavigate } from "react-router-dom";
-import { setUser } from "../../../Storage/Slices/profileSlice";
+import { setUser } from "../../../Redux/Slices/profileSlice";
 import Loader from "../../common/Loader";
 
 const ProfileInfo = () => {

@@ -1,14 +1,10 @@
 import axios from "axios";
 import apiConnector from "../apiConnector";
 import { endpointes } from "../apis";
-import {
-  setLoading,
-  setSignup,
-  setToken,
-} from "../../Storage/Slices/authSlice";
+import { setLoading, setSignup, setToken } from "../../Redux/Slices/authSlice";
 import { toast } from "react-hot-toast";
-import { setUser } from "../../Storage/Slices/profileSlice";
-import { clearCart } from "../../Storage/Slices/cartSlice";
+import { setUser } from "../../Redux/Slices/profileSlice";
+import { clearCart } from "../../Redux/Slices/cartSlice";
 
 const generatePasswordToken = (email, setEmailSend) => {
   return async (dispatch) => {

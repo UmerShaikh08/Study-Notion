@@ -9,9 +9,12 @@ import { getAllCategories } from "../../../../services/operations/category";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
 import Requirement from "./Requirement";
-import { setCourse, setStep } from "../../../../Storage/Slices/courseSlice";
+import { setCourse, setStep } from "../../../../Redux/Slices/courseSlice";
 import useEditFormData from "./hooks/useEditFormData";
-import { createCourse } from "../../../../services/operations/courses";
+import {
+  EditCourse,
+  createCourse,
+} from "../../../../services/operations/courses";
 import useNewFormData from "./hooks/useNewFormData";
 
 const CourseInfo = () => {
@@ -59,6 +62,7 @@ const CourseInfo = () => {
     if (editCourse) {
       setValue("courseName", course.courseName);
       setValue("courseDescription", course.courseDescription);
+      setValue("category", course.category);
       setValue("price", course.price);
       setValue("tags", course.tags);
       setValue("thumbnail", course.thumbnail);
@@ -89,10 +93,13 @@ const CourseInfo = () => {
       const isForm = isFromUpdated(values);
 
       if (isForm) {
-        const FormData = editFormData({ data, values });
-        const result = await dispatch(editCourse(FormData, token));
+        const formData = await editFormData({ data, values });
+        console.log("jlsdkl");
+        console.log("course name before call --> ", formData.getAll("price"));
+        const result = await EditCourse(formData, token);
+        console.log(result);
         if (result) {
-          setStep(2);
+          dispatch(setStep(2));
           dispatch(setCourse(result));
         }
       } else {
@@ -103,10 +110,15 @@ const CourseInfo = () => {
 
     //  it return FromData which have all details about new course
     const newCourseFormData = await updateFormData({ data });
-    const result = await createCourse(newCourseFormData, token);
+    console.log(
+      "course name before call --> ",
+      newCourseFormData.getAll("price")
+    );
 
+    const result = await createCourse(newCourseFormData, token);
+    console.log("result --->", result);
     if (result) {
-      setStep(2);
+      dispatch(setStep(2));
       dispatch(setCourse(result));
     }
   };
@@ -122,31 +134,37 @@ const CourseInfo = () => {
           Course Title <span className="text-red-200">*</span>
         </label>
         <input
-          required
           type="text"
           id="courseName"
           name="courseName"
-          {...register("courseName")}
+          {...register("courseName", { required: true })}
           placeholder="Enter course title "
           className=" w-full bg-richblack-700 h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
         />
+        {errors.courseName && (
+          <span className="ml-2 text-xs tracking-wide text-yellow-100">
+            Course Name is required
+          </span>
+        )}
       </div>
-
       {/* description */}
       <div className="flex flex-col w-full gap-2">
         <label htmlFor="courseDescription  " className="text-sm">
           Course Short Description <span className="text-red-200">*</span>
         </label>
         <textarea
-          required
           id="courseDescription"
           name="courseDescription"
-          {...register("courseDescription")}
+          {...register("courseDescription", { required: true })}
           placeholder="Enter Description "
           className=" pt-3 h-[10rem] w-full bg-richblack-700  rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700 placeholder:text-start "
         />
+        {errors.courseDescription && (
+          <span className="ml-2 text-xs tracking-wide text-yellow-100">
+            Course Description is required
+          </span>
+        )}
       </div>
-
       {/* price */}
       <div className=" relative flex flex-col w-full gap-2">
         <label htmlFor="price  " className="text-sm">
@@ -154,11 +172,10 @@ const CourseInfo = () => {
         </label>
 
         <input
-          required
           type="text"
           id="price"
-          name="coursePrice"
-          {...register("price", { valueAsNumber: true })}
+          name="price"
+          {...register("price", { required: true, valueAsNumber: true })}
           placeholder="Enter course Price "
           className=" w-full bg-richblack-700 h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700 pl-10"
         />
@@ -166,8 +183,12 @@ const CourseInfo = () => {
           size={30}
           className="absolute top-[50%] text-richblack-500 left-[1%] "
         />
+        {errors.price && (
+          <span className="ml-2 text-xs tracking-wide text-yellow-100">
+            Course Price is required
+          </span>
+        )}
       </div>
-
       {/* course category */}
       <div className="flex w-full flex-col">
         <label htmlFor="category">
@@ -192,11 +213,19 @@ const CourseInfo = () => {
             );
           })}
         </select>
+        {errors.category && (
+          <span className="ml-2 text-xs tracking-wide text-yellow-100">
+            Course Category is required
+          </span>
+        )}
       </div>
-
       {/* tags */}
-      <Tags name={"tags"} register={register} setValue={setValue} />
-
+      <Tags
+        name={"tags"}
+        register={register}
+        setValue={setValue}
+        errors={errors}
+      />
       {/* upload thumbnail */}
       <Upload
         name="thumbnail"
@@ -206,28 +235,32 @@ const CourseInfo = () => {
         errors={errors}
         editData={null}
       />
+
       {/* Benefits of the course  */}
       <div className="flex flex-col w-full gap-2">
         <label htmlFor="whatYouWillLearn  " className="text-sm">
-          Benefits of the course *<span className="text-red-200">*</span>
+          Benefits of the course <span className="text-red-200">*</span>
         </label>
         <textarea
-          required
           id="whatYouWillLearn"
           name="whatYouWillLearn"
-          {...register("whatYouWillLearn")}
+          {...register("whatYouWillLearn", { required: true })}
           placeholder="Enter Benefits of the course "
           className="pt-3  h-[10rem] w-full bg-richblack-700  rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700 placeholder:text-start "
         />
+        {errors.whatYouWillLearn && (
+          <span className="ml-2 text-xs tracking-wide text-yellow-100">
+            Course Benefits are required
+          </span>
+        )}
       </div>
-
       {/* requirements or instructions */}
       <Requirement
         name="requirements"
         register={register}
         setValue={setValue}
+        errors={errors}
       />
-
       <div className="flex flex-row justify-end gap-4">
         {
           <button

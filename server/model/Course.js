@@ -31,7 +31,7 @@ const CourseSchema = new Schema({
   tags: {
     type: [String],
   },
-  WhatYouWeLearn: {
+  whatYouWillLearn: {
     type: String,
   },
   // section
@@ -58,6 +58,9 @@ const CourseSchema = new Schema({
       required: true,
     },
   ],
+  requirements: {
+    type: [],
+  },
   status: {
     type: String,
     enum: ["Draft", "Published"],

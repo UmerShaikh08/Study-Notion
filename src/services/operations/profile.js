@@ -1,9 +1,9 @@
 import { toast } from "react-hot-toast";
-import { setLoading, setUser } from "../../Storage/Slices/profileSlice";
+import { setLoading, setUser } from "../../Redux/Slices/profileSlice";
 import apiConnector from "../apiConnector";
 import { course, profile } from "../apis";
-import { setToken } from "../../Storage/Slices/authSlice";
-import { clearCart } from "../../Storage/Slices/cartSlice";
+import { setToken } from "../../Redux/Slices/authSlice";
+import { clearCart } from "../../Redux/Slices/cartSlice";
 
 export const deleteAccount = (token, nevigate) => {
   return async (dispatch) => {

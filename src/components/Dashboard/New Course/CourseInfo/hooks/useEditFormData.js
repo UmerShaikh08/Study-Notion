@@ -7,25 +7,28 @@ const useEditFormData = () => {
     const updatedFormData = new FormData();
 
     updatedFormData.append("courseId", course?._id);
-    if (course?.courseName !== values?.coursetitle)
-      updatedFormData.append("courseName", data?.coursetitle);
+    if (course?.courseName !== values?.courseName)
+      updatedFormData.append("courseName", data?.courseName);
 
     if (course?.courseDescription !== values?.courseDescription)
       updatedFormData.append("courseDescription", data?.courseDescription);
 
+    if (course?.category !== values?.category)
+      updatedFormData.append("price", data?.category);
+
     if (course?.price !== values?.price)
       updatedFormData.append("price", data?.price);
 
-    if (course?.tags !== values?.courseTag)
-      updatedFormData.append("tags", data?.courseTag);
+    if (course?.tags !== values?.tags)
+      updatedFormData.append("tags", data?.tags);
 
-    if (course?.thumbnail !== values?.courseImage)
-      updatedFormData.append("thumbnail", data?.courseImage);
+    if (course?.thumbnail !== values?.thumbnail)
+      updatedFormData.append("thumbnail", data?.thumbnail);
 
-    if (course?.whatYouWillLearn !== values?.courseBenefits)
-      updatedFormData.append("whatYouWillLearn", data?.courseBenefits);
+    if (course?.whatYouWillLearn !== values?.whatYouWillLearn)
+      updatedFormData.append("whatYouWillLearn", data?.whatYouWillLearn);
 
-    if (course?.requirements.toString() !== values?.requirements.toString())
+    if (course?.requirements?.toString() !== values?.requirements?.toString())
       updatedFormData.append(
         "requirements",
         JSON.stringify(data?.requirements)

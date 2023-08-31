@@ -2,8 +2,8 @@ import React, { Fragment } from "react";
 
 import { useSelector } from "react-redux";
 import { AiOutlineCheck } from "react-icons/ai";
-import CourseBuilder from "./CourseBuilder";
 import CourseInfo from "./CourseInfo/CourseInfo";
+import CourseBuilder from "./course builder/CourseBuilder";
 
 const AddCourse = () => {
   const { step } = useSelector((store) => store.course);

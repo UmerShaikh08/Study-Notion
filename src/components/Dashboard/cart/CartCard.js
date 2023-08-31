@@ -2,7 +2,7 @@ import React from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaStar } from "react-icons/fa";
 import { useDispatch } from "react-redux";
-import { removeItemFromCart } from "../../../Storage/Slices/cartSlice";
+import { removeItemFromCart } from "../../../Redux/Slices/cartSlice";
 import ReactStars from "react-rating-stars-component";
 
 const CartCard = (course) => {

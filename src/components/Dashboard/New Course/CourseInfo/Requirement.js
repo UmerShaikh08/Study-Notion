@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
-const Requirement = ({ register, setValue, name }) => {
+const Requirement = ({ register, setValue, name, errors }) => {
+  const { course } = useSelector((store) => store.course);
   const [requirements, setRequirements] = useState("");
-  const [requirementList, setRequirementsList] = useState([]);
+  const [requirementList, setRequirementsList] = useState(
+    course?.requirements?.length > 0 ? course?.requirements : []
+  );
 
   // requirements handler
   const handleRequirementList = (e) => {
@@ -66,6 +70,11 @@ const Requirement = ({ register, setValue, name }) => {
             </div>
           ))}
         </ul>
+      )}
+      {errors[name] && (
+        <span className="ml-2 text-xs tracking-wide text-yellow-100">
+          Course Benefits are required
+        </span>
       )}
     </div>
   );
