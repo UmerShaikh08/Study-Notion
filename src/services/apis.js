@@ -32,6 +32,12 @@ export const section = {
   DELETE_SECTION: BASE_URL + "/course/deleteSection",
 };
 
+export const subsection = {
+  CREATE_SUBSECTION: BASE_URL + "/course/createSubSection",
+  DELETE_SUBSECTION: BASE_URL + "/course/deleteSubSection",
+  UPDATE_SUBSECTION: BASE_URL + "/course/updatSubSection",
+};
+
 export const category = {
   GET_ALL_CATEGORIES: BASE_URL + "/course/showAllCategories",
 };

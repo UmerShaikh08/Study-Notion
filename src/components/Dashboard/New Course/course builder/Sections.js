@@ -2,13 +2,18 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SubSections from "./SubSections";
 import { BiPlus } from "react-icons/bi";
-import { AiFillCaretDown, AiFillCaretRight } from "react-icons/ai";
-import { MdEdit } from "react-icons/md";
+import { FaFolder } from "react-icons/fa";
+import {
+  AiFillCaretDown,
+  AiFillCaretRight,
+  AiFillFolderOpen,
+} from "react-icons/ai";
+import { MdEdit, MdOndemandVideo } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { RxDropdownMenu } from "react-icons/rx";
 import { deleteSection } from "../../../../services/operations/section";
 import { setCourse } from "../../../../Redux/Slices/courseSlice";
 import ConfirmationModal from "../../../common/ConfirmationModal";
+import SubsetionModal from "./SubsetionModal";
 
 const Sections = ({ section, handleEditSection }) => {
   const { course } = useSelector((store) => store.course);
@@ -16,9 +21,11 @@ const Sections = ({ section, handleEditSection }) => {
 
   const [showSubsection, setShowSubsection] = useState(false);
   const [confirmationModal, setConfirmationModal] = useState(null);
+  const [addSubsection, setAddSubsection] = useState(null);
+
   const dispatch = useDispatch();
 
-  const handleSubsection = (e) => {
+  const handleAddSubsection = (e) => {
     e.preventDefault();
   };
 
@@ -39,9 +46,9 @@ const Sections = ({ section, handleEditSection }) => {
 
   return (
     <>
-      <div className="flex flex-col bg-richblack-700 rounded-md p-3">
+      <div className="flex flex-col gap-3 bg-richblack-700 rounded-md p-3">
         <div>
-          <div className="text-richblack-300 font-semibold text-[1.2rem] flex flex-row justify-between items-center border-b-2 border-richblack-500 ">
+          <div className="text-richblack-300 font-semibold text-[1.2rem] flex flex-row justify-between gap-5 items-center border-b-2 border-richblack-500 ">
             <div
               className="flex flex-row items-center gap-2 mb-2 cursor-pointer"
               onClick={(e) => {
@@ -50,13 +57,21 @@ const Sections = ({ section, handleEditSection }) => {
               }}
             >
               {" "}
-              <RxDropdownMenu />
+              <div className="flex flex-row ">
+                {showSubsection ? <AiFillCaretDown /> : <AiFillCaretRight />}
+                {showSubsection ? (
+                  <AiFillFolderOpen size={24} className="text-[#2C73D2]" />
+                ) : (
+                  <FaFolder className="text-[#2C73D2]" />
+                )}
+              </div>
               <div> {section?.sectionName}</div>
             </div>
             <div className="flex flex-row items-center gap-2">
               <MdEdit
                 onClick={(e) => {
                   e.preventDefault();
+                  console.log("i am click on edit section button");
                   handleEditSection(section?._id, section?.sectionName);
                 }}
               />
@@ -86,25 +101,40 @@ const Sections = ({ section, handleEditSection }) => {
             </div>
           </div>
         </div>
-        {showSubsection && (
-          <div>
-            <SubSections />
-            <SubSections />
-            <SubSections />
-            <SubSections />
-            <SubSections />
-          </div>
-        )}
+        <div className="flex flex-col ">
+          {showSubsection &&
+            section?.subSection.length > 0 &&
+            section?.subSection.map((subsection) => (
+              <SubSections
+                key={subsection._id}
+                {...subsection}
+                sectionId={section._id}
+              />
+            ))}
+        </div>
         <div className="text-yellow-50 ">
           <button
-            onClick={handleSubsection}
+            onClick={(e) => {
+              e.preventDefault();
+              setAddSubsection(section._id);
+            }}
             className="flex flex-row items-center gap-1 "
           >
             <BiPlus size={30} />{" "}
-            <p className="text-lg font-semibold">Add Lecture</p>
+            <p className="text-md font-semibold">Add Lecture</p>
           </button>
         </div>
       </div>
+
+      {addSubsection && (
+        <SubsetionModal
+          modalData={addSubsection}
+          setModalData={setAddSubsection}
+          add={true}
+        />
+      )}
+
+      {/* this modal is for deleting section */}
       {confirmationModal && <ConfirmationModal modalData={confirmationModal} />}
     </>
   );

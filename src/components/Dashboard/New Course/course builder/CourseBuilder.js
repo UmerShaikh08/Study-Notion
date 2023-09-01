@@ -78,46 +78,49 @@ const CourseBuilder = () => {
   };
   console.log("course.courseContent.length-->", course.courseContent.length);
   return (
-    <form
-      onSubmit={handleSection}
-      className="bg-richblack-800 flex flex-col gap-10 p-5 rounded-md  text-richblack-5 border border-richblack-600"
-    >
-      <h1>Course Builder</h1>
+    <div className="bg-richblack-800 flex flex-col gap-10 p-5 rounded-md  text-richblack-5 border border-richblack-600">
+      <form
+        onSubmit={handleSection}
+        className="bg-richblack-800 flex flex-col gap-10 p-5 rounded-md  text-richblack-5 "
+      >
+        <h1>Course Builder</h1>
 
-      <div className="flex flex-col w-full gap-2">
-        <label htmlFor="sectionName  " className="text-sm text-richblack-5">
-          Section Name <span className="text-red-200">*</span>
-        </label>
-        <input
-          type="text"
-          id="sectionName"
-          name="sectionName"
-          {...register("sectionName", { required: true })}
-          placeholder="Enter course title "
-          className=" w-full bg-richblack-700 h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
-        />
-      </div>
+        <div className="flex flex-col w-full gap-2">
+          <label htmlFor="sectionName  " className="text-sm text-richblack-5">
+            Section Name <span className="text-red-200">*</span>
+          </label>
+          <input
+            type="text"
+            id="sectionName"
+            name="sectionName"
+            {...register("sectionName", { required: true })}
+            placeholder="Enter course title "
+            className=" w-full bg-richblack-700 h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
+          />
+        </div>
 
-      <div className="flex flex-row gap-4 ">
-        <button
-          type="submit"
-          className="flex flex-row items-center gap-3 bg-yellow-100 py-2 px-4 w-fit text-richblack-900 rounded-md font-medium transition-all duration-200 hover:scale-95"
-        >
-          <p>{editSection ? "Edit Section Name" : "Create Section"} </p>
-          <AiOutlinePlusCircle />
-        </button>
-        {editSection && (
+        <div className="flex flex-row gap-4 ">
           <button
-            onClick={(e) => {
-              e.preventDefault();
-              cancelEdit();
-            }}
-            className="text-richblack-300 border-b border-richblack-300 text-sm h-fit self-end"
+            type="submit"
+            className="flex flex-row items-center gap-3 bg-yellow-100 py-2 px-4 w-fit text-richblack-900 rounded-md font-medium transition-all duration-200 hover:scale-95"
           >
-            Cancel Edit
+            <p>{editSection ? "Edit Section Name" : "Create Section"} </p>
+            <AiOutlinePlusCircle />
           </button>
-        )}
-      </div>
+          {editSection && (
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                cancelEdit();
+              }}
+              className="text-richblack-300 border-b border-richblack-300 text-sm h-fit self-end"
+            >
+              Cancel Edit
+            </button>
+          )}
+        </div>
+      </form>
+
       {course.courseContent.length > 0 && (
         <NestedView handleEditSection={handleEditSection} />
       )}
@@ -136,7 +139,7 @@ const CourseBuilder = () => {
           Next <MdOutlineNavigateNext />
         </button>
       </div>
-    </form>
+    </div>
   );
 };
 

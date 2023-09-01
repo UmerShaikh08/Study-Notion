@@ -1,3 +1,4 @@
+import { Course } from "../model/Course.js";
 import { Section } from "../model/Section.js";
 import { SubSection } from "../model/SubSection.js";
 import { videoUploader } from "../utils/videoUploader.js";
@@ -6,11 +7,18 @@ import dotenv from "dotenv";
 const createSubsection = async (req, res) => {
   try {
     dotenv.config({ path: ".env" });
-    const { sectionId, title, timeDuration, description } = req.body;
-
+    const {
+      sectionId,
+      title,
+      timeDuration = "",
+      description,
+      courseId,
+    } = req.body;
+    console.log(req.body);
     const file = req.files.videoFile;
+    console.log(file);
 
-    if (!sectionId || !title || !timeDuration || !description) {
+    if (!sectionId || !title || !description || !courseId) {
       return res.status(400).json({
         success: false,
         massage: "all fields are required",
@@ -18,14 +26,20 @@ const createSubsection = async (req, res) => {
     }
 
     const videoDetails = await videoUploader(file, process.env.FOLDER_NAME);
-    console.log(videoDetails);
 
     const newSubsection = await SubSection.create({
       title,
       timeDuration,
       description,
-      videoUrl: videoDetails.secure_url,
+      videoUrl: videoDetails?.secure_url,
     });
+
+    if (!newSubsection) {
+      return res.status(400).json({
+        success: false,
+        massage: "Subsection is not created",
+      });
+    }
 
     const updateSection = await Section.findByIdAndUpdate(
       sectionId,
@@ -37,12 +51,37 @@ const createSubsection = async (req, res) => {
       .populate("subSection")
       .exec();
 
+    if (!updateSection) {
+      return res.status(400).json({
+        success: false,
+        massage: "section is not updated",
+      });
+    }
+
+    console.log("update section -->", updateSection);
+    const course = await Course.findById(courseId)
+      .populate({
+        path: "courseContent",
+        populate: {
+          path: "subSection",
+        },
+      })
+      .exec();
+
+    if (!course) {
+      return res.status(400).json({
+        success: false,
+        massage: "course not found ",
+      });
+    }
+
     return res.status(200).json({
       success: true,
-      updateSection,
+      course,
       massage: "subsection created successfully",
     });
   } catch (error) {
+    console.log(error);
     return res.status(400).json({
       success: false,
       massage: "error occured while creating subsection",
@@ -53,7 +92,8 @@ const createSubsection = async (req, res) => {
 const updateSubsection = async (req, res) => {
   try {
     dotenv.config({ path: ".env" });
-    const { title, timeDuration, description, subSectionId } = req.body;
+    const { title, timeDuration, description, subSectionId, courseId } =
+      req.body;
 
     const file = req.files.videoFile;
     console.log("file --->", file);
@@ -77,9 +117,25 @@ const updateSubsection = async (req, res) => {
       { new: true }
     );
 
+    const course = await Course.findById(courseId)
+      .populate({
+        path: "courseContent",
+        populate: {
+          path: "subSection",
+        },
+      })
+      .exec();
+
+    if (!course) {
+      return res.status(400).json({
+        success: false,
+        massage: "course not found ",
+      });
+    }
+
     return res.status(200).json({
       success: true,
-      newSubsection,
+      course,
       massage: "subsection updated successfully",
     });
   } catch (error) {
@@ -93,20 +149,55 @@ const updateSubsection = async (req, res) => {
 const deleteSubsection = async (req, res) => {
   try {
     dotenv.config({ path: ".env" });
-    const { subSectionId, sectionId } = req.body;
+    const { subSectionId, sectionId, courseId } = req.body;
 
-    if (!subSectionId || !sectionId) {
+    if (!subSectionId || !sectionId || !courseId) {
       return res.status(400).json({
         success: false,
         massage: "all fields are required",
       });
     }
 
-    const newSubsection = await SubSection.findOneAndDelete(subSectionId, {
+    // remove subsection id from section
+    await Section.findByIdAndUpdate(
+      { _id: sectionId },
+      {
+        $pull: {
+          subSection: subSectionId,
+        },
+      }
+    );
+
+    const deletedSubsection = await SubSection.findOneAndDelete(subSectionId, {
       new: true,
     });
 
+    console.log("deleted subsection -->>", deleteSubsection);
+    if (!deletedSubsection) {
+      return res.status(400).json({
+        success: false,
+        massage: "Subsection is not deleted",
+      });
+    }
+
+    const course = await Course.findById(courseId)
+      .populate({
+        path: "courseContent",
+        populate: {
+          path: "subSection",
+        },
+      })
+      .exec();
+
+    if (!course) {
+      return res.status(400).json({
+        success: false,
+        massage: "course not found ",
+      });
+    }
+
     return res.status(200).json({
+      course,
       success: true,
       massage: "subsection deleted successfully",
     });
