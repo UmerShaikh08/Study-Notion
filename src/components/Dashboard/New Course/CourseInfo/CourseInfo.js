@@ -1,21 +1,27 @@
-import React, { useRef, useState, useSyncExternalStore } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { HiOutlineCurrencyRupee } from "react-icons/hi";
 import { MdOutlineNavigateNext } from "react-icons/md";
 import Tags from "./Tags";
 import Upload from "../Upload";
 import { useEffect } from "react";
-import { getAllCategories } from "../../../../services/operations/category";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
 import Requirement from "./Requirement";
+
+// redux
 import { setCourse, setStep } from "../../../../Redux/Slices/courseSlice";
-import useEditFormData from "./hooks/useEditFormData";
+
+// backend calls
+import { getAllCategories } from "../../../../services/operations/category";
 import {
   EditCourse,
   createCourse,
 } from "../../../../services/operations/courses";
+
+// custom hooks
 import useNewFormData from "./hooks/useNewFormData";
+import useEditFormData from "./hooks/useEditFormData";
 
 const CourseInfo = () => {
   const [category, setCategory] = useState([]);
@@ -86,18 +92,15 @@ const CourseInfo = () => {
   };
 
   const submitData = async (data) => {
-    console.log(data);
-
     if (editCourse) {
       const values = getValues();
       const isForm = isFromUpdated(values);
 
       if (isForm) {
         const formData = await editFormData({ data, values });
-        console.log("jlsdkl");
-        console.log("course name before call --> ", formData.getAll("price"));
+
         const result = await EditCourse(formData, token);
-        console.log(result);
+
         if (result) {
           dispatch(setStep(2));
           dispatch(setCourse(result));
@@ -110,13 +113,9 @@ const CourseInfo = () => {
 
     //  it return FromData which have all details about new course
     const newCourseFormData = await updateFormData({ data });
-    console.log(
-      "course name before call --> ",
-      newCourseFormData.getAll("price")
-    );
 
     const result = await createCourse(newCourseFormData, token);
-    console.log("result --->", result);
+
     if (result) {
       dispatch(setStep(2));
       dispatch(setCourse(result));

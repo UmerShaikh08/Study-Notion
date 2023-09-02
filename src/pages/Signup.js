@@ -1,16 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Loader from "../components/common/Loader";
+import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
+
+// images and icons
 import signupImg from "../assets/Images/signup.webp";
 import frame from "../assets/Images/frame.png";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
-import { useForm } from "react-hook-form";
-import { useState } from "react";
+// env data
 import { REACT_APP_INSTRUCTOR, REACT_APP_STUDENT } from "../data";
+// backend call
 import { sendOtp } from "../services/operations/auth";
+// redux
 import { useDispatch, useSelector } from "react-redux";
 import { setSignup } from "../Redux/Slices/authSlice";
-import Loader from "../components/common/Loader";
-import { toast } from "react-hot-toast";
+
+// custom hook
 import { isStrongPassword } from "../custom hooks/useStrongPassoword";
 
 const Signup = () => {

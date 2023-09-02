@@ -11,7 +11,6 @@ const SideLinks = ({ name, path, icon }) => {
   const matchRoute = (route) => {
     return matchPath({ path: route }, location.pathname);
   };
-  console.log("hallo");
 
   return (
     <div>

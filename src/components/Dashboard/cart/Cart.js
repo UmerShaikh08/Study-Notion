@@ -1,7 +1,6 @@
 import React from "react";
 import CartCard from "./CartCard";
-import img from "../../../assets/Images/Instructor.png";
-import { useState } from "react";
+
 import { useSelector } from "react-redux";
 
 const Cart = () => {

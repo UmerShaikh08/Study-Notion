@@ -1,23 +1,30 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
+
+// Pages
 import Home from "./pages/Home";
-import Navbar from "./components/common/Navbar";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import ForgotPassword from "./pages/ForgotPassword";
 import UpdatePassword from "./pages/UpdatePassword";
 import Otp from "./pages/Otp";
-import OpenRoute from "./components/auth/OpenRoute";
 import About from "./pages/About";
-import MyProfile from "./components/Dashboard/MyProfile";
-import Logout from "./components/Dashboard/Logout";
 import Dashboard from "./pages/Dashboard";
-import Setting from "./components/Dashboard/setting/Setting";
-import PrivateRoute from "./components/auth/PrivateRoute";
-import EnrolledCourse from "./components/Dashboard/EnrolledCourse";
-import Cart from "./components/Dashboard/cart/Cart";
+
+// common
+import Navbar from "./components/common/Navbar";
+
+// Auth routes
+import OpenRoute from "./components/auth/OpenRoute";
 import StudentRoute from "./components/auth/StudentRoute";
 import InstructorRoute from "./components/auth/InstructorRoute";
+import PrivateRoute from "./components/auth/PrivateRoute";
+
+// profile or profile sidebar
+import MyProfile from "./components/Dashboard/MyProfile";
+import Setting from "./components/Dashboard/setting/Setting";
+import EnrolledCourse from "./components/Dashboard/EnrolledCourse";
+import Cart from "./components/Dashboard/cart/Cart";
 import AddCourse from "./components/Dashboard/New Course/AddCourse";
 
 function App() {
@@ -84,7 +91,6 @@ function App() {
           {" "}
           <Route path="/dashboard/my-profile" element=<MyProfile /> />
           <Route path="/dashboard/setting" element=<Setting /> />
-          <Route path="/dashboard/logout" element=<Logout /> />
           {/* Student routes */}
           <Route
             path="/dashboard/cart"

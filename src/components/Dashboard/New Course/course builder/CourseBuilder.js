@@ -2,23 +2,25 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { MdOutlineNavigateNext } from "react-icons/md";
+import NestedView from "./NestedView";
+
+// redux
 import { useDispatch, useSelector } from "react-redux";
 import {
   setCourse,
   setEditCourse,
   setStep,
 } from "../../../../Redux/Slices/courseSlice";
+
+// backend
 import {
   createSection,
   updateSection,
 } from "../../../../services/operations/section";
-import Sections from "./Sections";
-import NestedView from "./NestedView";
 
 const CourseBuilder = () => {
   const {
     register,
-    handleSubmit,
     getValues,
     setValue,
     formState: { errors },
@@ -33,6 +35,7 @@ const CourseBuilder = () => {
     dispatch(setEditCourse(true));
     dispatch(setStep(1));
   };
+
   const cancelEdit = () => {
     setEditSection(null);
     setValue("sectionName", "");
@@ -43,13 +46,14 @@ const CourseBuilder = () => {
       cancelEdit();
       return;
     }
+
     setEditSection(sectionId);
-    console.log(sectionId, sectionName);
     setValue("sectionName", sectionName);
   };
 
   const handleSection = async (e) => {
     e.preventDefault();
+
     if (editSection) {
       const sectionName = await getValues("sectionName");
       const result = await updateSection(
@@ -58,6 +62,7 @@ const CourseBuilder = () => {
         course?._id,
         token
       );
+
       if (result) {
         dispatch(setCourse(result));
         setValue("sectionName", "");
@@ -66,8 +71,7 @@ const CourseBuilder = () => {
 
       return;
     }
-    console.log(course);
-    console.log();
+
     const sectionName = await getValues("sectionName");
     const result = await createSection(sectionName, course._id, token);
     if (result) {
@@ -76,7 +80,7 @@ const CourseBuilder = () => {
     }
     return;
   };
-  console.log("course.courseContent.length-->", course.courseContent.length);
+
   return (
     <div className="bg-richblack-800 flex flex-col gap-10 p-5 rounded-md  text-richblack-5 border border-richblack-600">
       <form

@@ -15,8 +15,6 @@ const ContactUsForm = () => {
   const [loading, setLoading] = useState(false);
 
   const submitData = (data) => {
-    console.log(data);
-
     contactUs(data, setLoading);
 
     reset({

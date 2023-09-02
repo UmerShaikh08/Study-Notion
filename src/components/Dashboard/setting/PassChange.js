@@ -19,8 +19,6 @@ const PassChange = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const submitData = (data) => {
-    console.log(data);
-
     dispatch(updatePassword(data, token));
     reset({ password: "", confirmPassword: "" });
   };

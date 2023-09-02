@@ -33,10 +33,6 @@ const Otp = () => {
       confirmPassword,
     } = signupData;
 
-    console.log(otp);
-    console.log(signupData);
-
-    console.log("after dispatch --> ", signupData);
     dispatch(
       singup(
         {

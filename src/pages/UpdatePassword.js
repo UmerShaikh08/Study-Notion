@@ -14,8 +14,6 @@ const UpdatePassword = () => {
   const { Loading } = useSelector((store) => store.auth);
 
   const submitDetails = (data) => {
-    console.log(data);
-
     const token = location.pathname.split("/").at(-1);
     data.token = token;
 

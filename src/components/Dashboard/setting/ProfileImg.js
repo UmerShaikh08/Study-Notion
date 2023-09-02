@@ -47,7 +47,6 @@ const ProfileImg = () => {
               onChange={(data) => {
                 if (data.target.files[0]) {
                   setImage(data.target.files[0]);
-                  console.log(data.target.files[0]);
                 }
               }}
               ref={selectImg}

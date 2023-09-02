@@ -1,13 +1,16 @@
 import React, { useState } from "react";
-import { HiOutlineViewList } from "react-icons/hi";
-import { AiFillCaretDown } from "react-icons/ai";
-import { MdEdit, MdOndemandVideo } from "react-icons/md";
-import { RiDeleteBin6Line } from "react-icons/ri";
+
 import { useDispatch, useSelector } from "react-redux";
 import ConfirmationModal from "../../../common/ConfirmationModal";
-import { setCourse } from "../../../../Redux/Slices/courseSlice";
-import { deleteSubsection } from "../../../../services/operations/subsection";
 import SubsetionModal from "./SubsetionModal";
+import { setCourse } from "../../../../Redux/Slices/courseSlice";
+
+// backend call
+import { deleteSubsection } from "../../../../services/operations/subsection";
+
+// icons
+import { MdEdit, MdOndemandVideo } from "react-icons/md";
+import { RiDeleteBin6Line } from "react-icons/ri";
 
 const SubSections = ({
   _id: subSectionId,
@@ -23,15 +26,18 @@ const SubSections = ({
   const dispatch = useDispatch();
   const { token } = useSelector((store) => store.auth);
   const { course } = useSelector((store) => store.course);
+  const [loading, setLoading] = useState(false);
 
   const deleteSubsectionHandler = async (e) => {
     e.preventDefault();
-    console.log("hi");
-    console.log(token);
+
+    setLoading(true);
     const result = await deleteSubsection(
       { subSectionId, sectionId, courseId: course._id },
       token
     );
+    setLoading(false);
+
     if (result) {
       dispatch(setCourse(result));
     }
@@ -40,15 +46,29 @@ const SubSections = ({
   return (
     <>
       <div className="w-[90%] mx-auto my-2 text-richblack-200 text-[1.2rem] flex flex-row justify-between items-center  border-b-2 border-richblack-500 ">
-        <div className="flex flex-row items-center gap-3">
+        <div
+          className="flex flex-row items-center gap-3 cursor-pointer"
+          onClick={(e) => {
+            e.preventDefault();
+            setViewSubsection({
+              subSectionId,
+              title,
+              timeDuration,
+              description,
+              videoFile: videoUrl,
+              sectionId,
+            });
+          }}
+        >
           <div className="flex flex-row items-center">
             {" "}
-            <MdOndemandVideo />
+            <MdOndemandVideo className="text-red-200" />
           </div>
           <div> {title}</div>
         </div>
         <div className="flex flex-row items-center gap-2">
           <MdEdit
+            className="text-gradientGreen-200 cursor-pointer"
             onClick={(e) => {
               e.preventDefault();
               setEditSubsection({
@@ -56,15 +76,16 @@ const SubSections = ({
                 title,
                 timeDuration,
                 description,
-                videoUrl,
+                videoFile: videoUrl,
                 sectionId,
               });
             }}
           />
           <RiDeleteBin6Line
+            className="text-red-200 cursor-pointer"
             onClick={(e) => {
               e.preventDefault();
-              console.log("hi");
+
               setConfirmationModal({
                 text1: "Delete this Sub-Section?",
                 text2: "This lecture will be deleted",
@@ -75,8 +96,6 @@ const SubSections = ({
               });
             }}
           />
-          <div className="font-semibold">|</div>
-          <AiFillCaretDown />
         </div>
       </div>
       {confirmationModal && <ConfirmationModal modalData={confirmationModal} />}
@@ -85,6 +104,14 @@ const SubSections = ({
           modalData={editSubsection}
           setModalData={setEditSubsection}
           edit={true}
+        />
+      )}
+
+      {viewSubsection && (
+        <SubsetionModal
+          modalData={viewSubsection}
+          setModalData={setViewSubsection}
+          view={true}
         />
       )}
     </>

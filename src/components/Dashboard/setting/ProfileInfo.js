@@ -28,8 +28,6 @@ const ProfileInfo = () => {
   ];
 
   const submitData = (data) => {
-    console.log(data);
-
     dispatch(setUser(data));
     dispatch(updateProfile(data, token));
     const updatedUser = {

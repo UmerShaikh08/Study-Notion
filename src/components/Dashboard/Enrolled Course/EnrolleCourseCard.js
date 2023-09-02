@@ -11,7 +11,6 @@ const EnrolleCourseCard = (
   },
   active
 ) => {
-  console.log(courseDescription);
   const discription = courseDescription?.substr(0, 50);
 
   return (

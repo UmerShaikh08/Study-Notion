@@ -8,9 +8,6 @@ import ReactStars from "react-rating-stars-component";
 const CartCard = (course) => {
   const dispatch = useDispatch();
 
-  const ratingChanged = (newRating) => {
-    console.log(newRating);
-  };
   const removeHandler = () => {
     dispatch(removeItemFromCart(course));
   };

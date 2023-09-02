@@ -10,7 +10,7 @@ const createSubsection = async (req, res) => {
     const {
       sectionId,
       title,
-      timeDuration = "",
+
       description,
       courseId,
     } = req.body;
@@ -29,9 +29,9 @@ const createSubsection = async (req, res) => {
 
     const newSubsection = await SubSection.create({
       title,
-      timeDuration,
       description,
       videoUrl: videoDetails?.secure_url,
+      timeDuration: videoDetails?.duration,
     });
 
     if (!newSubsection) {
@@ -92,28 +92,42 @@ const createSubsection = async (req, res) => {
 const updateSubsection = async (req, res) => {
   try {
     dotenv.config({ path: ".env" });
-    const { title, timeDuration, description, subSectionId, courseId } =
-      req.body;
+    const { title, description, subSectionId, courseId } = req.body;
 
-    const file = req.files.videoFile;
-    console.log("file --->", file);
-    if (!title || !timeDuration || !description || !subSectionId) {
-      return res.status(400).json({
+    const subsection = await SubSection.findById(subSectionId);
+    if (!subsection) {
+      return res.status(404).json({
         success: false,
-        massage: "all fields are required",
+        message: "SubSection not found",
       });
     }
+    console.log("req body ---->", req.body);
+    if (title !== undefined) {
+      subsection.title = title;
+    }
 
-    const videoDetails = await videoUploader(file, process.env.FOLDER_NAME);
+    if (description !== undefined) {
+      subsection.description = description;
+    }
 
+    if (req.files && req.files.videoFile !== undefined) {
+      const file = req.files.videoFile;
+      const uploadDetails = await videoUploader(file, process.env.FOLDER_NAME);
+      subsection.videoUrl = uploadDetails.secure_url;
+      subsection.timeDuration = uploadDetails.duration;
+    }
+
+    console.log("subsection ---> ", subsection);
     const newSubsection = await SubSection.findOneAndUpdate(
       { _id: subSectionId },
+
       {
-        title,
-        timeDuration,
-        description,
-        videoUrl: videoDetails.secure_url,
+        title: subsection.title,
+        description: subsection.description,
+        videoUrl: subsection.videoUrl,
+        timeDuration: subsection.timeDuration,
       },
+
       { new: true }
     );
 
@@ -139,6 +153,7 @@ const updateSubsection = async (req, res) => {
       massage: "subsection updated successfully",
     });
   } catch (error) {
+    console.log(error);
     return res.status(400).json({
       success: false,
       massage: "error occured while updating subsection",

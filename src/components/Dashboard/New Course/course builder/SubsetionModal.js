@@ -2,13 +2,20 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { RxCross2 } from "react-icons/rx";
-import { useDispatch, useSelector } from "react-redux";
 import Upload from "../Upload";
+// redux
+import { useDispatch, useSelector } from "react-redux";
+import { setCourse } from "../../../../Redux/Slices/courseSlice";
+
+// custom hooks
+import useNewSubsection from "./hooks/useNewSubsection";
+import useUpdateSubsection from "./hooks/useUpdateSubsection";
+
+//  backend
 import {
   createSubsection,
   updateSubsection,
 } from "../../../../services/operations/subsection";
-import { setCourse } from "../../../../Redux/Slices/courseSlice";
 
 const SubsetionModal = ({
   modalData,
@@ -25,93 +32,71 @@ const SubsetionModal = ({
     getValues,
   } = useForm();
 
-  console.log("title --> , ", modalData.title);
-
-  console.log("modal data ---> ", modalData);
-  // console.log("view", view)
-  // console.log("edit", edit)
-  // console.log("add", add)
-
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const { token } = useSelector((state) => state.auth);
   const { course } = useSelector((state) => state.course);
+  const { NewSubsection } = useNewSubsection();
+  const { UpdateSubsection } = useUpdateSubsection();
 
   const isSubsectionUpdated = (values) => {
     if (
       modalData.title !== values.title ||
       modalData.description !== values.description ||
-      modalData.videoUrl !== values.videoUrl ||
-      modalData.timeDuration !== values.timeDuration
+      modalData.videoFile !== values.videoFile
     ) {
       return true;
     } else return false;
   };
 
-  const setAllValues = () => {
+  useEffect(() => {
     if (edit || view) {
       setValue("title", modalData.title);
       setValue("description", modalData.description);
       setValue("videoFile", modalData.videoFile);
     }
-    return;
-  };
-
-  useEffect(() => {
-    setAllValues();
   }, []);
 
   const onSubmit = async (data) => {
+    if (view) {
+      return;
+    }
+
+    const courseId = course?._id;
+
     if (edit) {
       const values = getValues();
-      console.log(" i am in edit");
 
-      const formData = new FormData();
+      let formData = null;
       if (isSubsectionUpdated(values)) {
-        formData.append("subSectionId", modalData.subSectionId);
-        formData.append("courseId", course?._id);
-
-        if (modalData.title !== values.title) {
-          formData.append("title", values.title);
-        }
-        if (modalData.description !== values.description) {
-          formData.append("title", values.title);
-        }
-        if (modalData.timeDuration !== values.timeDuration) {
-          formData.append("title", values.title);
-        }
-        if (modalData.videoUrl !== values.videoUrl) {
-          formData.append("title", values.title);
-        }
+        formData = await UpdateSubsection({ modalData, values, courseId });
       } else {
         toast.error("No Changes Found");
+        return;
       }
 
+      setLoading(true);
       const result = await updateSubsection(formData, token);
+      setLoading(false);
 
       if (result) {
         dispatch(setCourse(result));
-        console.log("edited course -->", course);
       }
 
       setModalData(null);
       return;
     }
 
-    console.log(data);
-    const formData = new FormData();
-    formData.append("title", data.title);
-    formData.append("description", data.description);
-    formData.append("videoFile", data.videoFile);
-    formData.append("sectionId", modalData);
-    formData.append("courseId", course?._id);
+    const formData = await NewSubsection({ data, modalData, courseId });
 
+    setLoading(true);
     const result = await createSubsection(formData, token);
+    setLoading(false);
+
     if (result) {
-      console.log("i am in result ");
       dispatch(setCourse(result));
     }
-    console.log(result);
+
     setModalData(null);
   };
   return (
@@ -120,7 +105,7 @@ const SubsetionModal = ({
         {/* Modal Header */}
         <div className="flex items-center justify-between rounded-t-lg bg-richblack-700 p-5">
           <p className="text-xl font-semibold text-richblack-5">
-            Adding Lecture
+            {add ? "Adding" : edit ? "Editing" : view ? "Viewing" : ""} Lecture
           </p>
           <button onClick={() => (!loading ? setModalData(null) : {})}>
             <RxCross2 className="text-2xl text-richblack-5" />
@@ -139,8 +124,8 @@ const SubsetionModal = ({
             setValue={setValue}
             errors={errors}
             video={true}
-            viewData={view ? modalData?.videoUrl : null}
-            editData={edit ? modalData?.videoUrl : null}
+            viewData={view ? modalData?.videoFile : null}
+            editData={edit ? modalData?.videoFile : null}
           />
           {/* Lecture Title */}
           <div className="flex flex-col space-y-2">
@@ -149,6 +134,7 @@ const SubsetionModal = ({
             </label>
             <input
               id="title"
+              disabled={view || loading}
               placeholder="Enter Lecture Title"
               {...register("title", { required: true })}
               className=" w-full bg-richblack-700 h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
@@ -166,6 +152,7 @@ const SubsetionModal = ({
             </label>
             <textarea
               id="description"
+              disabled={view || loading}
               placeholder="Enter Lecture Description"
               {...register("description", { required: true })}
               className=" pt-3 h-[10rem] w-full bg-richblack-700  rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700 placeholder:text-start "
@@ -184,7 +171,13 @@ const SubsetionModal = ({
                 view ? "hidden" : ""
               }`}
             >
-              {edit ? "Save Changes" : add ? "Save" : ""}
+              {loading
+                ? "Loading..."
+                : edit
+                ? "Save Changes"
+                : add
+                ? "Save"
+                : ""}
             </button>
           </div>
         </form>

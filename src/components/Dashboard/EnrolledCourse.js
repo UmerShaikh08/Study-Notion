@@ -11,7 +11,6 @@ const EnrolledCourse = () => {
 
   const getData = async () => {
     const data = await dispatch(getEnrolledCourse(token));
-    console.log("data-->", data);
 
     await setEnrolleList(data);
   };
@@ -19,7 +18,6 @@ const EnrolledCourse = () => {
   useEffect(() => {
     getData();
   }, []);
-  console.log("enroll ", enrolleList);
   return (
     <div className=" text-richblack-5 flex flex-col gap-4">
       <div className="text-3xl font-inter">

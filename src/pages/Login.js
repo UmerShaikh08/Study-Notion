@@ -1,13 +1,15 @@
 import React from "react";
-import { CTAButton } from "../components/home/Button";
 import { Link, useNavigate } from "react-router-dom";
 import loginPage from "../assets/Images/login.webp";
 import frame from "../assets/Images/frame.png";
-import { PiStarOfDavidBold } from "react-icons/pi";
 import { useForm } from "react-hook-form";
+
+// redux
 import { useDispatch } from "react-redux";
-import { login } from "../services/operations/auth";
 import { setLoading } from "../Redux/Slices/authSlice";
+
+// backend call
+import { login } from "../services/operations/auth";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
@@ -16,7 +18,6 @@ const Login = () => {
   dispatch(setLoading(false));
 
   const submitDetails = (data) => {
-    console.log(data);
     dispatch(login(data, navigate));
   };
   return (

@@ -6,7 +6,7 @@ const NestedView = ({ handleEditSection }) => {
   const { course } = useSelector((store) => store.course);
 
   return (
-    <div className="bg-richblack-700 rounded-md p-3">
+    <div className="bg-richblack-900 rounded-md p-3">
       {course?.courseContent?.length > 0 &&
         course?.courseContent.map((section) => (
           <Sections

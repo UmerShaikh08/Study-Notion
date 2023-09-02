@@ -1,19 +1,23 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SubSections from "./SubSections";
+import ConfirmationModal from "../../../common/ConfirmationModal";
+import SubsetionModal from "./SubsetionModal";
+import { setCourse } from "../../../../Redux/Slices/courseSlice";
+
+// backend
+import { deleteSection } from "../../../../services/operations/section";
+
+// icons
 import { BiPlus } from "react-icons/bi";
+import { MdEdit } from "react-icons/md";
+import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaFolder } from "react-icons/fa";
 import {
   AiFillCaretDown,
   AiFillCaretRight,
   AiFillFolderOpen,
 } from "react-icons/ai";
-import { MdEdit, MdOndemandVideo } from "react-icons/md";
-import { RiDeleteBin6Line } from "react-icons/ri";
-import { deleteSection } from "../../../../services/operations/section";
-import { setCourse } from "../../../../Redux/Slices/courseSlice";
-import ConfirmationModal from "../../../common/ConfirmationModal";
-import SubsetionModal from "./SubsetionModal";
 
 const Sections = ({ section, handleEditSection }) => {
   const { course } = useSelector((store) => store.course);
@@ -22,31 +26,27 @@ const Sections = ({ section, handleEditSection }) => {
   const [showSubsection, setShowSubsection] = useState(false);
   const [confirmationModal, setConfirmationModal] = useState(null);
   const [addSubsection, setAddSubsection] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
 
-  const handleAddSubsection = (e) => {
-    e.preventDefault();
-  };
-
   const deleteSectionHandler = async (e) => {
     e.preventDefault();
-    console.log("section id -->", section._id);
-    console.log("section id -->", course);
-    console.log("i am before result ");
+
+    setLoading(true);
     const result = await deleteSection(section._id, course._id, token);
-    console.log("i am after resutl ");
+    setLoading(false);
     if (result) {
       dispatch(setCourse(result));
     }
     setConfirmationModal(null);
-    console.log("result --.", result);
+
     return;
   };
 
   return (
     <>
-      <div className="flex flex-col gap-3 bg-richblack-700 rounded-md p-3">
+      <div className="flex flex-col gap-3 bg-richblack-900 rounded-md p-3">
         <div>
           <div className="text-richblack-300 font-semibold text-[1.2rem] flex flex-row justify-between gap-5 items-center border-b-2 border-richblack-500 ">
             <div
@@ -57,8 +57,12 @@ const Sections = ({ section, handleEditSection }) => {
               }}
             >
               {" "}
-              <div className="flex flex-row ">
-                {showSubsection ? <AiFillCaretDown /> : <AiFillCaretRight />}
+              <div className="flex flex-row items-center">
+                {showSubsection ? (
+                  <AiFillCaretDown className="text-richblack-5" />
+                ) : (
+                  <AiFillCaretRight className="text-richblack-5" />
+                )}
                 {showSubsection ? (
                   <AiFillFolderOpen size={24} className="text-[#2C73D2]" />
                 ) : (
@@ -69,13 +73,15 @@ const Sections = ({ section, handleEditSection }) => {
             </div>
             <div className="flex flex-row items-center gap-2">
               <MdEdit
+                className="text-gradientGreen-200 cursor-pointer"
                 onClick={(e) => {
                   e.preventDefault();
-                  console.log("i am click on edit section button");
+
                   handleEditSection(section?._id, section?.sectionName);
                 }}
               />
               <RiDeleteBin6Line
+                className="text-red-200 cursor-pointer"
                 onClick={(e) => {
                   e.preventDefault();
                   setConfirmationModal({
@@ -96,7 +102,11 @@ const Sections = ({ section, handleEditSection }) => {
                 }}
               >
                 {" "}
-                {showSubsection ? <AiFillCaretDown /> : <AiFillCaretRight />}
+                {showSubsection ? (
+                  <AiFillCaretDown className="text-richblack-5 cursor-pointer" />
+                ) : (
+                  <AiFillCaretRight className="text-richblack-5 cursor-pointer" />
+                )}
               </div>
             </div>
           </div>
