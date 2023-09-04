@@ -166,6 +166,7 @@ const SubsetionModal = ({
 
           <div className="flex justify-end">
             <button
+              disabled={loading}
               type="submit"
               className={`bg-yellow-100 py-1 p-3 text-richblack-900 rounded-md ${
                 view ? "hidden" : ""

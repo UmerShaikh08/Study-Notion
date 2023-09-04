@@ -26,10 +26,11 @@ import Setting from "./components/Dashboard/setting/Setting";
 import EnrolledCourse from "./components/Dashboard/EnrolledCourse";
 import Cart from "./components/Dashboard/cart/Cart";
 import AddCourse from "./components/Dashboard/New Course/AddCourse";
+import MyCourse from "./components/Dashboard/my course/MyCourse";
 
 function App() {
   return (
-    <div className="w-screen min-h-screen bg-richblack-900 flex flex-col font-inter">
+    <div className="w-screen min-h-screen max-w-[100vw] bg-richblack-900 flex flex-col font-inter">
       <Navbar />
       <Routes>
         <Route path="/" element=<Home /> />
@@ -110,6 +111,12 @@ function App() {
             path="/dashboard/add-course"
             element=<InstructorRoute>
               <AddCourse />
+            </InstructorRoute>
+          />
+          <Route
+            path="/dashboard/my-courses"
+            element=<InstructorRoute>
+              <MyCourse />
             </InstructorRoute>
           />
         </Route>

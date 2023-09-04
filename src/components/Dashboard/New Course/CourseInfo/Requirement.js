@@ -42,7 +42,7 @@ const Requirement = ({ register, setValue, name, errors }) => {
         id="requirements"
         name="requirements"
         value={requirements}
-        className=" w-full bg-richblack-700 h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700 pl-10"
+        className=" w-full bg-richblack-700 h-[2rem] md:h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700 pl-10"
         onChange={(e) => setRequirements(e.target.value)}
       />
 

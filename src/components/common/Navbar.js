@@ -32,7 +32,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="hidden  w-[100%] md:flex flex-row justify-around items-center font-inter bg-richblack-800  border-richblack-700 border-b-2 py-2">
+    <nav className="  w-[100%] md:flex flex-row justify-around items-center font-inter bg-richblack-800  border-richblack-700 border-b-2 py-2">
       <Link to={"/"}>
         {" "}
         <img

@@ -41,7 +41,7 @@ const PassChange = () => {
               name="password"
               {...register("password", { required: true })}
               placeholder="Enter Password "
-              className="  w-full bg-richblack-700 h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
+              className="  w-full bg-richblack-700 h-[2rem] md:h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
             />
             <button
               type="button"
@@ -69,7 +69,7 @@ const PassChange = () => {
               name="confirmpassword"
               {...register("confirmPassword", { required: true })}
               placeholder="Enter last Name"
-              className="w-full bg-richblack-700 h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
+              className="w-full bg-richblack-700 h-[2rem] md:h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
             />
             <button
               type="button"

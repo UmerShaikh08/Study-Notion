@@ -61,7 +61,7 @@ const Tags = ({ register, setValue, name, errors }) => {
         name="tags"
         value={tag}
         placeholder="Enter Tags and press enter "
-        className=" w-full bg-richblack-700 h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700 pl-10"
+        className=" w-full bg-richblack-700 h-[2rem] md:h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700 pl-10"
         onChange={(e) => setTag(e.target.value)}
         onKeyUp={(e) => {
           handleTagList(e);

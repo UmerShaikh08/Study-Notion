@@ -138,7 +138,7 @@ const CourseInfo = () => {
           name="courseName"
           {...register("courseName", { required: true })}
           placeholder="Enter course title "
-          className=" w-full bg-richblack-700 h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
+          className=" w-full bg-richblack-700 h-[2rem] md:h-[3rem] rounded-md px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
         />
         {errors.courseName && (
           <span className="ml-2 text-xs tracking-wide text-yellow-100">
@@ -176,7 +176,7 @@ const CourseInfo = () => {
           name="price"
           {...register("price", { required: true, valueAsNumber: true })}
           placeholder="Enter course Price "
-          className=" w-full bg-richblack-700 h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700 pl-10"
+          className=" w-full bg-richblack-700 h-[2rem] md:h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700 pl-10"
         />
         <HiOutlineCurrencyRupee
           size={30}

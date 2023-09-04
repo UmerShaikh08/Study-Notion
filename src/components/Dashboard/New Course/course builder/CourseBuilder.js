@@ -17,6 +17,7 @@ import {
   createSection,
   updateSection,
 } from "../../../../services/operations/section";
+import { toast } from "react-hot-toast";
 
 const CourseBuilder = () => {
   const {
@@ -81,6 +82,20 @@ const CourseBuilder = () => {
     return;
   };
 
+  const nextPage = () => {
+    if (course.courseContent.length === 0) {
+      toast.error("Please add atleast one section");
+      return;
+    }
+    if (
+      course.courseContent.some((section) => section.subSection.length === 0)
+    ) {
+      toast.error("Please add atleast one lecture in each section");
+      return;
+    }
+    dispatch(setStep(3));
+  };
+
   return (
     <div className="bg-richblack-800 flex flex-col gap-10 p-5 rounded-md  text-richblack-5 border border-richblack-600">
       <form
@@ -125,7 +140,7 @@ const CourseBuilder = () => {
         </div>
       </form>
 
-      {course.courseContent.length > 0 && (
+      {course?.courseContent?.length > 0 && (
         <NestedView handleEditSection={handleEditSection} />
       )}
 
@@ -137,7 +152,7 @@ const CourseBuilder = () => {
           Back
         </button>
         <button
-          type="submit"
+          onClick={nextPage}
           className=" bg-yellow-100 py-2 px-4 w-fit flex flex-row items-center  text-richblack-900 rounded-md font-medium transition-all duration-200 hover:scale-95"
         >
           Next <MdOutlineNavigateNext />
