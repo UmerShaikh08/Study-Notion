@@ -65,6 +65,10 @@ const CourseSchema = new Schema({
     type: String,
     enum: ["Draft", "Published"],
   },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 const Course = model("Course", CourseSchema);

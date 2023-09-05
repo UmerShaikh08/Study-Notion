@@ -273,7 +273,12 @@ const getCourseDetails = async (req, res) => {
   try {
     const { courseId } = req.body;
 
-    const courseDetails = await Course.find({ _id: courseId });
+    const courseDetails = await Course.findById(courseId).populate({
+      path: "courseContent",
+      populate: {
+        path: "subSection",
+      },
+    });
 
     if (!courseDetails) {
       return res.status(400).json({
@@ -281,7 +286,7 @@ const getCourseDetails = async (req, res) => {
         massage: `could not find the code with ${courseId}`,
       });
     }
-    console.log(courseDetails);
+    console.log("course Details ---> ", courseDetails);
 
     return res.status(200).json({
       success: true,
@@ -337,11 +342,11 @@ const getInstructorCourses = async (req, res) => {
     // get user id
     const userId = req.user.id;
 
-    // get user data and populate enrolled courses
-    const studentData = await User.findById(userId).populate("courses");
+    // get user data and populate instructor created courses
+    const instructorCourses = await User.findById(userId).populate("courses");
 
     // check user student or not
-    if (studentData.accountType !== "Instructor") {
+    if (instructorCourses.accountType !== "Instructor") {
       return res.status(400).json({
         success: false,
         massage: "User is not a Instructor  ",
@@ -350,10 +355,10 @@ const getInstructorCourses = async (req, res) => {
 
     // return response
 
-    return res.status(400).json({
+    return res.status(200).json({
       success: true,
       massage: "Instructor course fetched successfully ",
-      studentData,
+      Instructor: instructorCourses,
     });
   } catch (error) {
     console.log(error);
@@ -391,9 +396,12 @@ const deleteCourse = async (req, res) => {
       $pull: { courses: courseId },
     });
 
+    const UpdatedCourses = await User.findById(userId).populate("courses");
+
     return res.status(200).json({
       success: true,
       massage: "course deleted successfully",
+      Instructor: UpdatedCourses,
     });
   } catch (error) {
     console.log(error);

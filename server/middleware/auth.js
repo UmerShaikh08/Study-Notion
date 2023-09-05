@@ -12,6 +12,8 @@ const auth = async (req, res, next) => {
       (req.headers.authorization &&
         req.headers.authorization.replace("Bearer ", ""));
 
+    console.log("token---->", token);
+
     console.log("hi");
     // check token empty or not
     if (!token) {
@@ -20,8 +22,6 @@ const auth = async (req, res, next) => {
         massage: "token not found",
       });
     }
-
-    console.log(token);
 
     // extract payload data from token like account type
     const decode = await Jwt.verify(token, "UMER78");

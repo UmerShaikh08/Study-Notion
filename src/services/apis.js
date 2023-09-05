@@ -27,7 +27,10 @@ export const contactUsEndPointes = {
 export const course = {
   CREATE_COURSE: BASE_URL + "/course/createCourse",
   GET_ENROLLED_COURSES: BASE_URL + "/course/getEnrolledCourse",
+  GET_INSTRUCTOR_COURSES: BASE_URL + "/course/getInstructorCourses",
   EDIT_COURSE: BASE_URL + "/course/editCourse",
+  DELETE_COURSE: BASE_URL + "/course/deleteCourse",
+  GET_COURSE_DETAILS: BASE_URL + "/course/getCoursesDetails",
 };
 
 //section

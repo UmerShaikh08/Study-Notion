@@ -7,7 +7,6 @@ import {
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { COURSE_STATUS } from "../../../../utils/constants";
-import { getValue } from "@testing-library/user-event/dist/utils";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { EditCourse } from "../../../../services/operations/courses";

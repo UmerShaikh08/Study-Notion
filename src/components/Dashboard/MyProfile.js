@@ -49,7 +49,10 @@ const MyProfile = () => {
       {/* user name and user email  */}
       <div className="  flex  md:justify-between flex-col  md:flex-row  bg-richblack-800 p-10 rounded-md shadow-sm shadow-richblack-500">
         <div className="flex flex-row items-center gap-6">
-          <img src={user?.img} className="max-h-20 max-w-20 rounded-full" />
+          <img
+            src={user?.img}
+            className="aspect-square max-h-20 max-w-20 rounded-full"
+          />
           <div className="flex flex-col">
             <h1 className="font-bold text-lg text-richblack-5">
               {user?.firstName} {user?.lastName}

@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { updatePassword } from "../../../services/operations/profile";
+import { Link } from "react-router-dom";
 
 const PassChange = () => {
   const {
@@ -93,7 +94,9 @@ const PassChange = () => {
 
       {/* save and cancel button */}
       <div className="flex justify-end gap-3">
-        <Button text={"Cancel"} />
+        <Link to={"/dashboard/my-profile"}>
+          <Button text={"Cancel"} />
+        </Link>
         <Button text={"Update"} active={1} />
       </div>
     </form>

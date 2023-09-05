@@ -29,7 +29,7 @@ const AddCourse = () => {
         {/* course upload */}
         <div className="flex w-[90%] md:w-[80%] lg:w-[50%] flex-col gap-14 ">
           <h1 className="text-4xl font-semibold font-inter text-richblack-5">
-            Add Course
+            {editCourse ? "Edit Course" : "Add Course"}
           </h1>
           <div>
             <div className="flex flex-row justify-center items-center gap-0 text-richblack-5">

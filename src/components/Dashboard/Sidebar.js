@@ -82,7 +82,7 @@ const Sidebar = () => {
         )}
       </div>
       <div
-        className=" min-h-[1rem] h-fit text-richblack-5"
+        className=" min-h-[1rem] h-fit text-richblack-5 cursor-pointer"
         onClick={() => dispatch(setShowSidebar(showSidebar))}
       >
         {showSidebar ? <RxCross2 size={30} /> : <BiMenu size={30} />}

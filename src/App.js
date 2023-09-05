@@ -27,6 +27,7 @@ import EnrolledCourse from "./components/Dashboard/EnrolledCourse";
 import Cart from "./components/Dashboard/cart/Cart";
 import AddCourse from "./components/Dashboard/New Course/AddCourse";
 import MyCourse from "./components/Dashboard/my course/MyCourse";
+import EditCourse from "./components/Dashboard/EditCourse/EditCourse";
 
 function App() {
   return (
@@ -117,6 +118,12 @@ function App() {
             path="/dashboard/my-courses"
             element=<InstructorRoute>
               <MyCourse />
+            </InstructorRoute>
+          />
+          <Route
+            path="/dashboard/edit-course/:id"
+            element=<InstructorRoute>
+              <EditCourse />
             </InstructorRoute>
           />
         </Route>

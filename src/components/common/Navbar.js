@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../../assets/Logo/Logo-Full-Light.png";
 import { NavbarLinks } from "../../Data/navbar-links";
 import { Link } from "react-router-dom";
@@ -8,6 +8,7 @@ import ProfileDashboard from "../../pages/ProfileDashboard";
 import { IoIosArrowDown } from "react-icons/io";
 import { AiOutlineCaretDown } from "react-icons/ai";
 import ProfileDropdown from "../auth/ProfileDropdrown";
+import { getAllCategories } from "../../services/operations/category";
 
 const Navbar = () => {
   const [currTab, setCurrTab] = useState(NavbarLinks[0].title);
@@ -20,17 +21,19 @@ const Navbar = () => {
   const { totalItems } = useSelector((store) => store.cart);
   const { token } = useSelector((store) => store.auth);
 
-  const SubLinks = [
-    {
-      title: "python",
-      link: "category/python",
-    },
-    {
-      title: "c++",
-      link: "category/c++",
-    },
-  ];
+  const [SubLinks, setSubLinks] = useState([]);
 
+  const getCategories = async () => {
+    const result = await getAllCategories();
+
+    if (result) {
+      setSubLinks(result);
+    }
+  };
+
+  useEffect(() => {
+    getCategories();
+  }, []);
   return (
     <nav className="  w-[100%] md:flex flex-row justify-around items-center font-inter bg-richblack-800  border-richblack-700 border-b-2 py-2">
       <Link to={"/"}>
@@ -44,43 +47,48 @@ const Navbar = () => {
         />
       </Link>
       <div className="md:w-[50%] lg:w-[30%]  flex justify-between items-center">
-        {NavbarLinks.map((ele, index) => {
-          return ele.title === "Catalog" ? (
-            <div className="realtive flex flex-col group" key={index}>
-              <div className=" text-richblack-5 flex flex-row gap-2 items-center cursor-pointer">
-                <p>{ele.title}</p>
-                <IoIosArrowDown size={20} />
-              </div>
-              <div className=" absolute p-3 top-[8%] left-[35%]  invisible opacity-0 bg-richblack-5 flex flex-col lg:w-[300px] rounded-md transition-all duration-300   group-hover:opacity-100 group-hover:visible z-10">
-                <div className=" absolute top-[-2%] left-[56%] rounded-sm bg-richblack-5 h-[2rem] w-[2rem] rotate-45 -z-10 "></div>
+        {NavbarLinks &&
+          NavbarLinks.map((ele, index) => {
+            return ele.title === "Catalog" ? (
+              <div className="realtive flex flex-col group" key={index}>
+                <div className=" text-richblack-5 flex flex-row gap-2 items-center cursor-pointer">
+                  <p>{ele.title}</p>
+                  <IoIosArrowDown size={20} />
+                </div>
+                <div className=" absolute p-3 top-[8%] left-[35%]  invisible opacity-0 bg-richblack-5 flex flex-col lg:w-[300px] rounded-md transition-all duration-300   group-hover:opacity-100 group-hover:visible z-10">
+                  <div className=" absolute top-[-2%] left-[56%] rounded-sm bg-richblack-5 h-[2rem] w-[2rem] rotate-45 -z-10 "></div>
 
-                {SubLinks.map((element, index) => {
-                  return (
-                    <Link to={element.link} key={index}>
-                      <div className="mx-3 py-[0.5rem] px-[1rem] rounded-md text-lg hover:bg-richblack-50 ">
-                        {element.title}
-                      </div>
-                    </Link>
-                  );
-                })}
+                  {SubLinks &&
+                    SubLinks.map((element, index) => {
+                      return (
+                        <div
+                          key={element._id}
+                          className="mx-3 py-[0.5rem] px-[1rem] rounded-md text-lg hover:bg-richblack-50 cursor-pointer "
+                        >
+                          {element.name}
+                        </div>
+                      );
+                    })}
+                </div>
               </div>
-            </div>
-          ) : (
-            <Link to={ele.path} key={index}>
-              {" "}
-              <div
-                className={`font-[400]  ${
-                  currTab === ele.title ? "text-yellow-50" : "text-richblack-25"
-                } `}
-                onClick={() => {
-                  setMyTab(ele.title);
-                }}
-              >
-                {ele.title}{" "}
-              </div>
-            </Link>
-          );
-        })}
+            ) : (
+              <Link to={ele.path} key={index}>
+                {" "}
+                <div
+                  className={`font-[400]  ${
+                    currTab === ele.title
+                      ? "text-yellow-50"
+                      : "text-richblack-25"
+                  } `}
+                  onClick={() => {
+                    setMyTab(ele.title);
+                  }}
+                >
+                  {ele.title}{" "}
+                </div>
+              </Link>
+            );
+          })}
       </div>
       <div className="flex flex-row gap-5">
         {user && user.accountType !== "Instructor" ? (

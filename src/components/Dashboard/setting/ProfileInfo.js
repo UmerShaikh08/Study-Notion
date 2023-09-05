@@ -3,7 +3,7 @@ import Button from "./Button";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { updateProfile } from "../../../services/operations/profile";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { setUser } from "../../../Redux/Slices/profileSlice";
 import Loader from "../../common/Loader";
 
@@ -181,8 +181,10 @@ const ProfileInfo = () => {
       </div>
       {/* save and cancel button */}
       <div className="flex justify-end gap-3">
-        <Button text={"Cancel"} />
-        <Button text={"Update"} active={1} />
+        <Link to={"/dashboard/my-profile"}>
+          <Button text={"Cancel"} />
+        </Link>
+        <Button type="submit" text={"Update"} active={1} />
       </div>
     </form>
   );
