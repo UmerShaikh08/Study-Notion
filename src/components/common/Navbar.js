@@ -22,6 +22,7 @@ const Navbar = () => {
   const { token } = useSelector((store) => store.auth);
 
   const [SubLinks, setSubLinks] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const getCategories = async () => {
     const result = await getAllCategories();
@@ -58,17 +59,28 @@ const Navbar = () => {
                 <div className=" absolute p-3 top-[8%] left-[35%]  invisible opacity-0 bg-richblack-5 flex flex-col lg:w-[300px] rounded-md transition-all duration-300   group-hover:opacity-100 group-hover:visible z-10">
                   <div className=" absolute top-[-2%] left-[56%] rounded-sm bg-richblack-5 h-[2rem] w-[2rem] rotate-45 -z-10 "></div>
 
-                  {SubLinks &&
-                    SubLinks.map((element, index) => {
-                      return (
-                        <div
-                          key={element._id}
-                          className="mx-3 py-[0.5rem] px-[1rem] rounded-md text-lg hover:bg-richblack-50 cursor-pointer "
+                  {loading ? (
+                    <p className="text-center">Loading...</p>
+                  ) : SubLinks.length ? (
+                    <>
+                      {SubLinks?.filter(
+                        (subLink) => subLink?.course?.length > 0
+                      )?.map((subLink, i) => (
+                        <Link
+                          to={`/catalog/${subLink.name
+                            .split(" ")
+                            .join("-")
+                            .toLowerCase()}`}
+                          className="rounded-lg bg-transparent py-4 pl-4 hover:bg-richblack-50"
+                          key={i}
                         >
-                          {element.name}
-                        </div>
-                      );
-                    })}
+                          <p>{subLink.name}</p>
+                        </Link>
+                      ))}
+                    </>
+                  ) : (
+                    <p className="text-center">No Courses Found</p>
+                  )}
                 </div>
               </div>
             ) : (

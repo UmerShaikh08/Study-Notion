@@ -120,6 +120,7 @@ const CourseInfo = () => {
       dispatch(setStep(2));
       dispatch(setCourse(result));
     }
+    setLoading(false);
   };
 
   return (

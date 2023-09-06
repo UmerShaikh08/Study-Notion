@@ -49,4 +49,5 @@ export const subsection = {
 
 export const category = {
   GET_ALL_CATEGORIES: BASE_URL + "/course/showAllCategories",
+  GET_CATEGORIES_PAGE_DETAILS: BASE_URL + "/course/getCategoryPageDetails",
 };

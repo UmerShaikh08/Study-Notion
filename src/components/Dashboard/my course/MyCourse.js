@@ -6,11 +6,13 @@ import { useEffect } from "react";
 import CourseTable from "./CourseTable";
 import { useState } from "react";
 import { getInstructorCourses } from "../../../services/operations/courses";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setEditCourse } from "../../../Redux/Slices/courseSlice";
 
 const MyCourse = () => {
   const [courses, setCourses] = useState([]);
   const { token } = useSelector((store) => store.auth);
+  const dispatch = useDispatch();
 
   const fetchInstructorCourses = async () => {
     const result = await getInstructorCourses(token);

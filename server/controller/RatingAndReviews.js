@@ -73,6 +73,7 @@ const createRatingReviews = async (req, res) => {
       success: true,
       // updateCourse,
       massage: "rating reviews successfully",
+      updateCourse,
     });
   } catch (error) {
     console.log(error);

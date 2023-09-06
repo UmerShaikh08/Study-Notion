@@ -21,6 +21,7 @@ import { toast } from "react-hot-toast";
 
 const CourseBuilder = () => {
   const {
+    handleSubmit,
     register,
     getValues,
     setValue,
@@ -99,7 +100,7 @@ const CourseBuilder = () => {
   return (
     <div className="bg-richblack-800 flex flex-col gap-10 p-5 rounded-md  text-richblack-5 border border-richblack-600">
       <form
-        onSubmit={handleSection}
+        onSubmit={handleSubmit(handleSection)}
         className="bg-richblack-800 flex flex-col gap-10 p-5 rounded-md  text-richblack-5 "
       >
         <h1>Course Builder</h1>

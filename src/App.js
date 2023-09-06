@@ -28,6 +28,7 @@ import Cart from "./components/Dashboard/cart/Cart";
 import AddCourse from "./components/Dashboard/New Course/AddCourse";
 import MyCourse from "./components/Dashboard/my course/MyCourse";
 import EditCourse from "./components/Dashboard/EditCourse/EditCourse";
+import Catalog from "./components/home/Catalog";
 
 function App() {
   return (
@@ -35,6 +36,8 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element=<Home /> />
+        <Route path="/catalog/:catalogName" element=<Catalog /> />
+        <Route path="/about" element=<About /> />
 
         <Route
           path="/login"
@@ -80,8 +83,6 @@ function App() {
             </OpenRoute>
           }
         />
-
-        <Route path="/about" element=<About /> />
 
         <Route
           path="/dashboard"

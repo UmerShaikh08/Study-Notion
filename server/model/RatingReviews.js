@@ -1,16 +1,16 @@
 import mongoose, { Schema, model } from "mongoose";
 
 const RatingAndReviewsSchema = new Schema({
+  rating: {
+    type: Number,
+    required: true,
+  },
   user: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
   ],
-  rating: {
-    type: Number,
-    required: true,
-  },
   review: {
     type: String,
     required: true,

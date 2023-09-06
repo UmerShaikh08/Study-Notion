@@ -81,7 +81,7 @@ courseRoutes.post("/updateSection", auth, isInstructor, updateSection);
 courseRoutes.post("/deleteSection", auth, isInstructor, deleteSection);
 
 // ***************************************************************************************************************************************
-//                                                              Sections
+//                                                             Sub Sections
 // ***************************************************************************************************************************************
 courseRoutes.post("/createSubSection", auth, isInstructor, createSubsection);
 courseRoutes.post("/updatSubSection", auth, isInstructor, updateSubsection);

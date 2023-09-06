@@ -237,8 +237,8 @@ const getCourseFullDetails = async (req, res) => {
           path: "additionalDetails",
         },
       })
-      .populate("category")
       .populate("RatingAndReviews")
+      .populate("category")
       .populate({
         path: "courseContent",
         populate: {
