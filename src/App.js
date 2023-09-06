@@ -29,6 +29,7 @@ import AddCourse from "./components/Dashboard/New Course/AddCourse";
 import MyCourse from "./components/Dashboard/my course/MyCourse";
 import EditCourse from "./components/Dashboard/EditCourse/EditCourse";
 import Catalog from "./components/home/Catalog";
+import CoursePage from "./pages/CoursePage";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
         <Route path="/" element=<Home /> />
         <Route path="/catalog/:catalogName" element=<Catalog /> />
         <Route path="/about" element=<About /> />
+        <Route path="/courses/course" element=<CoursePage /> />
 
         <Route
           path="/login"
