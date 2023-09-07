@@ -54,8 +54,6 @@ const CourseBuilder = () => {
   };
 
   const handleSection = async (e) => {
-    e.preventDefault();
-
     if (editSection) {
       const sectionName = await getValues("sectionName");
       const result = await updateSection(

@@ -273,12 +273,14 @@ const getCourseDetails = async (req, res) => {
   try {
     const { courseId } = req.body;
 
-    const courseDetails = await Course.findById(courseId).populate({
-      path: "courseContent",
-      populate: {
-        path: "subSection",
-      },
-    });
+    const courseDetails = await Course.findById(courseId)
+      .populate({
+        path: "courseContent",
+        populate: {
+          path: "subSection",
+        },
+      })
+      .populate("RatingAndReviews");
 
     if (!courseDetails) {
       return res.status(400).json({

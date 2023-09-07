@@ -14,7 +14,7 @@ const useEditFormData = () => {
       updatedFormData.append("courseDescription", data?.courseDescription);
 
     if (course?.category !== values?.category)
-      updatedFormData.append("price", data?.category);
+      updatedFormData.append("category", data?.category);
 
     if (course?.price !== values?.price)
       updatedFormData.append("price", data?.price);

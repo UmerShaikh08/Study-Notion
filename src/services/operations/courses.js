@@ -137,10 +137,43 @@ const getCourseDetails = async (courseId, token) => {
   return response?.data?.data;
 };
 
+const getCourseFullDetails = async (courseId, token) => {
+  const toastId = toast.loading("loading...");
+
+  let response;
+  try {
+    response = await apiConnector(
+      "POST",
+      course.GET_COURSE_FULL_DETAILS,
+      { courseId },
+      {
+        Authorization: `Bearer ${token}`,
+      }
+    );
+
+    console.log("Responnseee ---->", response);
+
+    if (!response.data.success) {
+      toast.error("Failed to Fetch Course ");
+      throw new Error("Failed to Fetch Course ");
+    }
+
+    toast.success("Course Fetched");
+  } catch (error) {
+    console.log(error);
+    toast.error("Failed to Load Course");
+  }
+
+  toast.dismiss(toastId);
+  console.log("Responnseee ---->", response);
+  return response?.data?.data[0];
+};
+
 export {
   EditCourse,
   createCourse,
   getInstructorCourses,
   deleteCourse,
   getCourseDetails,
+  getCourseFullDetails,
 };

@@ -47,18 +47,14 @@ const CourseInfo = () => {
     const toastId = toast.loading("Loading...");
     try {
       setLoading(true);
-
       const response = await getAllCategories();
-
       if (response.length > 0) setCategory(response);
-
-      setLoading(false);
     } catch (error) {
       console.log(error);
       setLoading(false);
       toast.error("failed to fetch category");
     }
-
+    setLoading(false);
     toast.dismiss(toastId);
   };
 
@@ -92,8 +88,10 @@ const CourseInfo = () => {
   };
 
   const submitData = async (data) => {
+    setLoading(true);
     if (editCourse) {
       const values = getValues();
+      console.log("price =====>", values.price);
       const isForm = isFromUpdated(values);
 
       if (isForm) {
@@ -108,12 +106,12 @@ const CourseInfo = () => {
       } else {
         toast.error("No changes made to the form");
       }
+      setLoading(false);
       return;
     }
 
     //  it return FromData which have all details about new course
     const newCourseFormData = await updateFormData({ data });
-
     const result = await createCourse(newCourseFormData, token);
 
     if (result) {
@@ -172,6 +170,7 @@ const CourseInfo = () => {
         </label>
 
         <input
+          disabled={loading}
           type="text"
           id="price"
           name="price"
@@ -221,6 +220,7 @@ const CourseInfo = () => {
       </div>
       {/* tags */}
       <Tags
+        disabled={loading}
         name={"tags"}
         register={register}
         setValue={setValue}
@@ -228,6 +228,7 @@ const CourseInfo = () => {
       />
       {/* upload thumbnail */}
       <Upload
+        disabled={loading}
         name="thumbnail"
         label="Course Thumbnail"
         register={register}
@@ -242,6 +243,7 @@ const CourseInfo = () => {
           Benefits of the course <span className="text-red-200">*</span>
         </label>
         <textarea
+          disabled={loading}
           id="whatYouWillLearn"
           name="whatYouWillLearn"
           {...register("whatYouWillLearn", { required: true })}
@@ -262,16 +264,18 @@ const CourseInfo = () => {
         errors={errors}
       />
       <div className="flex flex-row justify-end gap-4">
-        {
+        {editCourse && (
           <button
+            disabled={loading}
             className="py-2 px-3 bg-richblack-300 rounded-md text-richblack-900 font-semibold transition-all duration-200 hover:scale-95"
             onClick={() => dispatch(setStep(2))}
           >
             Countinue without saving
           </button>
-        }
+        )}
         <button
           type="submit"
+          disabled={loading}
           className="py-2 px-3 flex flex-row items-center bg-yellow-50 rounded-md text-richblack-900 font-semibold transition-all duration-200 hover:scale-95"
         >
           {editCourse ? "Save Changes" : "Next"} <MdOutlineNavigateNext />

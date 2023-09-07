@@ -1,15 +1,15 @@
 import React from "react";
 import { useState } from "react";
-import Footer from "../common/Footer";
-import { useParams } from "react-router-dom";
+import Footer from "../components/common/Footer";
+import { Link, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import {
   getAllCategories,
   getCategoriesPageDetails,
-} from "../../services/operations/category";
+} from "../services/operations/category";
 import { useSelector } from "react-redux";
-import CourseCard from "../catalog/CourseCard";
-import CourseSlider from "../catalog/CourseSlider";
+import CourseCard from "../components/catalog/CourseCard";
+import CourseSlider from "../components/catalog/CourseSlider";
 
 const Catalog = () => {
   const [active, setActive] = useState(1);
@@ -122,11 +122,15 @@ const Catalog = () => {
         </div>
         <div className="py-8">
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-2  md:mx-auto ">
-            {catalogPageData?.mostSellingCourses
-              ?.slice(0, 4)
-              .map((course, i) => (
-                <CourseCard course={course} key={i} Height={"h-[400px]"} />
-              ))}
+            {catalogPageData?.mostSellingCourses?.slice(0, 4).map((course) => (
+              <Link to={`/course/${course._id}`} key={course._id}>
+                <CourseCard
+                  course={course}
+                  delayTime={1500}
+                  Height={"h-[400px]"}
+                />
+              </Link>
+            ))}
           </div>
         </div>
       </div>

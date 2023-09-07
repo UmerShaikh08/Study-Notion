@@ -4,8 +4,9 @@ import { Autoplay, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import CourseCard from "./CourseCard";
+import { Link } from "react-router-dom";
 
-const CourseSlider = ({ courses }) => {
+const CourseSlider = ({ courses, delayTime }) => {
   return (
     <>
       <Swiper
@@ -14,7 +15,7 @@ const CourseSlider = ({ courses }) => {
         spaceBetween={30}
         centeredSlides={true}
         autoplay={{
-          delay: 1000,
+          delay: delayTime || 1000,
           disableOnInteraction: false,
         }}
         navigation={true}
@@ -28,7 +29,9 @@ const CourseSlider = ({ courses }) => {
           courses.map((course) => (
             <SwiperSlide key={course._id}>
               {" "}
-              <CourseCard course={course} Height={"h-[250px]"} />
+              <Link to={`/course/${course._id}`}>
+                <CourseCard course={course} Height={"h-[250px]"} />
+              </Link>
             </SwiperSlide>
           ))}
       </Swiper>

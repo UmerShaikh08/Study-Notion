@@ -1,13 +1,6 @@
 import mongoose, { Schema, model } from "mongoose";
 
 const CourseSchema = new Schema({
-  RatingAndReviews: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "RatingReviews",
-    },
-  ],
-
   courseName: {
     type: String,
     required: true,
@@ -57,6 +50,12 @@ const CourseSchema = new Schema({
     {
       type: String,
       required: true,
+    },
+  ],
+  RatingAndReviews: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "RatingReviews",
     },
   ],
   requirements: {
