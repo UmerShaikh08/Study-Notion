@@ -52,3 +52,9 @@ export const category = {
   GET_ALL_CATEGORIES: BASE_URL + "/course/showAllCategories",
   GET_CATEGORIES_PAGE_DETAILS: BASE_URL + "/course/getCategoryPageDetails",
 };
+
+export const payment = {
+  CAPTURE_PAYMENT: BASE_URL + "/payment/capturePayment",
+  VERIFY_PAYMENT: BASE_URL + "/payment/verifyingSignature",
+  PAYMENT_SUCCESS: BASE_URL +"/payment/payment-successfull",
+};

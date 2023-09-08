@@ -4,9 +4,12 @@ import { instance } from "../config/razorpay.js";
 import { User } from "../model/User.js";
 import { mailSender } from "../utils/mailSender.js";
 import { courseEnrollmentEmail } from "../mail/templates/courseEnrollmentEmail.js";
+import { paymentSuccessEmail } from "../mail/templates/paymentSuccessEmail.js";
+import crypto from "crypto";
 
 const capturePayment = async (req, res) => {
   try {
+    console.log("i am in capture payment");
     const userId = req.user.id;
     const { courses } = req.body;
 
@@ -17,12 +20,13 @@ const capturePayment = async (req, res) => {
       });
     }
 
-    const UID = mongoose.Types.ObjectId(userId);
+    const UID = new mongoose.Types.ObjectId(userId);
 
     let totalPrice = 0;
+    console.log("courses--->", courses);
     for (const courseId of courses) {
       try {
-        const course = await Course.findById(courseId);
+        const course = await Course.findById(courseId?.id);
 
         if (!course) {
           return res.json({
@@ -60,7 +64,7 @@ const capturePayment = async (req, res) => {
     };
 
     const paymentResponse = await instance.orders.create(options);
-    console.log(paymentResponse);
+    console.log("Payment response --->", paymentResponse);
 
     if (!paymentResponse) {
       return res.status(401).json({
@@ -71,7 +75,7 @@ const capturePayment = async (req, res) => {
 
     return res.status(200).json({
       success: true,
-      massage: paymentResponse,
+      data: paymentResponse,
     });
   } catch (error) {
     console.log(error);
@@ -89,6 +93,7 @@ const verifyPaymentSignature = async (req, res) => {
   const { courses } = req.body;
   const userId = req.user.id;
 
+  console.log("verify data---->", courses);
   if (
     !razorpay_order_id ||
     !razorpay_payment_id ||
@@ -98,7 +103,7 @@ const verifyPaymentSignature = async (req, res) => {
   ) {
     res.status(400).json({
       success: false,
-      massage: "Payment Failed",
+      massage: "All fields are required",
     });
   }
 
@@ -106,7 +111,7 @@ const verifyPaymentSignature = async (req, res) => {
 
   // create signature using razorpay secret Id
   // shasm algo
-  const expectedSignature = crypto
+  const expectedSignature = await crypto
     .createHmac("sha256", process.env.RAZOR_KEY_SECRET)
     .update(body.toString())
     .digest("hex");
@@ -116,10 +121,11 @@ const verifyPaymentSignature = async (req, res) => {
     // add all courses in student enrolled courses list because he buyed all course
     // add student in course student enrolled list
     for (const courseId of courses) {
+      console.log("course id--->", courseId?.id);
       try {
         // add user id in Course.studentEnrolled list
         const course = await Course.findByIdAndUpdate(
-          courseId,
+          courseId.id,
           {
             $push: { studentsEnrolled: userId },
           },
@@ -130,7 +136,7 @@ const verifyPaymentSignature = async (req, res) => {
         const student = await User.findByIdAndUpdate(
           userId,
           {
-            $push: { courses: courseId },
+            $push: { courses: courseId.id },
           },
           { new: true }
         );
@@ -138,7 +144,7 @@ const verifyPaymentSignature = async (req, res) => {
         // create templet
         const enrolledTemplet = courseEnrollmentEmail(
           course?.courseName,
-          student.firstName + " " + student.lastName
+          student?.firstName + " " + student?.lastName
         );
 
         //  send mail student to enrolled course successfully
@@ -158,7 +164,7 @@ const verifyPaymentSignature = async (req, res) => {
         console.log(error);
         res.status(400).json({
           success: false,
-          massage: "Payment Failed",
+          massage: "Failed to add course in enrolled list of user and course",
         });
       }
     }
@@ -170,4 +176,31 @@ const verifyPaymentSignature = async (req, res) => {
   }
 };
 
-export { capturePayment, verifyPaymentSignature };
+const paymentSuccessfull = async (req, res) => {
+  try {
+    const { amount, orderId, paymentId } = req.body;
+    const userId = req.user.id;
+
+    if (!amount || !orderId || !paymentId || !userId) {
+      return res.status(400).json({
+        success: false,
+        massage: "all fields are required",
+      });
+    }
+
+    const student = await User.findById(userId);
+    const name = `${student?.firstName} ${student?.lastName} `;
+
+    const template = paymentSuccessEmail(name, amount, orderId, paymentId);
+    const mail = await mailSender(student?.email, template, "Payment Recieved");
+
+    return res.status(200).json({
+      success: true,
+      massage: "massage send successfully",
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export { capturePayment, verifyPaymentSignature, paymentSuccessfull };

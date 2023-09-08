@@ -3,11 +3,25 @@ import { AiFillCaretRight } from "react-icons/ai";
 import { FaRegShareSquare } from "react-icons/fa";
 import copy from "copy-to-clipboard";
 import { toast } from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { buyCourse } from "../../services/operations/payment";
 
 const CourseBuyCard = ({ course }) => {
+  const { token } = useSelector((store) => store.auth);
+  const { user } = useSelector((store) => store.profile);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const courseId = useParams();
+
   const handleShare = () => {
     copy(window.location.href);
     toast.success("Link Copied to Clipboard");
+  };
+
+  const handleBuyCourse = async () => {
+    const result = await buyCourse(user, [courseId], navigate, dispatch, token);
   };
   return (
     <>
@@ -20,7 +34,10 @@ const CourseBuyCard = ({ course }) => {
         <h1 className="text-3xl font-bold  border-b border-richblack-600 pb-2 md:pb-0">
           Rs.{course?.price}
         </h1>
-        <button className="bg-yellow-100 py-2   text-richblack-900 font-semibold rounded-md transition-all duration-200  hover:scale-95 ">
+        <button
+          onClick={handleBuyCourse}
+          className="bg-yellow-100 py-2   text-richblack-900 font-semibold rounded-md transition-all duration-200  hover:scale-95 "
+        >
           By Now
         </button>
         <button className="bg-richblack-800 py-3 font-semibold border-b border-richblack-600   rounded-md transition-all duration-200  hover:scale-95">

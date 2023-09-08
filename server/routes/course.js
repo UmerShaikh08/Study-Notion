@@ -42,7 +42,7 @@ courseRoutes.post("/createCourse", auth, isInstructor, createCourse);
 courseRoutes.post("/editCourse", auth, isInstructor, editCourse);
 courseRoutes.delete("/deleteCourse", auth, isInstructor, deleteCourse);
 courseRoutes.get("/getAllCourses", auth, isInstructor, getAllCourses);
-courseRoutes.post("/getCoursesDetails", auth, isInstructor, getCourseDetails);
+courseRoutes.post("/getCoursesDetails", getCourseDetails);
 courseRoutes.get("/getEnrolledCourse", auth, isStudent, getEnrolledCourses);
 courseRoutes.get(
   "/getInstructorCourses",
@@ -52,8 +52,7 @@ courseRoutes.get(
 );
 courseRoutes.post(
   "/getCourseFullDetails",
-  auth,
-  isInstructor,
+
   getCourseFullDetails
 );
 

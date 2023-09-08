@@ -6,7 +6,7 @@ import { courseRoutes } from "./routes/course.js";
 import { profileRoutes } from "./routes/profile.js";
 import { paymentRoutes } from "./routes/payments.js";
 import { userRoutes } from "./routes/user.js";
-import cor from "cors";
+import cors from "cors";
 import fileUpload from "express-fileupload";
 import { connectCloudinary } from "./config/cloudinary.js";
 import { ContactUs } from "./routes/contactUs.js";
@@ -22,9 +22,9 @@ connectCloudinary();
 app.use(express.json());
 app.use(cookieParser());
 app.use(
-  cor({
+  cors({
     origin: "http://localhost:3000",
-    Credential: true,
+    credential: true,
   })
 );
 app.use(
