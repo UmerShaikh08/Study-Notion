@@ -101,7 +101,7 @@ const verifyPaymentSignature = async (req, res) => {
     !courses ||
     !userId
   ) {
-    res.status(400).json({
+    return res.status(400).json({
       success: false,
       massage: "All fields are required",
     });
@@ -150,19 +150,20 @@ const verifyPaymentSignature = async (req, res) => {
         //  send mail student to enrolled course successfully
         const email = mailSender(
           student.email,
-          `Successfully Enrolled into ${course.courseName}`,
-          enrolledTemplet
+
+          enrolledTemplet,
+          `Successfully Enrolled into ${course.courseName}`
         );
 
         // send response
         console.log("Email send successfully --->", email);
-        res.status(200).json({
+        return res.status(200).json({
           success: false,
           massage: "Payment Verified",
         });
       } catch (error) {
         console.log(error);
-        res.status(400).json({
+        return res.status(400).json({
           success: false,
           massage: "Failed to add course in enrolled list of user and course",
         });

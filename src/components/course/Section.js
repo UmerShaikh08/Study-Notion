@@ -26,6 +26,7 @@ const Section = ({ section }) => {
       {section &&
         section?.subSection?.map((lecture) => (
           <div
+            key={lecture._id}
             className="relative h-0  bg-richblack-900 transition-[height] duration-[0.35s] ease-[ease] "
             style={showLectures ? { height: "88px" } : { height: "0px" }}
           >

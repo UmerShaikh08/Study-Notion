@@ -6,6 +6,7 @@ import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { buyCourse } from "../../services/operations/payment";
+import { addToCart } from "../../Redux/Slices/cartSlice";
 
 const CourseBuyCard = ({ course }) => {
   const { token } = useSelector((store) => store.auth);
@@ -35,12 +36,26 @@ const CourseBuyCard = ({ course }) => {
           Rs.{course?.price}
         </h1>
         <button
-          onClick={handleBuyCourse}
+          onClick={
+            user && course?.studentsEnrolled.includes(user?._id)
+              ? () => navigate("/dashboard/enrolled-courses")
+              : handleBuyCourse
+          }
           className="bg-yellow-100 py-2   text-richblack-900 font-semibold rounded-md transition-all duration-200  hover:scale-95 "
         >
-          By Now
+          {user && course?.studentsEnrolled.includes(user?._id)
+            ? "Go to Course"
+            : "Buy Now"}
         </button>
-        <button className="bg-richblack-800 py-3 font-semibold border-b border-richblack-600   rounded-md transition-all duration-200  hover:scale-95">
+        <button
+          onClick={() => {
+            console.log("course ---->", course);
+            dispatch(addToCart(course));
+          }}
+          className={`bg-richblack-800 py-3 font-semibold border-b border-richblack-600   rounded-md transition-all duration-200  hover:scale-95 ${
+            user && course?.studentsEnrolled.includes(user?._id) ? "hidden" : ""
+          }`}
+        >
           Add to Cart
         </button>
 
@@ -52,7 +67,10 @@ const CourseBuyCard = ({ course }) => {
         </h1>
         <div className="flex flex-col">
           {course?.requirements.map((instruction, idx) => (
-            <div className="hidden md:flex flex-row  items-center text-gradientGreen-200">
+            <div
+              className="hidden md:flex flex-row  items-center text-gradientGreen-200"
+              key={idx}
+            >
               <AiFillCaretRight key={idx} /> {instruction}
             </div>
           ))}

@@ -7,9 +7,9 @@ import ReactStars from "react-rating-stars-component";
 
 const CartCard = (course) => {
   const dispatch = useDispatch();
-
+  console.log("course details ---->", course);
   const removeHandler = () => {
-    dispatch(removeItemFromCart(course));
+    dispatch(removeItemFromCart(course.data));
   };
   return (
     <div className="text-richblack-5  border-richblack-600  ">
@@ -18,23 +18,26 @@ const CartCard = (course) => {
 
         <div className="flex flex-col w-[90%] sm:w-[80%]  md:flex-row gap-5 md:w-[55%]  mx-auto lg:mx-0 items-center">
           {/* card img */}
-          <img src={course?.thumbnail} className=" h-52  md:h-28 rounded-md " />
+          <img
+            src={course?.data?.thumbnail}
+            className=" h-52  md:h-28 rounded-md "
+          />
           <div className="flex flex-col gap-1">
-            <div className="  font-inter text-richblack-5">{course.name}</div>
+            <div className="  font-inter text-richblack-5">{course?.name}</div>
             <div className="text-richblack-200 text-sm">
-              {course?.category?.name}
+              {course?.data?.category?.name}
             </div>
             <div>
               <ReactStars
                 count={5}
-                value={course?.RatingAndReviews?.length}
+                value={course?.data?.RatingAndReviews?.length}
                 size={20}
                 edit={false}
                 activeColor="#ffd700"
                 emptyIcon={<FaStar />}
                 fullIcon={<FaStar />}
               />
-              <div>{course?.RatingAndReviews?.length} Ratings</div>
+              <div>{course?.data?.RatingAndReviews?.length} Ratings</div>
             </div>
             <div className="text-richblack-200 text-sm">
               Total Courses • Lesson • Beginner
@@ -54,7 +57,7 @@ const CartCard = (course) => {
           </div>
           {/* course price */}
           <div className=" text-yellow-50 text-xl font-semibold text-center">
-            Rs. {course?.price}
+            Rs. {course?.data?.price}
           </div>
         </div>
       </div>
