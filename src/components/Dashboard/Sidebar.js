@@ -8,20 +8,19 @@ import { VscSignOut } from "react-icons/vsc";
 import { useNavigate } from "react-router-dom";
 import ConfirmationModal from "../common/ConfirmationModal";
 import { logout } from "../../services/operations/auth";
-import { setShowSidebar } from "../../Redux/Slices/profileSlice";
 import { BiMenu } from "react-icons/bi";
 import { RxCross2 } from "react-icons/rx";
 
 const Sidebar = () => {
   const { loading: authLoading } = useSelector((store) => store.auth);
-  const {
-    user,
-    showSidebar,
-    loading: profileLoading,
-  } = useSelector((store) => store.profile);
+  const { user, loading: profileLoading } = useSelector(
+    (store) => store.profile
+  );
   const [confirmationModal, setConfirmationModal] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const [showSidebar, setShowSidebar] = useState(false);
 
   const setting = {
     id: 1,
@@ -83,7 +82,7 @@ const Sidebar = () => {
       </div>
       <div
         className=" min-h-[1rem] h-fit text-richblack-5 cursor-pointer"
-        onClick={() => dispatch(setShowSidebar(showSidebar))}
+        onClick={() => setShowSidebar(!showSidebar)}
       >
         {showSidebar ? <RxCross2 size={30} /> : <BiMenu size={30} />}
       </div>

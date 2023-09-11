@@ -27,11 +27,14 @@ const createSubsection = async (req, res) => {
 
     const videoDetails = await videoUploader(file, process.env.FOLDER_NAME);
 
+    console.log("video details ---->", videoDetails);
+
+    const time = parseInt(videoDetails?.duration);
     const newSubsection = await SubSection.create({
       title,
       description,
       videoUrl: videoDetails?.secure_url,
-      timeDuration: videoDetails?.duration,
+      timeDuration: time,
     });
 
     if (!newSubsection) {

@@ -157,10 +157,6 @@ const verifyPaymentSignature = async (req, res) => {
 
         // send response
         console.log("Email send successfully --->", email);
-        return res.status(200).json({
-          success: false,
-          massage: "Payment Verified",
-        });
       } catch (error) {
         console.log(error);
         return res.status(400).json({
@@ -169,6 +165,10 @@ const verifyPaymentSignature = async (req, res) => {
         });
       }
     }
+    return res.status(200).json({
+      success: false,
+      massage: "Payment Verified",
+    });
   } else {
     res.status(400).json({
       success: false,

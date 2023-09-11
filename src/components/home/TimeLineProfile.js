@@ -5,7 +5,7 @@ const TimeLineProfile = ({ title, logo, description, index }) => {
     <>
       <div className="text-black flex flex-row gap-3">
         <div className="bg-white rounded-full p-3 h-[3.5rem] w-[3.5rem] flex items-center justify-center shadow-sm">
-          <img src={logo}></img>
+          <img src={logo} alt="logo"></img>
         </div>
 
         <div>

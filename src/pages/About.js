@@ -80,7 +80,11 @@ const About = () => {
             color={ourData[0].color}
           />
           <div className=" mx-auto">
-            <img src={FoundingStory} className="  shadow-[0px_0px_20px_red]" />
+            <img
+              src={FoundingStory}
+              alt="img"
+              className="  shadow-[0px_0px_20px_red]"
+            />
           </div>
         </div>
         <div className="flex flex-col lg:flex-row gap-56 ">

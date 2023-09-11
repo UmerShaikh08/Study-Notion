@@ -2,12 +2,11 @@ import React from "react";
 import Sidebar from "../components/Dashboard/Sidebar";
 import { Outlet } from "react-router-dom";
 import Loader from "../components/common/Loader";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 const Dashboard = () => {
   const { loading: profileLoading } = useSelector((store) => store.profile);
   const { loading: authLoading } = useSelector((store) => store.auth);
-  const dispatch = useDispatch();
 
   return profileLoading || authLoading ? (
     <Loader />

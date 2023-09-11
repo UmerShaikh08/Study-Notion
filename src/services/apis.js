@@ -32,6 +32,7 @@ export const course = {
   DELETE_COURSE: BASE_URL + "/course/deleteCourse",
   GET_COURSE_DETAILS: BASE_URL + "/course/getCoursesDetails",
   GET_COURSE_FULL_DETAILS: BASE_URL + "/course/getCourseFullDetails",
+  DELETE_COURSE_FROM_STUDENT: BASE_URL + "/course/removed-enrolledcourse",
 };
 
 //section
@@ -56,5 +57,5 @@ export const category = {
 export const payment = {
   CAPTURE_PAYMENT: BASE_URL + "/payment/capturePayment",
   VERIFY_PAYMENT: BASE_URL + "/payment/verifyingSignature",
-  PAYMENT_SUCCESS: BASE_URL +"/payment/payment-successfull",
+  PAYMENT_SUCCESS: BASE_URL + "/payment/payment-successfull",
 };

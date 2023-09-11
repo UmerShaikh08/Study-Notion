@@ -390,6 +390,19 @@ const deleteCourse = async (req, res) => {
       });
     }
 
+    const course = await Course.findById(courseId);
+    console.log("course ====>", course);
+
+    const category = await Category.findOneAndUpdate(
+      { _id: course.category },
+      {
+        $pull: { course: courseId },
+      },
+      { new: true }
+    );
+
+    console.log("after course removed from catrgory ---->", category);
+
     // delete course
     const deletedCourse = await Course.findByIdAndDelete(courseId);
 
@@ -414,6 +427,82 @@ const deleteCourse = async (req, res) => {
   }
 };
 
+const removeCourseFromStudent = async (req, res) => {
+  try {
+    const { courseId } = req.body;
+    const userId = req.user.id;
+
+    if (!courseId || !userId) {
+      return res.status(400).json({
+        success: false,
+        massage: "course id and user id required",
+      });
+    }
+
+    const student = await User.findById(userId);
+
+    if (student.accountType !== "Student") {
+      return res.status(400).json({
+        success: false,
+        massage: "User is not a student ",
+      });
+    }
+
+    console.log("student courses ----> ", student.courses);
+    console.log("course Id --->", courseId);
+
+    if (!student.courses.includes(courseId)) {
+      return res.status(400).json({
+        success: false,
+        massage: "This course is not enrolled by student",
+      });
+    }
+
+    const updateStudent = await User.findByIdAndUpdate(
+      userId,
+      {
+        $pull: { courses: courseId },
+      },
+      { new: true }
+    );
+
+    const updateCourse = await Course.findByIdAndUpdate(
+      courseId,
+      {
+        $pull: { studentsEnrolled: userId },
+      },
+      { new: true }
+    );
+
+    console.log("removed courses --->", updateStudent);
+
+    if (!updateStudent) {
+      return res.status(400).json({
+        success: false,
+        massage: "failed to delete course from student  ",
+      });
+    }
+
+    if (!updateCourse) {
+      return res.status(400).json({
+        success: false,
+        massage: "failed to remove user from course  ",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      massage: "Course is removed from student",
+      courses: updateStudent?.courses,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      success: false,
+      massage: "This course is not enrolled by student",
+    });
+  }
+};
+
 export {
   createCourse,
   getAllCourses,
@@ -423,4 +512,5 @@ export {
   getEnrolledCourses,
   getInstructorCourses,
   deleteCourse,
+  removeCourseFromStudent,
 };

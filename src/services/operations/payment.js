@@ -33,8 +33,6 @@ const buyCourse = async (user, courses, navigate, dispatch, token) => {
       throw new Error("Razonpay sdk failed to execute");
     }
 
-    console.log("courses-->", courses);
-    console.log("token --> ", token);
     const response = await apiConnector(
       "POST",
       payment.CAPTURE_PAYMENT,
@@ -50,10 +48,7 @@ const buyCourse = async (user, courses, navigate, dispatch, token) => {
       throw new Error("Failed to capture payment");
     }
 
-    console.log("amount --->", response?.data?.data?.amount);
     const amount = response?.data?.data?.amount;
-
-    console.log("secret key ", process.env.REACT_APP_RAZOR_KEY_SECRET);
 
     const options = {
       key: process.env.REACT_APP_RAZOR_KEY_SECRET,
@@ -74,12 +69,9 @@ const buyCourse = async (user, courses, navigate, dispatch, token) => {
           courses,
         };
 
-        console.log("body dta --->", bodyData);
         await verifyPayment(bodyData, navigate, dispatch, token);
       },
     };
-
-    console.log("Options --->", options);
 
     const paymentObject = new window.Razorpay(options);
     paymentObject.open();
@@ -87,8 +79,6 @@ const buyCourse = async (user, courses, navigate, dispatch, token) => {
       toast.error("oops, payment failed");
       console.log("error---->", response.error);
     });
-
-    console.log("hi");
   } catch (error) {
     console.log("Buy course error ---> ", error);
     toast.error("payment failed");
@@ -129,8 +119,6 @@ const paymentSuccessfullEmail = async (res, amount, token) => {
 };
 
 const verifyPayment = async (bodyData, navigate, dispatch, token) => {
-  console.log("verify function called");
-  console.log("body data ---->", bodyData);
   const toastId = toast.loading("Verifying Payment...");
   dispatch(setPaymentLoading(true));
   try {

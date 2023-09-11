@@ -177,3 +177,36 @@ export const getEnrolledCourse = (token) => {
     }
   };
 };
+
+export const removeEnrolledCourse = (courseId, token) => {
+  return async (dispatch) => {
+    try {
+      setLoading(true);
+      const response = await apiConnector(
+        "POST",
+        course.DELETE_COURSE_FROM_STUDENT,
+        { courseId },
+        {
+          Authorization: `Bearer ${token}`,
+        }
+      );
+
+      // check req
+      if (!response.data.success) {
+        toast.error("Failed to Delete");
+        dispatch(setLoading(false));
+        console.log(response);
+        throw new Error("Failed to Delete");
+      }
+
+      console.log("response -->", response);
+      toast.success("Removed Course");
+      setLoading(false);
+      return response.data?.courses;
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to Delete");
+      dispatch(setLoading(false));
+    }
+  };
+};

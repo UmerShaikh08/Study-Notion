@@ -11,7 +11,7 @@ const UpdatePassword = () => {
   const dispatch = useDispatch();
   const [isResetCompleted, setIsResetCompleted] = useState(false);
 
-  const { Loading } = useSelector((store) => store.auth);
+  const { loading } = useSelector((store) => store.auth);
 
   const submitDetails = (data) => {
     const token = location.pathname.split("/").at(-1);
@@ -54,6 +54,7 @@ const UpdatePassword = () => {
             password <span className="text-red-200">*</span>
           </label>
           <input
+            disabled={loading}
             required
             type="password"
             id="password"
@@ -69,6 +70,7 @@ const UpdatePassword = () => {
             confirmPassword <span className="text-red-200">*</span>
           </label>
           <input
+            disabled={loading}
             required
             type="password"
             id="confirmPassword"
@@ -79,6 +81,7 @@ const UpdatePassword = () => {
           ></input>
         </div>
         <button
+          disabled={loading}
           type="submit"
           className="bg-yellow-50 text-black py-2  rounded-md "
         >

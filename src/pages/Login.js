@@ -88,8 +88,9 @@ const Login = () => {
           className="absolute bottom-4 right-5 lg:w-[400px] "
           loading="lazy"
           src={loginPage}
+          alt="login img"
         />
-        <img className="w-[400px]" src={frame} />
+        <img className="w-[400px]" alt="frame img" src={frame} />
       </div>
     </div>
   );

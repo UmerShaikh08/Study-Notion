@@ -16,7 +16,7 @@ const MyCourse = () => {
 
   const fetchInstructorCourses = async () => {
     const result = await getInstructorCourses(token);
-    console.log("--->", result);
+
     if (result) {
       setCourses(result);
     }

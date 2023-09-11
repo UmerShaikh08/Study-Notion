@@ -1,7 +1,6 @@
-import axios from "axios";
 import apiConnector from "../apiConnector";
 import { endpointes } from "../apis";
-import { setLoading, setSignup, setToken } from "../../Redux/Slices/authSlice";
+import { setLoading, setToken } from "../../Redux/Slices/authSlice";
 import { toast } from "react-hot-toast";
 import { setUser } from "../../Redux/Slices/profileSlice";
 import { clearCart } from "../../Redux/Slices/cartSlice";

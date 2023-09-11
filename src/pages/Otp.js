@@ -3,7 +3,6 @@ import OTPInput from "react-otp-input";
 import { Link, useNavigate } from "react-router-dom";
 import { BsArrowLeft } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-import { setSignup } from "../Redux/Slices/authSlice";
 import { singup } from "../services/operations/auth";
 import Loader from "../components/common/Loader";
 
@@ -73,6 +72,7 @@ const Otp = () => {
           )}
         />
         <button
+          disabled={loading}
           type="submit"
           className="bg-yellow-50 text-black py-2  rounded-md "
         >

@@ -30,6 +30,7 @@ import {
   getCourseFullDetails,
   getEnrolledCourses,
   getInstructorCourses,
+  removeCourseFromStudent,
 } from "../controller/course.js";
 
 const courseRoutes = Router();
@@ -44,6 +45,12 @@ courseRoutes.delete("/deleteCourse", auth, isInstructor, deleteCourse);
 courseRoutes.get("/getAllCourses", auth, isInstructor, getAllCourses);
 courseRoutes.post("/getCoursesDetails", getCourseDetails);
 courseRoutes.get("/getEnrolledCourse", auth, isStudent, getEnrolledCourses);
+courseRoutes.post(
+  "/removed-enrolledcourse",
+  auth,
+  isStudent,
+  removeCourseFromStudent
+);
 courseRoutes.get(
   "/getInstructorCourses",
   auth,

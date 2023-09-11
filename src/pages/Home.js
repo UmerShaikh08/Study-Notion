@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { FaArrowRight } from "react-icons/fa";
 import { CTAButton } from "../components/home/Button";
-import { useState } from "react";
 import Banner from "../assets/Images/banner.mp4";
 import { Highlight } from "../components/home/Highlight";
 import CodeBlock from "../components/home/CodeBlock";

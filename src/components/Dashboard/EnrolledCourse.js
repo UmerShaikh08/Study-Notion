@@ -39,16 +39,26 @@ const EnrolledCourse = () => {
 
           <div className="flex flex-col ">
             <div className="grid grid-cols-6 text-richblack-50 text-sm  bg-richblack-600 py-2 px-2 rounded-t-md">
-              <div className="grid col-span-3">Course Name</div>
-              <div className="grid col-span-1">Duration</div>
-              <div className="grid col-span-2">Progress</div>
+              <div className="grid col-span-2 md:col-span-3">Course Name</div>
+              <div className="grid col-span-2 md:col-span-1 ">Duration</div>
+              <div className="grid col-span-2   ">Progress</div>
             </div>
             <div className="border-2  border-richblack-600 rounded-b-md flex flex-col ">
               {enrolleList.map((ele, idx) =>
                 enrolleList.length === idx + 1 ? (
-                  <EnrolleCourseCard active={false} key={ele._id} {...ele} />
+                  <EnrolleCourseCard
+                    active={false}
+                    key={ele._id}
+                    {...ele}
+                    getData={getData}
+                  />
                 ) : (
-                  <EnrolleCourseCard active={false} key={ele._id} {...ele} />
+                  <EnrolleCourseCard
+                    active={false}
+                    key={ele._id}
+                    {...ele}
+                    getData={getData}
+                  />
                 )
               )}
             </div>

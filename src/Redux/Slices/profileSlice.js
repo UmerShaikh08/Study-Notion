@@ -5,7 +5,6 @@ const initialState = {
     ? JSON.parse(localStorage.getItem("user"))
     : null,
   loading: false,
-  showSidebar: true,
 };
 
 const profileSlice = createSlice({
@@ -17,9 +16,6 @@ const profileSlice = createSlice({
     },
     setLoading(state, action) {
       state.loading = action.payload;
-    },
-    setShowSidebar(state, action) {
-      state.showSidebar = !action.payload;
     },
   },
 });

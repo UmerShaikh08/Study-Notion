@@ -241,9 +241,10 @@ const Signup = () => {
         <img
           className="absolute bottom-4 right-5 lg:w-[400px] "
           loading="lazy"
+          alt="sign up img"
           src={signupImg}
         />
-        <img className="w-[400px]" src={frame} />
+        <img className="w-[400px]" alt="frame" src={frame} />
       </div>
     </div>
   );

@@ -30,6 +30,7 @@ import MyCourse from "./components/Dashboard/my course/MyCourse";
 import EditCourse from "./components/Dashboard/EditCourse/EditCourse";
 import Catalog from "./pages/Catalog";
 import CoursePage from "./pages/CoursePage";
+import VideoPage from "./pages/VideoPage";
 
 function App() {
   return (
@@ -86,6 +87,7 @@ function App() {
           }
         />
 
+        {/* dashboard routes */}
         <Route
           path="/dashboard"
           element=<PrivateRoute>
@@ -130,6 +132,14 @@ function App() {
             </InstructorRoute>
           />
         </Route>
+
+        {/* video routes */}
+        <Route
+          path="/course/videos/watch-lectures"
+          element=<StudentRoute>
+            <VideoPage />
+          </StudentRoute>
+        ></Route>
       </Routes>
     </div>
   );

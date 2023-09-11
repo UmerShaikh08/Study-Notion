@@ -11,7 +11,7 @@ export default function IconBtn({
     <button
       disabled={disabled}
       onClick={onclick}
-      className={`flex items-center ${
+      className={`flex items-center transition-all duration-200 hover:scale-95 ${
         outline ? "border border-yellow-50 bg-transparent" : "bg-yellow-50"
       } cursor-pointer gap-x-2 rounded-md py-2 px-5 font-semibold text-richblack-900 ${customClasses}`}
       type={type}

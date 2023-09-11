@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { AiFillCaretRight } from "react-icons/ai";
 import { FaRegShareSquare } from "react-icons/fa";
 import copy from "copy-to-clipboard";
@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { buyCourse } from "../../services/operations/payment";
 import { addToCart } from "../../Redux/Slices/cartSlice";
+import { REACT_APP_INSTRUCTOR } from "../../data";
+import ConfirmationModal from "../common/ConfirmationModal";
 
 const CourseBuyCard = ({ course }) => {
   const { token } = useSelector((store) => store.auth);
@@ -15,6 +17,8 @@ const CourseBuyCard = ({ course }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const courseId = useParams();
+  const [loading, setLoading] = useState(false);
+  const [confirmationModal, setConfirmationModal] = useState(null);
 
   const handleShare = () => {
     copy(window.location.href);
@@ -22,7 +26,33 @@ const CourseBuyCard = ({ course }) => {
   };
 
   const handleBuyCourse = async () => {
-    const result = await buyCourse(user, [courseId], navigate, dispatch, token);
+    // check use instuctor or not
+    if (user && user.accountType === REACT_APP_INSTRUCTOR) {
+      toast.error("Instructor dont have permission to buy course");
+    }
+
+    // user is student
+    if (token) {
+      setLoading(true);
+      const result = await buyCourse(
+        user,
+        [courseId],
+        navigate,
+        dispatch,
+        token
+      );
+      setLoading(false);
+    }
+
+    // user not loged in
+    setConfirmationModal({
+      text1: "you are not Logged in",
+      text2: "Please login to purchase the course",
+      btn1Text: "Login",
+      btn2Text: "Cancel",
+      btn1Handler: () => navigate("/login"),
+      btn2Handler: () => setConfirmationModal(null),
+    });
   };
   return (
     <>
@@ -36,6 +66,7 @@ const CourseBuyCard = ({ course }) => {
           Rs.{course?.price}
         </h1>
         <button
+          disabled={loading}
           onClick={
             user && course?.studentsEnrolled.includes(user?._id)
               ? () => navigate("/dashboard/enrolled-courses")
@@ -83,6 +114,8 @@ const CourseBuyCard = ({ course }) => {
           <FaRegShareSquare /> <p>Share</p>
         </div>
       </div>
+
+      {confirmationModal && <ConfirmationModal modalData={confirmationModal} />}
     </>
   );
 };

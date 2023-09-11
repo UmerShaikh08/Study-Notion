@@ -13,6 +13,9 @@ import CourseDetails from "../components/course/CourseDetails";
 const CoursePage = () => {
   const [course, setCourse] = useState(null);
   const { token } = useSelector((store) => store.auth);
+  const [totalNoOfLectures, setTotalNoOfLectures] = useState(0);
+  const [avgReviewCount, setAverageReviewCount] = useState(0);
+  const [courseDuration, setCourseDuration] = useState(0);
 
   const { id } = useParams();
 
@@ -21,7 +24,6 @@ const CoursePage = () => {
 
     if (result) {
       setCourse(result);
-      console.log("course full details ---->", result);
     }
   };
 
@@ -29,19 +31,22 @@ const CoursePage = () => {
     fetchCourse();
   }, []);
 
-  const [avgReviewCount, setAverageReviewCount] = useState(0);
-
   useEffect(() => {
     const count = GetAvgRating(course?.data?.courseDetails.ratingAndReviews);
     setAverageReviewCount(count);
   }, [course]);
 
-  const [totalNoOfLectures, setTotalNoOfLectures] = useState(0);
   useEffect(() => {
     let lectures = 0;
+    let time = 0;
     course?.courseContent?.forEach((sec) => {
-      lectures += sec.subSection.length || 0;
+      lectures += sec?.subSection?.length || 0;
+      sec?.subSection?.forEach((lectures) => {
+        time += lectures?.timeDuration;
+      });
     });
+    setCourseDuration(time);
+    console.log(time);
     setTotalNoOfLectures(lectures);
   }, [course]);
 
@@ -76,7 +81,7 @@ const CoursePage = () => {
             <div className="flex flex-col md:flex-row  gap-2">
               <p>{course?.courseContent?.length} section(s)</p>
               <p>{totalNoOfLectures} lecture(s)</p>
-              <p>14s total length</p>
+              <p>{courseDuration.toFixed(2)}s total length</p>
             </div>
 
             {/* lectures table */}
@@ -92,6 +97,7 @@ const CoursePage = () => {
             <h1 className="text-4xl font-semibold">Author</h1>
             <div className="flex flex-row items-center gap-5">
               <img
+                alt="author img"
                 src={course?.instructor?.img}
                 className="aspect-square w-[78px] rounded-full object-cover"
               />

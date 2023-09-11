@@ -15,22 +15,18 @@ const Catalog = () => {
   const [active, setActive] = useState(1);
   const { catalogName } = useParams();
   const { token } = useSelector((store) => store.auth);
-  const [loading, setLoading] = useState(false);
   const [categoryId, setCategoryId] = useState("");
   const [catalogPageData, setCatalogPageData] = useState({});
 
   const fetchCategories = async () => {
     const result = await getAllCategories(token);
     if (result) {
-      console.log("result ====> ", result);
-      console.log("catalog name --->", catalogName);
       const category_Id = result.filter(
         (data) =>
           data?.name?.split(" ")?.join("-")?.toLowerCase() === catalogName
       )[0]._id;
 
       setCategoryId(category_Id);
-      console.log("category id ", categoryId);
     }
   };
 
@@ -40,7 +36,6 @@ const Catalog = () => {
 
   const fetchCatalogPagedata = async () => {
     const result = await getCategoriesPageDetails(categoryId);
-    console.log("catalog page details ---->", result);
 
     if (result) {
       setCatalogPageData(result);
@@ -101,7 +96,6 @@ const Catalog = () => {
           </p>
         </div>
         <div>
-          <h1 className="text-4xl text-richblack-5"></h1>
           <CourseSlider courses={catalogPageData?.selectedCategory?.course} />
         </div>
       </div>
