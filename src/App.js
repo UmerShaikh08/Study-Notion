@@ -135,7 +135,7 @@ function App() {
 
         {/* video routes */}
         <Route
-          path="/course/videos/watch-lectures"
+          path="/view-course/:courseId/section/:sectionId/sub-section/:subsectionId"
           element=<StudentRoute>
             <VideoPage />
           </StudentRoute>

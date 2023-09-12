@@ -166,7 +166,7 @@ const getCourseFullDetails = async (courseId, token) => {
 
   toast.dismiss(toastId);
   console.log("Responnseee ---->", response);
-  return response?.data?.data[0];
+  return response?.data?.data;
 };
 
 export {

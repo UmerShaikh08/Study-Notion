@@ -3,24 +3,28 @@ import Footer from "../components/common/Footer";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
-import { getCourseFullDetails } from "../services/operations/courses";
+import {
+  getCourseDetails,
+  getCourseFullDetails,
+} from "../services/operations/courses";
 import { useSelector } from "react-redux";
 import { GetAvgRating } from "../utils/avgRating";
 import Section from "../components/course/Section";
 import CourseBuyCard from "../components/course/CourseBuyCard";
 import CourseDetails from "../components/course/CourseDetails";
+import { convertSecondsToDuration } from "../utils/secToDuration";
 
 const CoursePage = () => {
   const [course, setCourse] = useState(null);
   const { token } = useSelector((store) => store.auth);
   const [totalNoOfLectures, setTotalNoOfLectures] = useState(0);
-  const [avgReviewCount, setAverageReviewCount] = useState(0);
-  const [courseDuration, setCourseDuration] = useState(0);
+  const [courseDuration, setCourseDuration] = useState("");
 
   const { id } = useParams();
 
   const fetchCourse = async () => {
-    const result = await getCourseFullDetails(id, token);
+    console.log("i called cours details fuction");
+    const result = await getCourseDetails(id, token);
 
     if (result) {
       setCourse(result);
@@ -32,21 +36,14 @@ const CoursePage = () => {
   }, []);
 
   useEffect(() => {
-    const count = GetAvgRating(course?.data?.courseDetails.ratingAndReviews);
-    setAverageReviewCount(count);
-  }, [course]);
-
-  useEffect(() => {
     let lectures = 0;
-    let time = 0;
+    setCourseDuration(convertSecondsToDuration(course?.courseDuration));
+
+    //  calculate the count of lectures
     course?.courseContent?.forEach((sec) => {
       lectures += sec?.subSection?.length || 0;
-      sec?.subSection?.forEach((lectures) => {
-        time += lectures?.timeDuration;
-      });
     });
-    setCourseDuration(time);
-    console.log(time);
+
     setTotalNoOfLectures(lectures);
   }, [course]);
 
@@ -81,7 +78,7 @@ const CoursePage = () => {
             <div className="flex flex-col md:flex-row  gap-2">
               <p>{course?.courseContent?.length} section(s)</p>
               <p>{totalNoOfLectures} lecture(s)</p>
-              <p>{courseDuration.toFixed(2)}s total length</p>
+              <p>{courseDuration} total length</p>
             </div>
 
             {/* lectures table */}

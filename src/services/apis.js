@@ -54,6 +54,11 @@ export const category = {
   GET_CATEGORIES_PAGE_DETAILS: BASE_URL + "/course/getCategoryPageDetails",
 };
 
+export const ratingAndReviews = {
+  ADD_RATING_AND_REVIEWS: BASE_URL + "/course/createRatingReviews",
+  GET_AVERAGE_RATING: BASE_URL + "/course/getAverageRating",
+};
+
 export const payment = {
   CAPTURE_PAYMENT: BASE_URL + "/payment/capturePayment",
   VERIFY_PAYMENT: BASE_URL + "/payment/verifyingSignature",

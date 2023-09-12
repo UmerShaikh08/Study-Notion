@@ -25,7 +25,7 @@ const CourseSchema = new Schema({
     required: true,
   },
   courseDuration: {
-    type: String,
+    type: Number,
     required: true,
   },
   tags: {

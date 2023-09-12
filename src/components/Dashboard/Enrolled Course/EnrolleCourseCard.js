@@ -11,6 +11,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import useOutsideClick from "../../../custom hooks/useOutsideClick";
 import { removeEnrolledCourse } from "../../../services/operations/profile";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const EnrolleCourseCard = (
   {
@@ -21,6 +22,7 @@ const EnrolleCourseCard = (
     progressPercentage,
     _id,
     getData,
+    courseContent,
   },
   active
 ) => {
@@ -29,6 +31,7 @@ const EnrolleCourseCard = (
   const [loading, setLoading] = useState(true);
   const { token } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
   useOutsideClick(ref, () => setOpen(false));
@@ -48,7 +51,14 @@ const EnrolleCourseCard = (
       className={`grid grid-cols-6  shadow-sm shadow-richblack-500 place-content-center p-3 pr-0 `}
     >
       {/* img and heading */}
-      <div className="grid col-span-2 md:col-span-3 ">
+      <div
+        className="grid col-span-2 md:col-span-3 "
+        onClick={() =>
+          navigate(
+            `/view-course/${_id}/section/${courseContent?.[0]?._id}/sub-section/${courseContent?.[0]?.subSection?.[0]}`
+          )
+        }
+      >
         <div className="flex flex-col md:flex-row gap-3 text md:items-center ">
           <img src={thumbnail} className="w-[45px] h-[45px] rounded-md" />
           <div>

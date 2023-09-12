@@ -29,7 +29,7 @@ const createSubsection = async (req, res) => {
 
     console.log("video details ---->", videoDetails);
 
-    const time = parseInt(videoDetails?.duration);
+    const time = convertSecondsToDuration(totalDurationInSeconds);
     const newSubsection = await SubSection.create({
       title,
       description,

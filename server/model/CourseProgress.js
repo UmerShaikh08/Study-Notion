@@ -1,9 +1,13 @@
 import mongoose, { Schema, model } from "mongoose";
 
 const CourseProgressSchema = new Schema({
-  courseID: {
+  courseId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Course",
+  },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
   },
   completedVideos: [
     {

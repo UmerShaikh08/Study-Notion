@@ -57,11 +57,7 @@ courseRoutes.get(
   isInstructor,
   getInstructorCourses
 );
-courseRoutes.post(
-  "/getCourseFullDetails",
-
-  getCourseFullDetails
-);
+courseRoutes.post("/getCourseFullDetails", auth, getCourseFullDetails);
 
 // ***************************************************************************************************************************************
 //                                                              Category Routes

@@ -16,15 +16,16 @@ const createRatingReviews = async (req, res) => {
       });
     }
 
-    // dummy code  for adding course in user field after changes and it become for add userid in studentenrolled courses
-    const addcourse = await Course.findOneAndUpdate(
-      { _id: courseId },
-      {
-        $push: { studentsEnrolled: userId },
-      },
-      { new: true }
-    );
-    console.log(addcourse);
+    const alreadyReviewed = await RatingReviews.findOne({
+      user: userId,
+      course: courseId,
+    });
+    if (alreadyReviewed) {
+      return res.status(403).json({
+        success: false,
+        message: "Course is already reviewed by the user",
+      });
+    }
 
     // validate student enrolled or not
     const userEnrolled = await Course.findOne({ _id: courseId });
@@ -36,15 +37,6 @@ const createRatingReviews = async (req, res) => {
       });
     }
 
-    // check student already created ratingReviews or not
-    if (userEnrolled.RatingAndReviews.includes(userId)) {
-      return res.status(400).json({
-        success: false,
-        massage: "student already rated and give review",
-      });
-    }
-
-    console.log("hi");
     // create rating and reviews
     const newRatingReviews = await RatingReviews.create({
       user: userId,
@@ -60,7 +52,7 @@ const createRatingReviews = async (req, res) => {
       courseId,
       {
         $push: {
-          RatingAndReviews: userId,
+          RatingAndReviews: newRatingReviews._id,
         },
       },
 
@@ -73,7 +65,7 @@ const createRatingReviews = async (req, res) => {
       success: true,
       // updateCourse,
       massage: "rating reviews successfully",
-      updateCourse,
+      course: updateCourse,
     });
   } catch (error) {
     console.log(error);

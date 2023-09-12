@@ -4,6 +4,8 @@ import { Category } from "../model/Category.js";
 import { imgUploadToCloudinary } from "../utils/imgUploader.js";
 import dotenv from "dotenv";
 
+import { CourseProgress } from "../model/CourseProgress.js";
+
 const createCourse = async (req, res) => {
   try {
     //config dotenv
@@ -229,15 +231,15 @@ const getAllCourses = async (req, res) => {
 const getCourseFullDetails = async (req, res) => {
   try {
     const { courseId } = req.body;
+    const userId = req.user.id;
 
-    const courseDetails = await Course.find({ _id: courseId })
+    const courseDetails = await Course.findById(courseId)
       .populate({
         path: "instructor",
         populate: {
           path: "additionalDetails",
         },
       })
-      .populate("RatingAndReviews")
       .populate("category")
       .populate({
         path: "courseContent",
@@ -245,20 +247,42 @@ const getCourseFullDetails = async (req, res) => {
           path: "subSection",
         },
       })
-      .exec();
+      .populate("RatingAndReviews");
 
     if (!courseDetails) {
       return res.status(400).json({
         success: false,
-        massage: `could not find the code with ${courseId}`,
+        message: `Could not find course with id: ${courseId}`,
       });
     }
+
     console.log(courseDetails);
+
+    let courseProgressCount = null;
+    courseProgressCount = await CourseProgress.findOne({
+      courseId: courseId,
+    });
+
+    let totalDurationInSeconds = 0;
+    courseDetails?.courseContent?.forEach((content) => {
+      content?.subSection?.forEach((subSection) => {
+        const timeDurationInSeconds = parseInt(subSection?.timeDuration);
+        totalDurationInSeconds += timeDurationInSeconds;
+      });
+    });
+
+    courseDetails.courseDuration = totalDurationInSeconds;
 
     return res.status(200).json({
       success: true,
       massage: "course details get successfully",
-      data: courseDetails,
+      data: {
+        courseDetails,
+
+        completedVideos: courseProgressCount?.completedVideos
+          ? courseProgressCount?.completedVideos
+          : [],
+      },
     });
   } catch (error) {
     console.log(error);
@@ -278,9 +302,13 @@ const getCourseDetails = async (req, res) => {
         path: "courseContent",
         populate: {
           path: "subSection",
+          select: "-videoUrl",
         },
       })
-      .populate("RatingAndReviews");
+      .populate("RatingAndReviews")
+      .populate("category")
+
+      .exec();
 
     if (!courseDetails) {
       return res.status(400).json({
@@ -289,6 +317,16 @@ const getCourseDetails = async (req, res) => {
       });
     }
     console.log("course Details ---> ", courseDetails);
+
+    let totalDurationInSeconds = 0;
+    courseDetails?.courseContent?.forEach((content) => {
+      content?.subSection?.forEach((subSection) => {
+        const timeDurationInSeconds = parseInt(subSection?.timeDuration);
+        totalDurationInSeconds += timeDurationInSeconds;
+      });
+    });
+
+    courseDetails.courseDuration = totalDurationInSeconds;
 
     return res.status(200).json({
       success: true,

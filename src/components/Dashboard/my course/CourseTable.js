@@ -4,7 +4,7 @@ import { FiEdit2 } from "react-icons/fi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { HiClock } from "react-icons/hi";
 import { FaCheck } from "react-icons/fa";
-import { formatDate } from "../../../services/formdate";
+import { formatDate } from "../../../utils/formdate";
 import { useSelector } from "react-redux";
 import { deleteCourse } from "../../../services/operations/courses";
 import ConfirmationModal from "../../common/ConfirmationModal";

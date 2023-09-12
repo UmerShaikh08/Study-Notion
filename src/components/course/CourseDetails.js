@@ -1,9 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BiErrorCircle } from "react-icons/bi";
 import { MdLanguage } from "react-icons/md";
-import { formatDate } from "../../services/formdate";
+import { formatDate } from "../../utils/formdate";
+import { GetAvgRating } from "../../utils/avgRating";
+import RatingStars from "../common/RatingStars";
 
 const CourseDetails = ({ course }) => {
+  console.log("RatingAndReviews 0---->", course?.RatingAndReviews);
+
+  const [avgReviewCount, setAverageReviewCount] = useState(0);
+
+  useEffect(() => {
+    const count = GetAvgRating(course?.RatingAndReviews);
+    console.log("count-->", count);
+    setAverageReviewCount(count);
+    console.log("average", avgReviewCount);
+  }, [course]);
   return (
     <>
       <div className="flex flex-col gap-4 w-full  sm:w-[60%] mx-auto  md:mx-0 md:w-[60%] mt-[5rem]">
@@ -15,10 +27,15 @@ const CourseDetails = ({ course }) => {
         <p className="hidden sm:block text-richblack-300">
           {course?.courseDescription}
         </p>
-        <p className="">
-          ({course?.RatingAndReviews.length} reviews){" "}
-          {course?.studentsEnrolled.length} Students enrolled
-        </p>
+        <div className=" flex flex-row gap-1  text-lg">
+          <RatingStars
+            Review_Count={avgReviewCount}
+            Star_Size={24}
+            edit={false}
+          />
+          <p>({course?.RatingAndReviews.length} reviews) </p>
+          <p>{course?.studentsEnrolled.length} Students enrolled</p>
+        </div>
         <p className="md:text-lg">
           Create By {course?.instructor.firstName} {course?.instructor.lastName}{" "}
         </p>
