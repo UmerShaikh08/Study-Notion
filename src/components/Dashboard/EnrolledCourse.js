@@ -3,16 +3,19 @@ import { useDispatch, useSelector } from "react-redux";
 import Logo from "../../assets/Logo/Logo-Small-Light.png";
 import EnrolleCourseCard from "./Enrolled Course/EnrolleCourseCard";
 import { getEnrolledCourse } from "../../services/operations/profile";
+import { course } from "../../services/apis";
 
 const EnrolledCourse = () => {
   const [enrolleList, setEnrolleList] = useState([]);
+  const [progress, setProgress] = useState([]);
   const { token } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
 
   const getData = async () => {
     const data = await dispatch(getEnrolledCourse(token));
-
-    await setEnrolleList(data);
+    console.log(data);
+    setEnrolleList(data?.student?.courses);
+    setProgress(data?.student?.courseProgress);
   };
 
   useEffect(() => {
@@ -51,6 +54,7 @@ const EnrolledCourse = () => {
                     key={ele._id}
                     {...ele}
                     getData={getData}
+                    progress={progress}
                   />
                 ) : (
                   <EnrolleCourseCard
@@ -58,6 +62,7 @@ const EnrolledCourse = () => {
                     key={ele._id}
                     {...ele}
                     getData={getData}
+                    progress={progress}
                   />
                 )
               )}

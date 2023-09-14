@@ -169,7 +169,7 @@ export const getEnrolledCourse = (token) => {
 
       console.log("response -->", response);
       setLoading(false);
-      return response.data?.courses;
+      return response.data;
     } catch (error) {
       console.log(error);
       toast.error("Failed to get Enrolled Course");

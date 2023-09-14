@@ -32,6 +32,10 @@ import {
   getInstructorCourses,
   removeCourseFromStudent,
 } from "../controller/course.js";
+import {
+  addCourseProgress,
+  getCourseProgress,
+} from "../controller/CourseProgress.js";
 
 const courseRoutes = Router();
 
@@ -85,7 +89,16 @@ courseRoutes.post("/deleteSection", auth, isInstructor, deleteSection);
 // ***************************************************************************************************************************************
 //                                                             Sub Sections
 // ***************************************************************************************************************************************
+
 courseRoutes.post("/createSubSection", auth, isInstructor, createSubsection);
 courseRoutes.post("/updatSubSection", auth, isInstructor, updateSubsection);
 courseRoutes.post("/deleteSubSection", auth, isInstructor, deleteSubsection);
+
+// ***************************************************************************************************************************************
+//                                                             Course Progress
+// ***************************************************************************************************************************************
+
+courseRoutes.post("/addCourseProgress", auth, isStudent, addCourseProgress);
+courseRoutes.post("/getCourseProgress", auth, isStudent, getCourseProgress);
+
 export { courseRoutes };

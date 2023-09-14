@@ -31,11 +31,14 @@ import EditCourse from "./components/Dashboard/EditCourse/EditCourse";
 import Catalog from "./pages/Catalog";
 import CoursePage from "./pages/CoursePage";
 import VideoPage from "./pages/VideoPage";
+import VideoPlay from "./components/video page/VideoPlay";
+import ScrollToTop from "./components/common/ScrollToTop";
 
 function App() {
   return (
     <div className="w-screen min-h-screen max-w-[100vw] bg-richblack-900 flex flex-col font-inter">
       <Navbar />
+      <ScrollToTop />
       <Routes>
         <Route path="/" element=<Home /> />
         <Route path="/catalog/:catalogName" element=<Catalog /> />
@@ -139,7 +142,12 @@ function App() {
           element=<StudentRoute>
             <VideoPage />
           </StudentRoute>
-        ></Route>
+        >
+          <Route
+            path="/view-course/:courseId/section/:sectionId/sub-section/:subsectionId"
+            element=<VideoPlay />
+          />
+        </Route>
       </Routes>
     </div>
   );

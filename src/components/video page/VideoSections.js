@@ -1,21 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { HiOutlineVideoCamera } from "react-icons/hi";
-import { MdMonitor } from "react-icons/md";
-import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
+import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { convertSecondsToDuration } from "../../utils/secToDuration";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import useGetIndex from "../video page/useGetIndex";
 
-const VideoSections = ({ section }) => {
-  const [showLectures, setShowLectures] = useState(false);
+const VideoSections = ({ section, videoActiveBar }) => {
   const [duration, setDuration] = useState("");
-  const { courseId, sectionId, subsectionId } = useParams();
+  const { courseId } = useParams();
+  const { getIdx } = useGetIndex();
 
   const location = useLocation();
   const navigate = useNavigate();
-
-  const [activeStatus, setActiveStatus] = useState("");
-  const [videoActiveBar, setVideoActiveBar] = useState("");
+  const [sidebar, setShowSidebar] = useState(false);
 
   const {
     courseSectionData,
@@ -24,25 +21,7 @@ const VideoSections = ({ section }) => {
     totalNoOfLectures,
   } = useSelector((store) => store.viewCourse);
 
-  const setActiveFlags = () => {
-    if (!courseSectionData.length) return;
-
-    const sectionIdx = courseSectionData?.findIndex(
-      (section) => section._id === sectionId
-    );
-    const subSectionIdx = courseSectionData[sectionIdx]?.subSection?.findIndex(
-      (subsection) => subsection._id === subsectionId
-    );
-
-    setActiveStatus(courseSectionData[sectionIdx]?._id);
-    setVideoActiveBar(
-      courseSectionData[sectionIdx]?.subSection[subSectionIdx]._id
-    );
-  };
-
-  useEffect(() => {
-    setActiveFlags();
-  }, [courseEntireData, courseSectionData, location.pathname]);
+  // finding an index of ection ans subsectio
 
   useEffect(() => {
     let time = 0;
@@ -51,52 +30,52 @@ const VideoSections = ({ section }) => {
     });
 
     setDuration(convertSecondsToDuration(time));
-  });
+  }, []);
 
   return (
-    <div>
-      <div className="flex flex-row border-b  overflow-hidden transition-[0.3s] border-richblack-600 justify-between p-1 bg-richblack-700">
-        <div className="flex flex-row justify-between items-center w-full text-richblack-100 ">
+    <details className=" appearance-none text-richblack-5 detailanimatation ">
+      <summary className="mt-2 cursor-pointer text-sm text-richblack-5 appearance-none">
+        <div className="flex flex-row justify-between bg-richblack-700 md:px-5 py-4">
+          <p className="w-[70%] font-semibold">{section?.sectionName}</p>
+          <div className="flex flex-row gap-3">
+            <div className="flex items-center gap-3">
+              <MdOutlineKeyboardArrowDown className="arrow" />
+            </div>
+          </div>
+        </div>
+      </summary>
+      {section?.subSection.map((subsection, index) => (
+        <div
+          key={subsection?._id}
+          className="transition-[height] duration-500 ease-in-out"
+        >
           <div
             onClick={() => {
-              setActiveStatus(section._id);
-              setShowLectures(!showLectures);
+              setShowSidebar(true);
+              navigate(
+                `/view-course/${courseId}/section/${section._id}/sub-section/${subsection._id}`
+              );
             }}
-            className="flex flex-row items-center gap-1 cursor-pointer "
+            className={`${
+              videoActiveBar === subsection._id
+                ? "bg-yellow-200"
+                : "bg-richblack-50"
+            } cursor-pointer items-baseline  flex gap-3  px-5 py-2 font-semibold text-richblack-800 relative border-b-[1px] border-richblack-600 `}
           >
-            {showLectures ? <IoIosArrowDown /> : <IoIosArrowUp />}
-            <p>{section?.sectionName}</p>
-          </div>
-          <p className="text-sm ">{duration}</p>
-        </div>
-      </div>
-
-      {/* subsections */}
-      <div className="relative  bg-richblack-900  ">
-        {showLectures &&
-          section?.subSection.map((subsection) => (
-            <div
-              key={subsection._id}
-              className={`p-1 flex flex-col  gap-2 w-full ${
-                videoActiveBar === subsection._id
-                  ? "bg-yellow-50 text-richblack-900"
-                  : "bg-black"
-              } `}
-              onClick={() =>
-                navigate(
-                  `/view-course/${courseId}/section/${section._id}/sub-section/${subsection._id}`
-                )
-              }
-            >
-              <div className="flex  flex-row gap-2 items-center">
-                <HiOutlineVideoCamera />
-                <div>{subsection?.title}</div>
-                <MdMonitor />
-              </div>
+            {/* <input type='checkbox' className=' '/> */}
+            <div className="checkbox-wrapper-19 absolute bottom-1">
+              <input
+                readOnly={true}
+                checked={completedLectures?.includes(subsection?._id)}
+                type="checkbox"
+              />
+              <label className="check-box"></label>
             </div>
-          ))}
-      </div>
-    </div>
+            <p className=" ml-6">{subsection?.title}</p>
+          </div>
+        </div>
+      ))}
+    </details>
   );
 };
 

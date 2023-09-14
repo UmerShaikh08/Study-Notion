@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
-import VideoSidebar from "../components/video page/VideoSidebar";
-import VideoPlay from "../components/video page/VideoPlay";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Outlet, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getCourseFullDetails } from "../services/operations/courses";
+import VideoSidebar from "../components/video page/VideoSidebar";
+import Footer from "./../components/common/Footer";
 import {
   setCompletedLectures,
   setCourseSectionData,
@@ -14,12 +14,12 @@ import {
 const VideoPage = () => {
   const { courseId } = useParams();
   const { token } = useSelector((store) => store.auth);
+
+  const [showSidebar, setShowSidebar] = useState(true);
   const dispatch = useDispatch();
 
-  console.log(courseId);
-
+  // fetching all course details and lectures
   const fetchCoursDetails = async () => {
-    //   get full course data
     const result = await getCourseFullDetails(courseId, token);
 
     if (result) {
@@ -40,15 +40,28 @@ const VideoPage = () => {
   useEffect(() => {
     fetchCoursDetails();
   }, []);
+
   return (
-    <div className="relative flex md:min-h-[calc(100vh-3.5rem)] ">
+    <div className="relative flex  md:min-h-[calc(100vh-3.5rem)] ">
       {/* sidebar permanant */}
-      <VideoSidebar />
-      <div className=" h-[calc(100vh-3.5rem)] flex-1 overflow-auto md:ml-[5rem]">
-        <div className="mx-auto w-11/12 max-w-[1000px] py-10  ">
+      <VideoSidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
+      <div
+        className={` ${
+          showSidebar ? "hidden md:block " : "hidden"
+        }  w-[240px] max-w-[240px]`}
+      ></div>
+      <div className=" h-[calc(100vh-3.5rem)] flex-1 overflow-y-auto overflow-x-hidden md:ml-[5rem]">
+        <div
+          className={`flex   ${
+            showSidebar
+              ? " md:w-[calc(100vw-320px)]"
+              : "w-full md:w-[calc(100vw-320px)] mx-auto"
+          } `}
+        >
           {/* changing dynamically */}
-          <VideoPlay />
+          <Outlet />
         </div>
+        <Footer />
       </div>
     </div>
   );

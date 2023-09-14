@@ -64,3 +64,8 @@ export const payment = {
   VERIFY_PAYMENT: BASE_URL + "/payment/verifyingSignature",
   PAYMENT_SUCCESS: BASE_URL + "/payment/payment-successfull",
 };
+
+export const courseProgress = {
+  GET_COURSE_PROGRESS: BASE_URL + "/course/getCourseProgress",
+  ADD_COURSE_PROGRESS: BASE_URL + "/course/addCourseProgress",
+};

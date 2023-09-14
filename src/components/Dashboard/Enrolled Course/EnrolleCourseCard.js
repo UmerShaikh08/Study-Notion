@@ -12,6 +12,7 @@ import useOutsideClick from "../../../custom hooks/useOutsideClick";
 import { removeEnrolledCourse } from "../../../services/operations/profile";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const EnrolleCourseCard = (
   {
@@ -23,6 +24,7 @@ const EnrolleCourseCard = (
     _id,
     getData,
     courseContent,
+    progress,
   },
   active
 ) => {
@@ -33,6 +35,28 @@ const EnrolleCourseCard = (
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const [courseProgress, setCourseProgress] = useState([]);
+
+  const fetchProgress = async () => {
+    const data = progress.filter((course) => course.courseId === _id);
+
+    if (data) {
+      setCourseProgress(data);
+      console.log("data --->", data);
+    }
+  };
+
+  useEffect(() => {
+    fetchProgress();
+  }, []);
+
+  const totalNoOfLectures = (course) => {
+    let total = 0;
+    courseContent.forEach((section) => {
+      total += section.subSection.length;
+    });
+    return total;
+  };
 
   useOutsideClick(ref, () => setOpen(false));
 
@@ -52,7 +76,7 @@ const EnrolleCourseCard = (
     >
       {/* img and heading */}
       <div
-        className="grid col-span-2 md:col-span-3 "
+        className="grid col-span-2 md:col-span-3 cursor-pointer "
         onClick={() =>
           navigate(
             `/view-course/${_id}/section/${courseContent?.[0]?._id}/sub-section/${courseContent?.[0]?.subSection?.[0]}`
@@ -77,21 +101,14 @@ const EnrolleCourseCard = (
       {/* progress */}
       <div className="grid col-span-2 md:col-span-1 font-semibold my-auto ">
         <p className="text-xs text-richblack-50">
-          Progress {progressPercentage || 50}%
+          Progress {(courseProgress.length / totalNoOfLectures()) * 100 || 0}%
         </p>
         <ProgressBar
-          completed={progressPercentage || 50}
-          bgColor="#47A5C5"
-          height="8px"
-          borderRadius="0px"
-          isLabelVisible={false}
-          baseBgColor="#2C333F"
-          labelColor="#e80909"
-          margin="0"
-          padding="0"
           transitionDuration="150"
-          maxCompleted={100}
-          barContainerClassName="container"
+          completed={(courseProgress.length / totalNoOfLectures()) * 100 || 0}
+          total={totalNoOfLectures()}
+          height="8px"
+          isLabelVisible={false}
         />
       </div>
 

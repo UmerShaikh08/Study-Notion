@@ -26,7 +26,7 @@ const CourseCard = ({ course, Height }) => {
           {course?.RatingAndReviews.length} Ratings
         </p>
       </div>
-      <p className="text-richblack-5">{course?.price}</p>
+      <p className="text-richblack-5">{course?.price} Rs</p>
     </div>
   );
 };

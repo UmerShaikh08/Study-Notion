@@ -261,6 +261,7 @@ const getCourseFullDetails = async (req, res) => {
     let courseProgressCount = null;
     courseProgressCount = await CourseProgress.findOne({
       courseId: courseId,
+      userId,
     });
 
     let totalDurationInSeconds = 0;
@@ -348,10 +349,13 @@ const getEnrolledCourses = async (req, res) => {
     const userId = req.user.id;
 
     // get user data and populate enrolled courses
-    const studentData = await User.findById(userId).populate({
-      path: "courses",
-      populate: { path: "courseContent" },
-    });
+    const studentData = await User.findById(userId)
+      .populate({
+        path: "courses",
+        populate: { path: "courseContent" },
+      })
+      .populate("courseProgress")
+      .exec();
 
     // check user student or not
     if (studentData.accountType !== "Student") {
@@ -366,7 +370,7 @@ const getEnrolledCourses = async (req, res) => {
     return res.status(200).json({
       success: true,
       massage: "enrolled course fetched successfully ",
-      courses: studentData?.courses,
+      student: studentData,
     });
   } catch (error) {
     console.log(error);
