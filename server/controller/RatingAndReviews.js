@@ -9,10 +9,12 @@ const createRatingReviews = async (req, res) => {
     const { courseId, rating, review } = req.body;
     const userId = req.user.id;
 
+    console.log("req body ", req.body);
+    console.log(userId);
     if (!courseId || !rating || !review || !userId) {
       return res.status(400).json({
         success: false,
-        massage: "all field are required",
+        message: "Please set Rating and Review",
       });
     }
 
@@ -23,7 +25,7 @@ const createRatingReviews = async (req, res) => {
     if (alreadyReviewed) {
       return res.status(403).json({
         success: false,
-        message: "Course is already reviewed by the user",
+        message: "You Already Rated",
       });
     }
 
@@ -33,7 +35,7 @@ const createRatingReviews = async (req, res) => {
     if (!userEnrolled.studentsEnrolled.includes(userId)) {
       return res.status(400).json({
         success: false,
-        massage: "student not enrolled course",
+        message: "Failed to add rating",
       });
     }
 
@@ -64,14 +66,14 @@ const createRatingReviews = async (req, res) => {
     return res.status(200).json({
       success: true,
       // updateCourse,
-      massage: "rating reviews successfully",
+      message: "rating reviews successfully",
       course: updateCourse,
     });
   } catch (error) {
     console.log(error);
     return res.status(400).json({
       success: false,
-      massage: "error occured while creating Rating and Reviews",
+      message: "Failed to add rating ",
     });
   }
 };
@@ -97,7 +99,7 @@ const getAvgrating = async (req, res) => {
     if (result.length == 0) {
       return res.status(400).json({
         success: false,
-        massage: "no rating found",
+        message: "no rating found",
         avarageRating: 0,
       });
     }
@@ -110,7 +112,7 @@ const getAvgrating = async (req, res) => {
     console.log(error);
     return res.status(200).json({
       success: false,
-      massage: "error occurred while find avg of rating",
+      message: "error occurred while find avg of rating",
     });
   }
 };
@@ -138,7 +140,7 @@ const getAllRatingReviews = async (req, res) => {
     console.log(error);
     return res.status(400).json({
       success: false,
-      massage: "error occured while getting all Rating and Reviews",
+      message: "error occured while getting all Rating and Reviews",
     });
   }
 };

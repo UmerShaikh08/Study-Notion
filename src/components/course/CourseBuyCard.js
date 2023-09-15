@@ -20,6 +20,9 @@ const CourseBuyCard = ({ course }) => {
   const [loading, setLoading] = useState(false);
   const [confirmationModal, setConfirmationModal] = useState(null);
 
+  console.log("course enrolled list --->", course);
+  console.log("user id ---> ", user._id);
+
   const handleShare = () => {
     copy(window.location.href);
     toast.success("Link Copied to Clipboard");
@@ -29,6 +32,7 @@ const CourseBuyCard = ({ course }) => {
     // check use instuctor or not
     if (user && user.accountType === REACT_APP_INSTRUCTOR) {
       toast.error("Instructor dont have permission to buy course");
+      return;
     }
 
     // user is student
@@ -42,6 +46,7 @@ const CourseBuyCard = ({ course }) => {
         token
       );
       setLoading(false);
+      return;
     }
 
     // user not loged in

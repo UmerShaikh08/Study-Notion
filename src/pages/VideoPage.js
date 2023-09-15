@@ -3,6 +3,7 @@ import { Outlet, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getCourseFullDetails } from "../services/operations/courses";
 import VideoSidebar from "../components/video page/VideoSidebar";
+import AddReviewModal from "../components/video page/AddReviewModal";
 import Footer from "./../components/common/Footer";
 import {
   setCompletedLectures,
@@ -16,6 +17,8 @@ const VideoPage = () => {
   const { token } = useSelector((store) => store.auth);
 
   const [showSidebar, setShowSidebar] = useState(true);
+  const [reviewModal, setReviewModal] = useState(false);
+
   const dispatch = useDispatch();
 
   // fetching all course details and lectures
@@ -44,7 +47,11 @@ const VideoPage = () => {
   return (
     <div className="relative flex  md:min-h-[calc(100vh-3.5rem)] ">
       {/* sidebar permanant */}
-      <VideoSidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
+      <VideoSidebar
+        showSidebar={showSidebar}
+        setShowSidebar={setShowSidebar}
+        setReviewModal={setReviewModal}
+      />
       <div
         className={` ${
           showSidebar ? "hidden md:block " : "hidden"
@@ -63,6 +70,7 @@ const VideoPage = () => {
         </div>
         <Footer />
       </div>
+      {reviewModal && <AddReviewModal setReviewModal={setReviewModal} />}
     </div>
   );
 };

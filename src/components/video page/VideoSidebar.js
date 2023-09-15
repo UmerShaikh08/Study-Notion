@@ -8,8 +8,7 @@ import VideoSections from "./VideoSections";
 import AddReviewModal from "./AddReviewModal";
 import useGetIndex from "./useGetIndex";
 
-const VideoSidebar = ({ showSidebar, setShowSidebar }) => {
-  const [reviewModal, setReviewModal] = useState(false);
+const VideoSidebar = ({ showSidebar, setShowSidebar, setReviewModal }) => {
   const [activeStatus, setActiveStatus] = useState("");
   const [videoActiveBar, setVideoActiveBar] = useState("");
 
@@ -60,6 +59,7 @@ const VideoSidebar = ({ showSidebar, setShowSidebar }) => {
             {courseSectionData &&
               courseSectionData?.map((section) => (
                 <VideoSections
+                  key={section._id}
                   section={section}
                   activeStatus={activeStatus}
                   videoActiveBar={videoActiveBar}
@@ -85,7 +85,7 @@ const VideoSidebar = ({ showSidebar, setShowSidebar }) => {
           )}
         </div>
       </div>
-      {reviewModal && <AddReviewModal setReviewModal={setReviewModal} />}
+      {/*  */}
     </>
   );
 };

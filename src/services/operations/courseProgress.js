@@ -22,6 +22,8 @@ const markCourseLecture = async (courseId, subsectionId, token) => {
       toast.error("failed to mark  lectures");
       throw new Error("failed to check completed lectures");
     }
+
+    toast.success("Lecture Completed");
   } catch (error) {
     console.log(error);
     toast.error("failed to check completed lectures");

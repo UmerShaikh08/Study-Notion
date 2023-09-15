@@ -47,7 +47,7 @@ const VideoPlay = () => {
       (subsection) => subsection._id === subsectionId
     );
 
-    setVideoData(VideoData[0]);
+    setVideoData(VideoData?.[0]);
     setVideoEnded(false);
   }, [courseEntireData, courseSectionData, location.pathname]);
 

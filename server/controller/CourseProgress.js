@@ -25,6 +25,14 @@ const addCourseProgress = async (req, res) => {
         courseId,
       });
       console.log("course progress after creating --->", courseProgress);
+
+      const updateUser = await User.findByIdAndUpdate(
+        userId,
+        {
+          $push: { courseProgress: courseProgress._id },
+        },
+        { new: true }
+      );
     }
 
     if (courseProgress?.completedVideos.includes(subsectionId)) {
@@ -41,14 +49,6 @@ const addCourseProgress = async (req, res) => {
       },
       {
         $push: { completedVideos: subsectionId },
-      },
-      { new: true }
-    );
-
-    const updateUser = await User.findByIdAndUpdate(
-      userId,
-      {
-        $push: { courseProgress: updateCourseProgress._id },
       },
       { new: true }
     );

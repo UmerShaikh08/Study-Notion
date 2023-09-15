@@ -9,6 +9,7 @@ import TimeLineSection from "../components/home/TimeLineSection";
 import BecomeInstructor from "../components/home/BecomeInstructor";
 import ExploreMore from "../components/home/ExploreMore";
 import Footer from "../components/common/Footer";
+import Reviews from "../components/home/Reviews";
 
 const Home = () => {
   return (
@@ -153,6 +154,9 @@ const Home = () => {
 
       {/* section 3 */}
       <BecomeInstructor />
+
+      {/* section 4 */}
+      <Reviews />
 
       {/* footer */}
       <Footer />

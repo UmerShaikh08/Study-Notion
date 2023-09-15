@@ -18,7 +18,7 @@ const AddReviewModal = ({ setReviewModal }) => {
 
   useEffect(() => {
     setValue("review", "");
-    setValue("rating", 0);
+    setValue("rating", 1);
     setValue("courseId", courseId);
   }, []);
 
@@ -68,6 +68,7 @@ const AddReviewModal = ({ setReviewModal }) => {
             <ReactStars
               count={5}
               size={24}
+              value={1}
               onChange={handleRating}
               activeColor="#ffd700"
               classNames={" mx-auto flex justify-center"}

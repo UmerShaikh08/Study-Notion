@@ -57,6 +57,7 @@ export const category = {
 export const ratingAndReviews = {
   ADD_RATING_AND_REVIEWS: BASE_URL + "/course/createRatingReviews",
   GET_AVERAGE_RATING: BASE_URL + "/course/getAverageRating",
+  GET_ALL_REVIEW: BASE_URL + "/course/getAllReviews",
 };
 
 export const payment = {
