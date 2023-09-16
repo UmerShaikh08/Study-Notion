@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateProfileImg } from "../../../services/operations/profile";
 import { setLoading } from "../../../Redux/Slices/profileSlice";
 import { AiOutlineUpload } from "react-icons/ai";
+import IconBtn from "../IconBtn";
 
 const ProfileImg = () => {
   const { user, loading: profileLoading } = useSelector(
@@ -25,7 +26,7 @@ const ProfileImg = () => {
   };
 
   return (
-    <div className="text-white bg-richblack-800 p-10 rounded-md shadow-sm shadow-richblack-500">
+    <div className="text-white bg-richblack-800 p-2 sm:p-10 rounded-md shadow-sm shadow-richblack-500">
       <div className="flex flex-row items-end gap-4">
         <img
           src={image ? URL.createObjectURL(image) : user?.img}
@@ -34,10 +35,10 @@ const ProfileImg = () => {
         />{" "}
         <div className="flex flex-col gap-2">
           <div>Change Profile Picture</div>
-          <div className="flex flex-row gap-2">
+          <div className="flex flex-col sm:flex-row gap-2 w-fit">
             <button
               onClick={imgClick}
-              className={`flex items-center   gap-3 transition-all duration-150 font-medium py-2 px-5 rounded-lg text-lg hover:scale-95 bg-richblack-700 text-richblack-5`}
+              className={`flex items-center   gap-3 transition-all duration-150 font-medium py-1 sm:py-2 px-3 sm:px-5 rounded-lg text-lg hover:scale-95 bg-richblack-700 text-richblack-5`}
             >
               Select
             </button>
@@ -51,12 +52,7 @@ const ProfileImg = () => {
               }}
               ref={selectImg}
             />
-            <button
-              onClick={() => {
-                uploadImg();
-              }}
-              className={`flex items-center   gap-3 transition-all duration-150 font-medium py-2 px-5 rounded-lg text-lg hover:scale-95 bg-yellow-100 text-richblack-900`}
-            >
+            <IconBtn onclick={uploadImg} className={`w-fit`}>
               {profileLoading ? (
                 "Uploading..."
               ) : (
@@ -65,7 +61,7 @@ const ProfileImg = () => {
                   Upload <AiOutlineUpload />{" "}
                 </div>
               )}
-            </button>
+            </IconBtn>
           </div>
         </div>
       </div>

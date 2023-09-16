@@ -81,12 +81,11 @@ const Otp = () => {
       </form>
       <div>
         <Link to={"/signup"}>
-          <div className="flex flex-row items-center">
+          <div className="flex flex-row items-center gap-2 hover:text-yellow-100">
             <BsArrowLeft />
             Back to signup
           </div>
         </Link>
-        <div>resend it</div>
       </div>
     </div>
   );

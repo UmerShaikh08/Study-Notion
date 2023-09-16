@@ -52,7 +52,7 @@ const ProfileInfo = () => {
       onSubmit={handleSubmit(submitData)}
       className="text-richblack-5 flex flex-col gap-6 "
     >
-      <div className="flex flex-col gap-8 bg-richblack-800 p-10 rounded-md shadow-sm shadow-richblack-500">
+      <div className="flex flex-col gap-8 bg-richblack-800 p-2  sm:p-10 rounded-md shadow-sm shadow-richblack-500">
         <h1 className="text-xl font-bold">Profile Information</h1>
 
         {/* first name last name */}
@@ -98,8 +98,8 @@ const ProfileInfo = () => {
         </div>
 
         {/* date of birth and gender */}
-        <div className="flex w-full flex-row gap-7">
-          <div className="flex flex-col w-full">
+        <div className="flex w-full flex-row gap-4 sm:gap-7">
+          <div className="flex flex-col w-[50%] sm:w-full">
             <label htmlFor="dateOfBirth">Date of Birt</label>
             <input
               required
@@ -144,7 +144,7 @@ const ProfileInfo = () => {
         {/* phone nuber and about details */}
         <div className="flex w-full flex-row gap-7">
           <div className="flex flex-col w-full">
-            <label htmlFor="contactNumber">Phone Number</label>
+            <label htmlFor="contactNumber">Phone No</label>
             <input
               required
               type="number"

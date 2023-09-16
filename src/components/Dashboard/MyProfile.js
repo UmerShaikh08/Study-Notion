@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { LiaEdit } from "react-icons/lia";
 import PersonalDetails from "./PersonalDetails";
 import { Link } from "react-router-dom";
+import IconBtn from "./IconBtn";
 
 const MyProfile = () => {
   const { user, loading: profileLoading } = useSelector(
@@ -47,29 +48,28 @@ const MyProfile = () => {
       <h1 className="text-3xl font-medium font-inter text-white">My Profile</h1>
 
       {/* user name and user email  */}
-      <div className="  flex  md:justify-between flex-col  md:flex-row  bg-richblack-800 p-10 rounded-md shadow-sm shadow-richblack-500">
-        <div className="flex flex-row items-center gap-6">
+      <div className="  flex  md:justify-between flex-col  md:flex-row  gap-5 bg-richblack-800 p-2 sm:p-10 rounded-md shadow-sm shadow-richblack-500">
+        <div className="flex flex-row items-center sm:gap-6">
           <img
             src={user?.img}
-            className="aspect-square max-h-20 max-w-20 rounded-full"
+            className="aspect-square max-h-20 max-w-20 w-[20%] sm:w-full  rounded-full"
           />
-          <div className="flex flex-col">
+          <div className="flex flex-col w-full">
             <h1 className="font-bold text-lg text-richblack-5">
               {user?.firstName} {user?.lastName}
             </h1>
             <p className="text-richblack-200 text-sm">{user?.email}</p>
           </div>
         </div>
-        <Link to="/dashboard/setting" className=" mr-0 ml-auto">
-          <button className="flex items-center bg-yellow-100 gap-3 transition-all duration-150 font-medium py-2 px-5 rounded-lg text-lg text-richblack-900 hover:scale-95 ">
-            Edit
+        <Link to="/dashboard/setting" className="  ml-auto">
+          <IconBtn text={"Edit"}>
             <LiaEdit />
-          </button>
+          </IconBtn>
         </Link>
       </div>
 
       {/* user about details  */}
-      <div className="flex flex-col lg:flex-row items-center justify-between bg-richblack-800 p-10 rounded-md shadow-sm shadow-richblack-500">
+      <div className="flex flex-col lg:flex-row gap-5 items-center justify-between bg-richblack-800 p-2 sm:p-10 rounded-md shadow-sm shadow-richblack-500">
         <div className=" w-[90%] lg:w-[70%]  ">
           <div className="font-bold text-lg text-richblack-5 mb-3">About</div>
           <div className="text-richblack-200 text-sm">
@@ -78,23 +78,21 @@ const MyProfile = () => {
               : user?.additionalDetails?.about}
           </div>
         </div>
-        <Link to="/dashboard/setting" className=" mx-auto lg:mx-0">
-          <button className="flex items-center bg-yellow-100 gap-3 transition-all duration-150 font-medium py-2 px-5 rounded-lg text-lg text-richblack-900 hover:scale-95 ">
-            Edit
+        <Link to="/dashboard/setting" className=" ml-auto lg:mx-0">
+          <IconBtn text={"Edit"}>
             <LiaEdit />
-          </button>
+          </IconBtn>
         </Link>
       </div>
 
       {/* user personal details */}
-      <div className="text-richblack-5 bg-richblack-800 p-10 rounded-md shadow-sm shadow-richblack-500">
+      <div className="text-richblack-5  bg-richblack-800 p-2 sm:p-10 rounded-md shadow-sm shadow-richblack-500">
         <div className="flex flex-row justify-between items-center mb-[3rem]">
           <h1 className="font-medium ">Personal Details</h1>
           <Link to="/dashboard/setting">
-            <button className="flex items-center bg-yellow-100 gap-3 transition-all duration-150 font-medium py-2 px-5 rounded-lg text-lg text-richblack-900 hover:scale-95 ">
-              Edit
+            <IconBtn text={"Edit"}>
               <LiaEdit />
-            </button>
+            </IconBtn>
           </Link>
         </div>
         <div className="grid sm:grid-cols-2 gap-4">

@@ -10,6 +10,7 @@ import StatsCmp from "../components/about/StatsCmp";
 import LearningGrid from "../components/about/LearningGrid";
 import ContactFormSection from "../components/about/ContactFormSection";
 import Footer from "./../components/common/Footer";
+import Reviews from "../components/home/Reviews";
 
 const About = () => {
   const ourData = [
@@ -111,7 +112,7 @@ const About = () => {
       </section>
 
       {/* section 5 */}
-
+      <Reviews />
       {/* section 6 */}
       <Footer />
     </div>

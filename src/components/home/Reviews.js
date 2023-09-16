@@ -13,12 +13,14 @@ import RatingStars from "../common/RatingStars";
 const Reviews = () => {
   const [allReview, setAllReview] = useState([]);
   const delayTime = 2000;
+  const onlyShow = 15;
 
   const fetchReview = async () => {
     const result = await getAllRatingReviews();
 
     if (result) {
-      setAllReview(result);
+      const reviewList = result.splice(0, onlyShow);
+      setAllReview(reviewList);
       console.log(result);
     }
   };
@@ -27,12 +29,12 @@ const Reviews = () => {
   }, []);
 
   return (
-    <div className="flex flex-col gap-6 my-16">
+    <div className="w-11/12 max-w-maxContent mx-auto  flex flex-col gap-6 my-16">
       <h1 className="text-4xl text-center text-richblack-5 font-semibold">
         Reviews from other learners
       </h1>
       <div>
-        <div className="h-max-[180px] text-richblack-5">
+        <div className="h-max-[180px]  text-richblack-5">
           <Swiper
             mousewheel={{
               enabled: true,
@@ -71,7 +73,11 @@ const Reviews = () => {
                 <div className="flex flex-col gap-3 min-h-[150px] bg-richblack-800 p-3 text-[14px] text-richblack-25">
                   <div className="flex items-center gap-4">
                     <img
-                      src={review?.user?.[0]?.img}
+                      src={
+                        review?.user?.[0]?.img
+                          ? review?.user?.[0]?.img
+                          : `https://api.dicebear.com/5.x/initials/svg?seed=${review?.user?.[0]?.firstName}%20${review?.user[0].lastName}`
+                      }
                       alt="user"
                       className="h-9 w-9 rounded-full object-cover"
                     />

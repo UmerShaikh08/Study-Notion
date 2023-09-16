@@ -28,13 +28,13 @@ const PassChange = () => {
       onSubmit={handleSubmit(submitData)}
       className="text-richblack-5 flex flex-col gap-8 "
     >
-      <div className="text-richblack-5 flex flex-col gap-8 bg-richblack-800 p-10 rounded-md shadow-sm shadow-richblack-500">
-        <h1 className="text-xl font-bold">Password</h1>
+      <div className="text-richblack-5 flex flex-col gap-8 bg-richblack-800 p-2 sm:p-10 rounded-md shadow-sm shadow-richblack-500">
+        <h1 className=" text-xl font-bold">Password</h1>
 
         {/* password and confirm password */}
         <div className="flex w-full gap-4  lg:flex-row">
           <div className="relative flex w-full flex-col">
-            <label htmlFor="password">Create Password</label>
+            <label htmlFor="password ">Create Password</label>
             <input
               required
               type={showPassword ? "text" : "password"}

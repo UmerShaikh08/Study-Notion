@@ -33,6 +33,7 @@ import CoursePage from "./pages/CoursePage";
 import VideoPage from "./pages/VideoPage";
 import VideoPlay from "./components/video page/VideoPlay";
 import ScrollToTop from "./components/common/ScrollToTop";
+import InstructorDashboard from "./components/Dashboard/InstructorDashboard";
 
 function App() {
   return (
@@ -132,6 +133,12 @@ function App() {
             path="/dashboard/edit-course/:id"
             element=<InstructorRoute>
               <EditCourse />
+            </InstructorRoute>
+          />
+          <Route
+            path="/dashboard/instructor"
+            element=<InstructorRoute>
+              <InstructorDashboard />
             </InstructorRoute>
           />
         </Route>

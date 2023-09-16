@@ -70,7 +70,7 @@ const LearningGrid = () => {
                 </p>
 
                 <div className="w-fit mt-2">
-                  <CTAButton active={true} linkto={card.BtnLink}>
+                  <CTAButton active={true} linkTo={card.BtnLink}>
                     {card.BtnText}
                   </CTAButton>
                 </div>

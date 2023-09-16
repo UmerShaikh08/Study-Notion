@@ -68,7 +68,7 @@ const ForgotPassword = () => {
       )}
 
       <Link to={"/login"}>
-        <div className="flex flex-row items-center">
+        <div className="flex flex-row items-center gap-2 hover:text-yellow-50">
           <BsArrowLeft />
           Back to login
         </div>
