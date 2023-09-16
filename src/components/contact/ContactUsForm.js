@@ -14,8 +14,8 @@ const ContactUsForm = () => {
   } = useForm();
   const [loading, setLoading] = useState(false);
 
-  const submitData = (data) => {
-    contactUs(data, setLoading);
+  const submitData = async (data) => {
+    await contactUs(data, setLoading);
 
     reset({
       firstName: "",

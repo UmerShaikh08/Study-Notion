@@ -26,6 +26,7 @@
     "react-router-dom": "^6.15.0",
     "react-scripts": "5.0.1",
     "react-super-responsive-table": "^5.2.2",
+    "react-top-loading-bar": "^2.3.1",
     "react-type-animation": "^3.1.0",
     "swiper": "^10.2.0",
     "video-react": "^0.16.0",

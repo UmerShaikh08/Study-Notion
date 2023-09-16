@@ -4,6 +4,7 @@ import profileSlice from "./Slices/profileSlice";
 import cartSlice from "./Slices/cartSlice";
 import courseSlice from "./Slices/courseSlice";
 import viewCourseSlice from "./Slices/viewCourseSlice";
+import loadingbarSlice from "./Slices/loadingbarSlice";
 
 const Store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const Store = configureStore({
     cart: cartSlice,
     course: courseSlice,
     viewCourse: viewCourseSlice,
+    loadingBar: loadingbarSlice,
   },
 
   middleware: (getDefaultMiddleware) => getDefaultMiddleware(),

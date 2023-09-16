@@ -1,5 +1,6 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
+import LoadingBar from "react-top-loading-bar";
 
 // Pages
 import Home from "./pages/Home";
@@ -34,17 +35,29 @@ import VideoPage from "./pages/VideoPage";
 import VideoPlay from "./components/video page/VideoPlay";
 import ScrollToTop from "./components/common/ScrollToTop";
 import InstructorDashboard from "./components/Dashboard/InstructorDashboard";
+import ContactUsPage from "./pages/ContactUsPage";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setProgress } from "./Redux/Slices/loadingbarSlice";
 
 function App() {
+  const { progress } = useSelector((store) => store.loadingBar);
+  const dispatch = useDispatch();
   return (
     <div className="w-screen min-h-screen max-w-[100vw] bg-richblack-900 flex flex-col font-inter">
       <Navbar />
+      {/* <LoadingBar
+        color="#f11946"
+        progress={progress}
+        onLoaderFinished={() => dispatch(setProgress(0))}
+      /> */}
       <ScrollToTop />
       <Routes>
         <Route path="/" element=<Home /> />
         <Route path="/catalog/:catalogName" element=<Catalog /> />
         <Route path="/about" element=<About /> />
         <Route path="/course/:id" element=<CoursePage /> />
+        <Route path="/contact" element=<ContactUsPage /> />
 
         <Route
           path="/login"
