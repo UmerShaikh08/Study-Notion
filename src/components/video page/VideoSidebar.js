@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { BiMenu } from "react-icons/bi";
-import { RxCross2 } from "react-icons/rx";
+import React from "react";
 import IconBtn from "../Dashboard/IconBtn";
 import VideoSections from "./VideoSections";
-import AddReviewModal from "./AddReviewModal";
 import useGetIndex from "./useGetIndex";
+import { BiMenu } from "react-icons/bi";
+import { RxCross2 } from "react-icons/rx";
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useLocation, useParams } from "react-router-dom";
 
 const VideoSidebar = ({ showSidebar, setShowSidebar, setReviewModal }) => {
   const [activeStatus, setActiveStatus] = useState("");

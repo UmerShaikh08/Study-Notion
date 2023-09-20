@@ -4,13 +4,15 @@ import { BsArrowLeft } from "react-icons/bs";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { resetPassword } from "../services/operations/auth";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
 const UpdatePassword = () => {
   const { register, handleSubmit } = useForm();
   const location = useLocation();
   const dispatch = useDispatch();
   const [isResetCompleted, setIsResetCompleted] = useState(false);
-
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const { loading } = useSelector((store) => store.auth);
 
   const submitDetails = (data) => {
@@ -48,37 +50,56 @@ const UpdatePassword = () => {
         onSubmit={handleSubmit(submitDetails)}
         className="flex flex-col gap-10"
       >
-        <div>
-          <label htmlFor="password" className="text-richblack-25">
-            {" "}
-            password <span className="text-red-200">*</span>
+        <div className="relative flex w-full flex-col">
+          <label htmlFor="password">
+            Create Password <span className="text-red-200">*</span>
           </label>
           <input
-            disabled={loading}
             required
-            type="password"
+            type={showPassword ? "text" : "password"}
             id="password"
             name="password"
             {...register("password")}
-            placeholder="Enter password address"
-            className="w-full bg-richblack-800 h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
-          ></input>
+            placeholder="Enter Password "
+            className="  w-full bg-richblack-700 h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-3  bottom-[15%] bg-transparent text-richblack-5 hover:text-richblack-3 focus:outline-none"
+          >
+            {showPassword ? (
+              <AiFillEye size={20} />
+            ) : (
+              <AiFillEyeInvisible size={20} />
+            )}
+          </button>
         </div>
-        <div>
-          <label htmlFor="confirmPassword" className="text-richblack-25">
-            {" "}
-            confirmPassword <span className="text-red-200">*</span>
+        <div className="relative w-full flex flex-col">
+          <label htmlFor="confirmPassword">
+            Confirm Password{" "}
+            <span className="hidden sm:inline-block text-red-200">*</span>
           </label>
           <input
-            disabled={loading}
             required
-            type="password"
-            id="confirmPassword"
-            name="confirmPassword"
+            type={showConfirmPassword ? "text" : "password"}
+            id="confirmpassword"
+            name="confirmpassword"
             {...register("confirmPassword")}
-            placeholder="Enter confirmPassword address"
-            className="w-full bg-richblack-800 h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
-          ></input>
+            placeholder="Enter last Name"
+            className="w-full bg-richblack-700 h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
+          />
+          <button
+            type="button"
+            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+            className="absolute right-3  bottom-[15%] bg-transparent text-richblack-5 hover:text-richblack-3 focus:outline-none"
+          >
+            {showConfirmPassword ? (
+              <AiFillEye size={20} />
+            ) : (
+              <AiFillEyeInvisible size={20} />
+            )}
+          </button>
         </div>
         <button
           disabled={loading}

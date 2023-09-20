@@ -9,7 +9,7 @@ const useGetIndex = () => {
     if (!courseSectionData.length) return;
 
     const sectionIdx = courseSectionData?.findIndex(
-      (section) => section._id === sectionId
+      (section) => section?._id === sectionId
     );
     const subSectionIdx = courseSectionData[sectionIdx]?.subSection?.findIndex(
       (subsection) => subsection._id === subsectionId

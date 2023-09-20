@@ -148,6 +148,13 @@ module.exports = {
         maxContentTab: "650px",
       },
     },
+    keyframes: {
+      shimmer: {
+        "100%": {
+          transform: "translateX(100%)",
+        },
+      },
+    },
   },
   plugins: [],
 };

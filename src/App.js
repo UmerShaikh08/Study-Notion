@@ -1,7 +1,8 @@
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
 import LoadingBar from "react-top-loading-bar";
-
+import { setProgress } from "./Redux/Slices/loadingbarSlice";
+import { Routes, Route } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 // Pages
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -33,25 +34,23 @@ import Catalog from "./pages/Catalog";
 import CoursePage from "./pages/CoursePage";
 import VideoPage from "./pages/VideoPage";
 import VideoPlay from "./components/video page/VideoPlay";
-import ScrollToTop from "./components/common/ScrollToTop";
 import InstructorDashboard from "./components/Dashboard/InstructorDashboard";
 import ContactUsPage from "./pages/ContactUsPage";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setProgress } from "./Redux/Slices/loadingbarSlice";
 
 function App() {
   const { progress } = useSelector((store) => store.loadingBar);
+
   const dispatch = useDispatch();
   return (
     <div className="w-screen min-h-screen max-w-[100vw] bg-richblack-900 flex flex-col font-inter">
-      <Navbar />
-      {/* <LoadingBar
-        color="#f11946"
+      {/* Loading bar */}
+      <LoadingBar
+        color="#eccf0d"
         progress={progress}
         onLoaderFinished={() => dispatch(setProgress(0))}
-      /> */}
-      <ScrollToTop />
+      />
+      <Navbar setProgress={setProgress} />
+
       <Routes>
         <Route path="/" element=<Home /> />
         <Route path="/catalog/:catalogName" element=<Catalog /> />

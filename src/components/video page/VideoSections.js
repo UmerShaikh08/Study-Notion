@@ -1,36 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { MdOutlineKeyboardArrowDown } from "react-icons/md";
-import { convertSecondsToDuration } from "../../utils/secToDuration";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import useGetIndex from "../video page/useGetIndex";
+import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+import { useNavigate, useParams } from "react-router-dom";
 
 const VideoSections = ({ section, videoActiveBar }) => {
-  const [duration, setDuration] = useState("");
   const { courseId } = useParams();
-  const { getIdx } = useGetIndex();
 
-  const location = useLocation();
   const navigate = useNavigate();
   const [sidebar, setShowSidebar] = useState(false);
 
-  const {
-    courseSectionData,
-    courseEntireData,
-    completedLectures,
-    totalNoOfLectures,
-  } = useSelector((store) => store.viewCourse);
+  const { completedLectures } = useSelector((store) => store.viewCourse);
 
   // finding an index of ection ans subsectio
-
-  useEffect(() => {
-    let time = 0;
-    section?.subSection?.forEach((subsection) => {
-      time += subsection?.timeDuration;
-    });
-
-    setDuration(convertSecondsToDuration(time));
-  }, []);
 
   return (
     <details className=" appearance-none text-richblack-5 detailanimatation ">
@@ -53,11 +34,11 @@ const VideoSections = ({ section, videoActiveBar }) => {
             onClick={() => {
               setShowSidebar(true);
               navigate(
-                `/view-course/${courseId}/section/${section._id}/sub-section/${subsection._id}`
+                `/view-course/${courseId}/section/${section?._id}/sub-section/${subsection?._id}`
               );
             }}
             className={`${
-              videoActiveBar === subsection._id
+              videoActiveBar === subsection?._id
                 ? "bg-yellow-200"
                 : "bg-richblack-50"
             } cursor-pointer items-baseline  flex gap-3  px-5 py-2 font-semibold text-richblack-800 relative border-b-[1px] border-richblack-600 `}

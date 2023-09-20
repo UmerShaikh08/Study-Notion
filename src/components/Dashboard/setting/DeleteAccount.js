@@ -1,20 +1,20 @@
 import { FiTrash2 } from "react-icons/fi";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { deleteAccount } from "../../../services/operations/profile";
+import { useDispatch, useSelector } from "react-redux";
 
 const DeleteAccount = () => {
   const { token } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
   const nevigate = useNavigate();
 
-  async function handleDeleteAccount(e) {
-    dispatch(deleteAccount(token, nevigate));
-  }
+  const handleDeleteAccount = async (e) => {
+    await dispatch(deleteAccount(token, nevigate));
+  };
 
   return (
     <>
-      <div className="my-10 flex flex-row gap-x-5 rounded-md border-[1px] border-pink-700 bg-pink-900 p-8 px-12">
+      <div className="my-10 flex flex-col md:flex-row gap-x-5 rounded-md border-[1px] border-pink-700 bg-pink-900 p-8 md:px-12">
         <div className="flex aspect-square h-14 w-14 items-center justify-center rounded-full bg-pink-700">
           <FiTrash2 className="text-3xl text-pink-200" />
         </div>

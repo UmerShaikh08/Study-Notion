@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "react-hot-toast";
-import { RxCross2 } from "react-icons/rx";
 import Upload from "../Upload";
+import { toast } from "react-hot-toast";
+import { useForm } from "react-hook-form";
+import { RxCross2 } from "react-icons/rx";
+import { useEffect, useState } from "react";
+
 // redux
-import { useDispatch, useSelector } from "react-redux";
 import { setCourse } from "../../../../Redux/Slices/courseSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 // custom hooks
 import useNewSubsection from "./hooks/useNewSubsection";
@@ -24,6 +25,13 @@ const SubsetionModal = ({
   view = false,
   edit = false,
 }) => {
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const { NewSubsection } = useNewSubsection();
+  const { UpdateSubsection } = useUpdateSubsection();
+  const { token } = useSelector((state) => state.auth);
+  const { course } = useSelector((state) => state.course);
+
   const {
     register,
     handleSubmit,
@@ -32,18 +40,11 @@ const SubsetionModal = ({
     getValues,
   } = useForm();
 
-  const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
-  const { token } = useSelector((state) => state.auth);
-  const { course } = useSelector((state) => state.course);
-  const { NewSubsection } = useNewSubsection();
-  const { UpdateSubsection } = useUpdateSubsection();
-
   const isSubsectionUpdated = (values) => {
     if (
-      modalData.title !== values.title ||
-      modalData.description !== values.description ||
-      modalData.videoFile !== values.videoFile
+      modalData?.title !== values?.title ||
+      modalData?.description !== values?.description ||
+      modalData?.videoFile !== values?.videoFile
     ) {
       return true;
     } else return false;
@@ -51,19 +52,21 @@ const SubsetionModal = ({
 
   useEffect(() => {
     if (edit || view) {
-      setValue("title", modalData.title);
-      setValue("description", modalData.description);
-      setValue("videoFile", modalData.videoFile);
+      setValue("title", modalData?.title);
+      setValue("description", modalData?.description);
+      setValue("videoFile", modalData?.videoFile);
     }
   }, []);
 
   const onSubmit = async (data) => {
+    // view mode
     if (view) {
       return;
     }
 
     const courseId = course?._id;
 
+    // edit mode
     if (edit) {
       const values = getValues();
 
@@ -101,7 +104,7 @@ const SubsetionModal = ({
   };
   return (
     <div className="fixed inset-0 z-[1000] !mt-0 grid h-screen w-screen place-items-center overflow-auto bg-white bg-opacity-10 backdrop-blur-sm">
-      <div className="my-10 w-11/12 max-w-[700px] rounded-lg border border-richblack-400 bg-richblack-800">
+      <div className="my-10 w-11/12 max-w-[700px] rounded-md border border-richblack-400 bg-richblack-800">
         {/* Modal Header */}
         <div className="flex items-center justify-between rounded-t-lg bg-richblack-700 p-5">
           <p className="text-xl font-semibold text-richblack-5">
@@ -137,7 +140,7 @@ const SubsetionModal = ({
               disabled={view || loading}
               placeholder="Enter Lecture Title"
               {...register("title", { required: true })}
-              className=" w-full bg-richblack-700 h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
+              className=" w-full bg-richblack-700 h-[3rem] rounded-md px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
             />
             {errors.lectureTitle && (
               <span className="ml-2 text-xs tracking-wide text-pink-200">
@@ -155,7 +158,7 @@ const SubsetionModal = ({
               disabled={view || loading}
               placeholder="Enter Lecture Description"
               {...register("description", { required: true })}
-              className=" pt-3 h-[10rem] w-full bg-richblack-700  rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700 placeholder:text-start "
+              className=" pt-3 h-[10rem] w-full bg-richblack-700  rounded-md px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700 placeholder:text-start "
             />
             {errors.lectureDesc && (
               <span className="ml-2 text-xs tracking-wide text-pink-200">

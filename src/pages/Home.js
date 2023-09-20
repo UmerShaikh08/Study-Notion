@@ -10,11 +10,33 @@ import BecomeInstructor from "../components/home/BecomeInstructor";
 import ExploreMore from "../components/home/ExploreMore";
 import Footer from "../components/common/Footer";
 import Reviews from "../components/home/Reviews";
+import { useState } from "react";
+import { getAllCourses } from "../services/operations/courses";
+import CourseSlider from "../components/catalog/CourseSlider";
+import { useEffect } from "react";
+import CourseCardShimmer from "../components/shimmer/CourseCardShimmer";
 
 const Home = () => {
+  const [courses, setCourses] = useState(null);
+
+  const fetchCourses = async () => {
+    const result = await getAllCourses();
+    if (result) {
+      setTimeout(() => {
+        setCourses(result);
+      }, 2000);
+
+      console.log("result ", result);
+    }
+  };
+
+  useEffect(() => {
+    fetchCourses();
+  }, []);
   return (
     <div className="m-[1vh] scroll-smooth">
       {/* section 1 */}
+
       <div className="relative  mx-auto flex flex-col w-11/12v max-w-maxContent items-center justify-between text-white">
         <div className="flex items-center flex-col">
           <Link to={"/signup"}>
@@ -80,6 +102,7 @@ const Home = () => {
                 }}
                 code={`<<!DOCTYPE html>\n<html>\n<head>\n<title>This is myPage</title>\n</head>\n</body>\n<h1><ahref="/">Header</a></h1>\n<nav> <a href="/one">One</a>\n <a href="/two">Two</a>\n <a href="/three">Three</a>`}
                 codeColor={"text-yellow-25"}
+                backgroudGradient={"grad"}
               />
             </div>
             {/* code section 2 */}
@@ -107,9 +130,26 @@ const Home = () => {
                 }}
                 code={`import React from "react";\nimport CTAButton from "./Button";\nimport TypeAnimation from "react-type";\nimport { FaArrowRight } from "react-icons/fa";\n\nconst Home = () => {\nreturn ( \n<div>Home</div>\n}\nexport default Home;`}
                 codeColor={"text-gradientBlue-200"}
+                backgroudGradient={"grad2"}
               />
             </div>
           </div>
+        </div>
+      </div>
+      <div className=" mx-auto box-content w-[90%] space-y-10  lg:py-12 lg:max-w-maxContent mb-6">
+        <div className="text-4xl text-richblack-5">
+          Courses to get you started
+        </div>
+        <div className="lg:py-8">
+          {courses ? (
+            <CourseSlider courses={courses} />
+          ) : (
+            <div className="flex flex-row">
+              <CourseCardShimmer />
+              <CourseCardShimmer />
+              <CourseCardShimmer />
+            </div>
+          )}
         </div>
       </div>
 

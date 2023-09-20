@@ -26,7 +26,7 @@ const createCourse = async (req, res) => {
       category,
       price,
       tags,
-      courseDuration = "0",
+      courseDuration = 0,
       requirements,
       status,
     } = req.body;
@@ -78,7 +78,7 @@ const createCourse = async (req, res) => {
     console.log(thumbnailImg);
 
     // create new course
-    const newCourse = await Course.create({
+    let newCourse = await Course.create({
       courseName,
       courseDescription,
       price,
@@ -91,6 +91,8 @@ const createCourse = async (req, res) => {
       requirements: requirementsArray,
       status,
     });
+
+    console.log("new  course --->", newCourse);
 
     // add new course in User instructor course List
     await User.findByIdAndUpdate(
@@ -218,6 +220,7 @@ const getAllCourses = async (req, res) => {
     return res.status(200).json({
       success: true,
       massage: "all courses get successfully",
+      courses: allCourses,
     });
   } catch (error) {
     console.log(error);
@@ -319,6 +322,7 @@ const getCourseDetails = async (req, res) => {
     }
     console.log("course Details ---> ", courseDetails);
 
+    //TODO remove  extra code i already handle in subsection creation time
     let totalDurationInSeconds = 0;
     courseDetails?.courseContent?.forEach((content) => {
       content?.subSection?.forEach((subSection) => {

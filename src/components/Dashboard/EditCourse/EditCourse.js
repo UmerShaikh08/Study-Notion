@@ -1,18 +1,16 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
-import {
-  editCourse,
-  getCourseDetails,
-} from "../../../services/operations/courses";
-import { setCourse, setEditCourse } from "../../../Redux/Slices/courseSlice";
+import React from "react";
 import AddCourse from "../New Course/AddCourse";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { useState } from "react";
+import { getCourseDetails } from "../../../services/operations/courses";
+import { useDispatch, useSelector } from "react-redux";
+import { setCourse, setEditCourse } from "../../../Redux/Slices/courseSlice";
 
 const EditCourse = () => {
-  const { id } = useParams();
-  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const { id } = useParams();
   const { course } = useSelector((store) => store.course);
   const { token } = useSelector((store) => store.auth);
 

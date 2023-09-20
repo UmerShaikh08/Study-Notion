@@ -1,18 +1,16 @@
-import ProgressBar from "@ramonak/react-progress-bar";
 import React from "react";
-import { useState } from "react";
-import { useRef } from "react";
-import { useReducer } from "react";
-import {
-  BsThreeDotsVertical,
-  BsFillFileEarmarkCheckFill,
-} from "react-icons/bs";
-import { RiDeleteBin6Line } from "react-icons/ri";
+import ProgressBar from "@ramonak/react-progress-bar";
 import useOutsideClick from "../../../custom hooks/useOutsideClick";
-import { removeEnrolledCourse } from "../../../services/operations/profile";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useRef } from "react";
+import { useState } from "react";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { removeEnrolledCourse } from "../../../services/operations/profile";
+import { BsFillFileEarmarkCheckFill } from "react-icons/bs";
+import { useDispatch, useSelector } from "react-redux";
+import { convertSecondsToDuration } from "../../../utils/secToDuration";
 
 const EnrolleCourseCard = (
   {
@@ -20,7 +18,7 @@ const EnrolleCourseCard = (
     thumbnail,
     courseDescription,
     courseDuration,
-    progressPercentage,
+
     _id,
     getData,
     courseContent,
@@ -28,21 +26,22 @@ const EnrolleCourseCard = (
   },
   active
 ) => {
-  const discription = courseDescription?.substr(0, 50);
-  const ref = useRef(null);
-  const [loading, setLoading] = useState(true);
-  const { token } = useSelector((store) => store.auth);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [courseProgress, setCourseProgress] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const ref = useRef(null);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { token } = useSelector((store) => store.auth);
+
+  const discription = courseDescription?.substr(0, 50);
 
   const fetchProgress = async () => {
-    const data = progress.filter((course) => course.courseId === _id);
+    const data = progress?.filter((course) => course?.courseId === _id);
 
     if (data) {
       setCourseProgress(data);
-      console.log("data --->", data);
     }
   };
 
@@ -50,10 +49,10 @@ const EnrolleCourseCard = (
     fetchProgress();
   }, []);
 
-  const totalNoOfLectures = (course) => {
+  const totalNoOfLectures = () => {
     let total = 0;
-    courseContent.forEach((section) => {
-      total += section.subSection.length;
+    courseContent?.forEach((section) => {
+      total += section?.subSection?.length;
     });
     return total;
   };
@@ -96,16 +95,16 @@ const EnrolleCourseCard = (
 
       {/* duration */}
       <div className="grid col-span-1 md:col-span-1  text-richblack-50 my-auto">
-        {courseDuration}
+        {convertSecondsToDuration(courseDuration)}
       </div>
       {/* progress */}
       <div className="grid col-span-2 md:col-span-1 font-semibold my-auto ">
         <p className="text-xs text-richblack-50">
-          Progress {(courseProgress.length / totalNoOfLectures()) * 100 || 0}%
+          Progress {(courseProgress?.length / totalNoOfLectures()) * 100 || 0}%
         </p>
         <ProgressBar
           transitionDuration="150"
-          completed={(courseProgress.length / totalNoOfLectures()) * 100 || 0}
+          completed={(courseProgress?.length / totalNoOfLectures()) * 100 || 0}
           total={totalNoOfLectures()}
           height="8px"
           isLabelVisible={false}
@@ -124,7 +123,14 @@ const EnrolleCourseCard = (
             ref={ref}
             className="absolute top-[50%] left-[-45%] bg-richblack-700 rounded-md p-1 p-r0  text-sm flex flex-col  gap-3 transition-all translate-y-[-10px] duration-700 ease-in-out "
           >
-            <div className="flex flex-row items-center gap-1 cursor-pointer">
+            <div
+              className="flex flex-row items-center gap-1 cursor-pointer"
+              onClick={() =>
+                navigate(
+                  `/view-course/${_id}/section/${courseContent?.[0]?._id}/sub-section/${courseContent?.[0]?.subSection?.[0]}`
+                )
+              }
+            >
               <BsFillFileEarmarkCheckFill />
               <p>Mark as Completed</p>
             </div>

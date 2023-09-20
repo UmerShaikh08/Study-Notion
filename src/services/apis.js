@@ -33,6 +33,7 @@ export const course = {
   GET_COURSE_DETAILS: BASE_URL + "/course/getCoursesDetails",
   GET_COURSE_FULL_DETAILS: BASE_URL + "/course/getCourseFullDetails",
   DELETE_COURSE_FROM_STUDENT: BASE_URL + "/course/removed-enrolledcourse",
+  GET_ALL_COURSES: BASE_URL + "/course/getAllCourses",
 };
 
 //section

@@ -46,7 +46,7 @@ const courseRoutes = Router();
 courseRoutes.post("/createCourse", auth, isInstructor, createCourse);
 courseRoutes.post("/editCourse", auth, isInstructor, editCourse);
 courseRoutes.delete("/deleteCourse", auth, isInstructor, deleteCourse);
-courseRoutes.get("/getAllCourses", auth, isInstructor, getAllCourses);
+courseRoutes.get("/getAllCourses", getAllCourses);
 courseRoutes.post("/getCoursesDetails", getCourseDetails);
 courseRoutes.get("/getEnrolledCourse", auth, isStudent, getEnrolledCourses);
 courseRoutes.post(

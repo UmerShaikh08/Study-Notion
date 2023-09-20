@@ -10,9 +10,9 @@ const Statistics = ({ course }) => {
     let students = 0;
     let price = 0;
 
+    //  countinge students and how many revenue generated
     course?.forEach((data) => {
-      students += data?.studentsEnrolled.length;
-
+      students += data?.studentsEnrolled?.length;
       price += data?.studentsEnrolled?.length * data?.price;
     });
 

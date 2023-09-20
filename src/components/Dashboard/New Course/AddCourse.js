@@ -1,14 +1,14 @@
 import React, { Fragment } from "react";
-
-import { useSelector } from "react-redux";
-import { AiOutlineCheck } from "react-icons/ai";
 import CourseInfo from "./CourseInfo/CourseInfo";
 import CourseBuilder from "./course builder/CourseBuilder";
 import PublishCourse from "./publishCourse/PublishCourse";
+import { useSelector } from "react-redux";
+import { AiOutlineCheck } from "react-icons/ai";
 
 const AddCourse = () => {
   const { step } = useSelector((store) => store.course);
   const { editCourse } = useSelector((store) => store.course);
+
   const steps = [
     {
       id: 1,
@@ -102,14 +102,3 @@ const AddCourse = () => {
 };
 
 export default AddCourse;
-
-{
-  /* <div className="border border-dashed w-[30%]"></div>
-<div className="w-10 h-10 rounded-full border border-richblack-5  flex items-center justify-center">
-  2
-</div>
-<div className="border border-dashed w-[30%]"></div>
-<div className="w-10 h-10 rounded-full border border-richblack-5  flex items-center justify-center">
-  3
-</div> */
-}

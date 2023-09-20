@@ -12,13 +12,13 @@ const sendOtp = async (req, res) => {
     const checkUserPresent = await User.findOne({ email: email });
 
     // check user already present or not
-    // if (checkUserPresent) {
-    //   console.log(checkUserPresent);
-    //   return res.status(401).json({
-    //     success: false,
-    //     massage: "User already registered...",
-    //   });
-    // }
+    if (checkUserPresent) {
+      console.log(checkUserPresent);
+      return res.status(401).json({
+        success: false,
+        message: "User already registered...",
+      });
+    }
 
     // generate otp
     let otp = otpGenerator.generate(6, {
@@ -99,13 +99,13 @@ const signUp = async (req, res) => {
     }
 
     // check user registered or not
-    // const checkUserPresent = await User.findOne({ email: email });
-    // if (checkUserPresent) {
-    //   return res.status(401).json({
-    //     success: false,
-    //     massage: "User already registereddd",
-    //   });
-    // }
+    const checkUserPresent = await User.findOne({ email: email });
+    if (checkUserPresent) {
+      return res.status(401).json({
+        success: false,
+        massage: "User already registered",
+      });
+    }
 
     // taking last recently otp from db
     const checkOtp = await OTP.findOne({ email: email })

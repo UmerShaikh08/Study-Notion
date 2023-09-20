@@ -1,9 +1,10 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
 import SubSections from "./SubSections";
 import ConfirmationModal from "../../../common/ConfirmationModal";
 import SubsetionModal from "./SubsetionModal";
+import { useState } from "react";
 import { setCourse } from "../../../../Redux/Slices/courseSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 // backend
 import { deleteSection } from "../../../../services/operations/section";
@@ -34,7 +35,7 @@ const Sections = ({ section, handleEditSection }) => {
     e.preventDefault();
 
     setLoading(true);
-    const result = await deleteSection(section._id, course._id, token);
+    const result = await deleteSection(section?._id, course?._id, token);
     setLoading(false);
     if (result) {
       dispatch(setCourse(result));
@@ -113,20 +114,21 @@ const Sections = ({ section, handleEditSection }) => {
         </div>
         <div className="flex flex-col ">
           {showSubsection &&
-            section?.subSection.length > 0 &&
-            section?.subSection.map((subsection) => (
+            section?.subSection?.length > 0 &&
+            section?.subSection?.map((subsection) => (
               <SubSections
-                key={subsection._id}
+                key={subsection?._id}
                 {...subsection}
-                sectionId={section._id}
+                sectionId={section?._id}
               />
             ))}
         </div>
         <div className="text-yellow-50 ">
           <button
+            disabled={loading}
             onClick={(e) => {
               e.preventDefault();
-              setAddSubsection(section._id);
+              setAddSubsection(section?._id);
             }}
             className="flex flex-row items-center gap-1 "
           >

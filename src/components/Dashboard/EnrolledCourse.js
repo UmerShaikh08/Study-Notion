@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import Logo from "../../assets/Logo/Logo-Small-Light.png";
 import EnrolleCourseCard from "./Enrolled Course/EnrolleCourseCard";
 import { getEnrolledCourse } from "../../services/operations/profile";
-import { course } from "../../services/apis";
+import { useDispatch, useSelector } from "react-redux";
 
 const EnrolledCourse = () => {
   const [enrolleList, setEnrolleList] = useState([]);
@@ -13,7 +11,7 @@ const EnrolledCourse = () => {
 
   const getData = async () => {
     const data = await dispatch(getEnrolledCourse(token));
-    console.log(data);
+
     setEnrolleList(data?.student?.courses);
     setProgress(data?.student?.courseProgress);
   };
@@ -21,6 +19,7 @@ const EnrolledCourse = () => {
   useEffect(() => {
     getData();
   }, []);
+
   return (
     <div className=" text-richblack-5 flex flex-col gap-4">
       <div className="text-3xl font-inter">
@@ -32,7 +31,7 @@ const EnrolledCourse = () => {
         </div>
       ) : (
         <>
-          <nav className=" bg-richblack-800 w-[25%] rounded-full px-2 py-1  shadow-sm shadow-richblack-500 text-richblack-300 text-sm">
+          <nav className=" bg-richblack-800 w-[80%] sm:w-[50%] md:w-[25%] rounded-full px-2 py-1  shadow-sm shadow-richblack-500 text-richblack-300 text-sm">
             <ul className="flex flex-row justify-between  mx-auto  ">
               <li>All</li>
               <li>Pending</li>
@@ -47,25 +46,26 @@ const EnrolledCourse = () => {
               <div className="grid col-span-2   ">Progress</div>
             </div>
             <div className="border-2  border-richblack-600 rounded-b-md flex flex-col ">
-              {enrolleList.map((ele, idx) =>
-                enrolleList.length === idx + 1 ? (
-                  <EnrolleCourseCard
-                    active={false}
-                    key={ele._id}
-                    {...ele}
-                    getData={getData}
-                    progress={progress}
-                  />
-                ) : (
-                  <EnrolleCourseCard
-                    active={false}
-                    key={ele._id}
-                    {...ele}
-                    getData={getData}
-                    progress={progress}
-                  />
-                )
-              )}
+              {enrolleList &&
+                enrolleList?.map((ele, idx) =>
+                  enrolleList.length === idx + 1 ? (
+                    <EnrolleCourseCard
+                      active={false}
+                      key={ele._id}
+                      {...ele}
+                      getData={getData}
+                      progress={progress}
+                    />
+                  ) : (
+                    <EnrolleCourseCard
+                      active={false}
+                      key={ele._id}
+                      {...ele}
+                      getData={getData}
+                      progress={progress}
+                    />
+                  )
+                )}
             </div>
           </div>
         </>

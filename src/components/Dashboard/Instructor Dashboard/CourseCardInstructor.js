@@ -1,7 +1,6 @@
 import React from "react";
 
 const CourseCardInstructor = ({ course }) => {
-  console.log(course, "k");
   return (
     <div className="flex flex-col gap-1 text-richblack-5 mx-auto">
       <div className="rounded object-cover  ">

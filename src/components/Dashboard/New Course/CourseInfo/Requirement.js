@@ -55,20 +55,21 @@ const Requirement = ({ register, setValue, name, errors }) => {
 
       {requirementList.length > 0 && (
         <ul className="flex flex-col gap-3">
-          {requirementList.map((data, idx) => (
-            <div key={idx} className="flex flex-row gap-3">
-              <li>{data}</li>{" "}
-              <button
-                className="text-richblack-400 text-sm bg-richblack-900 px-1 rounded-lg"
-                onClick={(e) => {
-                  e.preventDefault();
-                  removeRequirement(idx);
-                }}
-              >
-                clear
-              </button>
-            </div>
-          ))}
+          {requirementList &&
+            requirementList?.map((data, idx) => (
+              <div key={idx} className="flex flex-row gap-3">
+                <li>{data}</li>{" "}
+                <button
+                  className="text-richblack-400 text-sm bg-richblack-900 px-1 rounded-lg"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    removeRequirement(idx);
+                  }}
+                >
+                  clear
+                </button>
+              </div>
+            ))}
         </ul>
       )}
       {errors[name] && (

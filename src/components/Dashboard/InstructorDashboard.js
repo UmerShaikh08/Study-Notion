@@ -6,7 +6,6 @@ import { useSelector } from "react-redux";
 import Statistics from "./Instructor Dashboard/Statistics";
 import Courses from "./Instructor Dashboard/Courses";
 import PieChart from "./Instructor Dashboard/PieChart";
-import Footer from "../common/Footer";
 
 const InstructorDashboard = () => {
   const [course, setCourse] = useState(null);
@@ -27,22 +26,22 @@ const InstructorDashboard = () => {
   useEffect(() => {
     fetchCourse();
   }, []);
-  return (
-    <>
-      <div className="flex flex-col gap-3">
-        <div className="text-2xl font-semibold text-richblack-5">
-          Hi {user?.firstName} 👋
-        </div>
-        <div className="text-richblack-200">Let's start something new</div>
-        <div className="flex flex-col md:flex-row gap-3">
-          <PieChart course={course} />
-
-          <Statistics course={course} />
-        </div>
-
-        <Courses course={course} />
+  return course ? (
+    <div className="flex flex-col gap-3">
+      <div className="text-2xl font-semibold text-richblack-5">
+        Hi {user?.firstName} 👋
       </div>
-    </>
+      <div className="text-richblack-200">Let's start something new</div>
+      <div className="flex flex-col md:flex-row gap-3">
+        <PieChart course={course} />
+
+        <Statistics course={course} />
+      </div>
+
+      <Courses course={course} />
+    </div>
+  ) : (
+    <div className="text-richblack-5 text-2xl text-center">Coure Not Found</div>
   );
 };
 

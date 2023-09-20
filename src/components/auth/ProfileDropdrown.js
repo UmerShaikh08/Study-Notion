@@ -6,13 +6,14 @@ import { Link, useNavigate } from "react-router-dom";
 
 import useOutsideClick from "../../custom hooks/useOutsideClick";
 import { logout } from "../../services/operations/auth";
+import { setProgress } from "../../Redux/Slices/loadingbarSlice";
 
 const ProfileDropdown = () => {
-  const { user } = useSelector((state) => state.profile);
+  const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
   const ref = useRef(null);
+  const { user } = useSelector((state) => state.profile);
 
   useOutsideClick(ref, () => setOpen(false));
 
@@ -34,7 +35,13 @@ const ProfileDropdown = () => {
           className="absolute top-[118%] right-0 z-[1000] divide-y-[1px] divide-richblack-700 overflow-hidden rounded-md border-[1px] border-richblack-700 bg-richblack-800"
           ref={ref}
         >
-          <Link to="/dashboard/my-profile" onClick={() => setOpen(false)}>
+          <Link
+            to="/dashboard/my-profile"
+            onClick={() => {
+              setOpen(false);
+              dispatch(setProgress(100));
+            }}
+          >
             <div className="flex w-full items-center gap-x-1 py-[10px] px-[12px] text-sm text-richblack-100 hover:bg-richblack-700 hover:text-richblack-25">
               <VscDashboard className="text-lg" />
               Dashboard

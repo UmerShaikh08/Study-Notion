@@ -10,7 +10,7 @@ const ContactUsForm = () => {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isSubmitSuccessful },
+    formState: { errors },
   } = useForm();
   const [loading, setLoading] = useState(false);
 
@@ -43,7 +43,7 @@ const ContactUsForm = () => {
             name="firstName"
             {...register("firstName", { required: true })}
             placeholder="Enter first name "
-            className=" w-full bg-richblack-700 h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
+            className=" w-full bg-richblack-700 h-[3rem] rounded-md px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
           />
           {errors.firstName && (
             <span className=" text-[12px] text-yellow-100">
@@ -61,7 +61,7 @@ const ContactUsForm = () => {
             name="lastName"
             {...register("lastName", { required: true })}
             placeholder="Enter last Name"
-            className="w-full  bg-richblack-700 h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
+            className="w-full  bg-richblack-700  h-[3rem] rounded-md px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
           />
           {errors.lastName && (
             <span className=" text-[12px] text-yellow-100">
@@ -80,7 +80,7 @@ const ContactUsForm = () => {
           name="email"
           {...register("email", { required: true })}
           placeholder="Enter email address"
-          className="w-full pl-3 bg-richblack-700 h-[3rem] rounded-lg  shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
+          className="w-full pl-3 bg-richblack-700 h-[3rem] rounded-md  shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
         ></input>
         {errors.email && (
           <span className=" text-[12px] text-yellow-100">
@@ -96,7 +96,7 @@ const ContactUsForm = () => {
         <div className="flex flex-row gap-4">
           <select
             id="countryCode"
-            className="w-[4rem] text-richblack-5 bg-richblack-700 h-[3rem] rounded-lg  shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
+            className="w-[4rem] text-richblack-5 bg-richblack-700 h-[3rem] rounded-md  shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
             {...register("countryCode")}
           >
             {countryCode.map((ele, idx) => {
@@ -113,7 +113,7 @@ const ContactUsForm = () => {
             id="phoneNumber"
             name="PhoneNumber"
             placeholder="Enter Phone Number"
-            className="w-full  bg-richblack-700 h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
+            className="w-full  bg-richblack-700 h-[3rem] rounded-md px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
             {...register("phoneNo", {
               required: {
                 value: true,
@@ -142,7 +142,7 @@ const ContactUsForm = () => {
           cols="30"
           rows="7"
           placeholder="Enter your message here"
-          className="w-full pl-3 bg-richblack-700 rounded-lg  shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
+          className="w-full pl-3 bg-richblack-700 rounded-md  shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
           {...register("message", { required: true })}
         />
         {errors.message && (

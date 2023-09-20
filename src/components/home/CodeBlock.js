@@ -10,6 +10,7 @@ const CodeBlock = ({
   btn2,
   position,
   code,
+  backgroudGradient,
   codeColor,
 }) => {
   return (
@@ -54,6 +55,7 @@ const CodeBlock = ({
         <div
           className={`w-[90%] flex flex-col gap-2 font-bold font-mono ${codeColor} pr-2 text-sm md:text-base`}
         >
+          {" "}
           <TypeAnimation
             sequence={[code, 2000, ""]}
             repeat={Infinity}
@@ -64,6 +66,7 @@ const CodeBlock = ({
             }}
             omitDeletionAnimation={true}
           />
+          <div className={`${backgroudGradient}`}></div>
         </div>
       </div>
     </div>

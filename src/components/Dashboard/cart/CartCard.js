@@ -1,16 +1,25 @@
 import React from "react";
-import { RiDeleteBin6Line } from "react-icons/ri";
-import { FaStar } from "react-icons/fa";
+import RatingStars from "../../common/RatingStars";
+import { useState } from "react";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { GetAvgRating } from "../../../utils/avgRating";
+import { RiDeleteBin6Line } from "react-icons/ri";
 import { removeItemFromCart } from "../../../Redux/Slices/cartSlice";
-import ReactStars from "react-rating-stars-component";
 
 const CartCard = (course) => {
   const dispatch = useDispatch();
-  console.log("course details ---->", course);
+  const [avgReviewCount, setAverageReviewCount] = useState(0);
+
+  useEffect(() => {
+    const count = GetAvgRating(course?.data?.RatingAndReviews);
+    setAverageReviewCount(count);
+  }, [course]);
+
   const removeHandler = () => {
     dispatch(removeItemFromCart(course.data));
   };
+
   return (
     <div className="text-richblack-5  border-richblack-600  ">
       <div className="flex flex-col  md:flex-row justify-around md:border-none  border-2 border-richblack-700 py-3">
@@ -28,14 +37,10 @@ const CartCard = (course) => {
               {course?.data?.category?.name}
             </div>
             <div>
-              <ReactStars
-                count={5}
-                value={course?.data?.RatingAndReviews?.length}
-                size={20}
+              <RatingStars
+                Review_Count={avgReviewCount}
+                Star_Size={24}
                 edit={false}
-                activeColor="#ffd700"
-                emptyIcon={<FaStar />}
-                fullIcon={<FaStar />}
               />
               <div>{course?.data?.RatingAndReviews?.length} Ratings</div>
             </div>

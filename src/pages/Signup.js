@@ -141,7 +141,7 @@ const Signup = () => {
               ></input>
             </div>
 
-            <div className="flex w-full gap-4  lg:flex-row">
+            <div className="flex w-full gap-4 flex-col lg:flex-row">
               <div className="relative flex w-full flex-col">
                 <label htmlFor="password">
                   Create Password <span className="text-red-200">*</span>

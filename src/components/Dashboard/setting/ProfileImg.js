@@ -1,19 +1,17 @@
 import React, { useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { updateProfileImg } from "../../../services/operations/profile";
-import { setLoading } from "../../../Redux/Slices/profileSlice";
-import { AiOutlineUpload } from "react-icons/ai";
 import IconBtn from "../IconBtn";
+import { AiOutlineUpload } from "react-icons/ai";
+import { updateProfileImg } from "../../../services/operations/profile";
+import { useDispatch, useSelector } from "react-redux";
 
 const ProfileImg = () => {
+  const [image, setImage] = useState("");
+  const dispatch = useDispatch();
+  const selectImg = useRef(null);
+  const { token } = useSelector((store) => store.auth);
   const { user, loading: profileLoading } = useSelector(
     (store) => store.profile
   );
-  const { token } = useSelector((store) => store.auth);
-  const dispatch = useDispatch();
-  const selectImg = useRef(null);
-  const [image, setImage] = useState("");
-  // dispatch(setLoading(false));
 
   const imgClick = () => {
     selectImg.current.click();
@@ -46,8 +44,8 @@ const ProfileImg = () => {
               type="file"
               className="hidden"
               onChange={(data) => {
-                if (data.target.files[0]) {
-                  setImage(data.target.files[0]);
+                if (data?.target?.files[0]) {
+                  setImage(data?.target?.files[0]);
                 }
               }}
               ref={selectImg}

@@ -15,7 +15,7 @@ const Tags = ({ register, setValue, name, errors }) => {
     e.preventDefault();
     if (e.key === "Enter") {
       if (tag.length === 0) return;
-      else if (tagList.includes(tag)) {
+      else if (tagList?.includes(tag)) {
         setTag("");
       } else {
         const list = [...tagList, tag];
@@ -40,16 +40,17 @@ const Tags = ({ register, setValue, name, errors }) => {
   }, [tagList]);
   return (
     <div className="  flex flex-col w-full gap-2">
-      <div className="flex flex-row gap-3 ">
-        {tagList.map((data, idx) => (
-          <div
-            key={idx}
-            className="flex flex-row gap-1 bg-yellow-200 rounded-full items-center  py-1 px-3"
-          >
-            <div>{data}</div>
-            <RxCross2 className="cursor-pointer" onClick={removeTag} />
-          </div>
-        ))}
+      <div className="flex flex-wrap gap-3 ">
+        {tagList &&
+          tagList.map((data, idx) => (
+            <div
+              key={idx}
+              className="flex flex-row gap-1 bg-yellow-200 rounded-full items-center  py-1 px-3"
+            >
+              <div>{data}</div>
+              <RxCross2 className="cursor-pointer" onClick={removeTag} />
+            </div>
+          ))}
       </div>
       <label htmlFor="tags  " className="text-sm">
         Tags <span className="text-red-200">*</span>
@@ -61,7 +62,7 @@ const Tags = ({ register, setValue, name, errors }) => {
         name="tags"
         value={tag}
         placeholder="Enter Tags and press enter "
-        className=" w-full bg-richblack-700 h-[2rem] md:h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700 pl-10"
+        className=" w-full bg-richblack-700 h-[2rem] md:h-[3rem] rounded-md px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700 pl-10"
         onChange={(e) => setTag(e.target.value)}
         onKeyUp={(e) => {
           handleTagList(e);

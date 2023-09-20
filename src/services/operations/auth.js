@@ -10,7 +10,6 @@ const generatePasswordToken = (email, setEmailSend) => {
     try {
       // show loader
       dispatch(setLoading(true));
-      console.log(email);
 
       // call db for creating password token
       const response = await apiConnector(
@@ -18,7 +17,7 @@ const generatePasswordToken = (email, setEmailSend) => {
         endpointes.RESETPASSTOKEN_API,
         { email }
       );
-      console.log("Response---> ", response);
+      // console.log("Response---> ", response);
 
       // check req
       if (!response.data.success) {
@@ -26,12 +25,11 @@ const generatePasswordToken = (email, setEmailSend) => {
       }
 
       //  display success toast
-      toast.success("reset password link send successfully");
+      toast.success("reset link sended");
       setEmailSend(true);
-
       dispatch(setLoading(false));
     } catch (error) {
-      toast.error("failed send link");
+      toast.error("failed to send link");
       console.log("erroe occured generating token", error);
       dispatch(setLoading(false));
     }
@@ -59,7 +57,7 @@ const resetPassword = (data, setIsResetCompleted) => {
       }
 
       //  display success toast
-      console.log(" Reset password Response--->", response);
+      // console.log(" Reset password Response--->", response);
       toast.success("password reset successfully");
       setIsResetCompleted(true);
       dispatch(setLoading(false));
@@ -84,7 +82,7 @@ const login = (data, navigate) => {
         throw new Error(response.data.massage);
       }
 
-      console.log(response);
+      // console.log(response);
       toast.success("successfully login");
 
       // set user
@@ -111,7 +109,7 @@ const sendOtp = (data, navigate) => {
       const response = await apiConnector("POST", endpointes.SEND_OTP, {
         email,
       });
-      console.log(response);
+      // console.log(response);
       if (!response.data.success) {
         dispatch(setLoading(false));
         throw new Error("otp not send");
@@ -123,7 +121,7 @@ const sendOtp = (data, navigate) => {
       navigate("/verify-otp");
     } catch (error) {
       console.log("error", error);
-      toast.error(error);
+      toast.error("you already registered ");
       dispatch(setLoading(false));
 
       navigate("/signup");
@@ -135,15 +133,15 @@ const singup = (data, navigate) => {
   return async (dispatch) => {
     try {
       dispatch(setLoading(true));
-      console.log("singup sending data-->", data);
+      // console.log("singup sending data-->", data);
       const response = await apiConnector("POST", endpointes.SIGN_UP, data);
-      console.log("heelo");
+
       if (!response.data.success) {
         dispatch(setLoading(false));
         throw new Error("signup failed");
       }
 
-      console.log("response --->", response);
+      // console.log("response --->", response);
       toast.success("signup successfully");
 
       navigate("/login");

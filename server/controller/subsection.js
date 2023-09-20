@@ -29,12 +29,11 @@ const createSubsection = async (req, res) => {
 
     console.log("video details ---->", videoDetails);
 
-    const time = convertSecondsToDuration(totalDurationInSeconds);
     const newSubsection = await SubSection.create({
       title,
       description,
       videoUrl: videoDetails?.secure_url,
-      timeDuration: time,
+      timeDuration: videoDetails?.duration,
     });
 
     if (!newSubsection) {
@@ -70,6 +69,11 @@ const createSubsection = async (req, res) => {
         },
       })
       .exec();
+
+    //  add subsection duration in course
+    await Course.findByIdAndUpdate(courseId, {
+      courseDuration: course?.courseDuration + videoDetails?.duration,
+    });
 
     if (!course) {
       return res.status(400).json({

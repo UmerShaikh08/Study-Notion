@@ -15,10 +15,9 @@ const Login = () => {
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  dispatch(setLoading(false));
 
-  const submitDetails = (data) => {
-    dispatch(login(data, navigate));
+  const submitDetails = async (data) => {
+    await dispatch(login(data, navigate));
   };
   return (
     <div className="w-11/12 max-w-maxContent flex flex-col-reverse md:flex-row items-center my-auto gap-20 ">

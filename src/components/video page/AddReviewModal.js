@@ -1,20 +1,18 @@
 import React, { useEffect } from "react";
-import { ImCross } from "react-icons/im";
-import logo from "../../assets/Images/Instructor.png";
-import IconBtn from "../Dashboard/IconBtn";
-import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
-import ReactStars from "react-rating-stars-component";
-import { useParams } from "react-router-dom";
-import { addRatingAndReview } from "../../services/operations/RatingAndReviews";
 import toast from "react-hot-toast";
+import IconBtn from "../Dashboard/IconBtn";
+import ReactStars from "react-rating-stars-component";
+import { ImCross } from "react-icons/im";
+import { useForm } from "react-hook-form";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { addRatingAndReview } from "../../services/operations/RatingAndReviews";
 
 const AddReviewModal = ({ setReviewModal }) => {
   const { register, handleSubmit, setValue, getValues } = useForm();
-
+  const { courseId } = useParams();
   const { user } = useSelector((store) => store.profile);
   const { token } = useSelector((store) => store.auth);
-  const { courseId } = useParams();
 
   useEffect(() => {
     setValue("review", "");
@@ -28,9 +26,6 @@ const AddReviewModal = ({ setReviewModal }) => {
   };
 
   const submitReview = async (data) => {
-    console.log("data --->", data);
-    console.log("course --> ", courseId);
-
     const result = await addRatingAndReview(data, token);
 
     if (result) {

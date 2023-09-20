@@ -1,16 +1,13 @@
 import React, { useState } from "react";
-
-import { useDispatch, useSelector } from "react-redux";
 import ConfirmationModal from "../../../common/ConfirmationModal";
 import SubsetionModal from "./SubsetionModal";
 import { setCourse } from "../../../../Redux/Slices/courseSlice";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { useDispatch, useSelector } from "react-redux";
+import { MdEdit, MdOndemandVideo } from "react-icons/md";
 
 // backend call
 import { deleteSubsection } from "../../../../services/operations/subsection";
-
-// icons
-import { MdEdit, MdOndemandVideo } from "react-icons/md";
-import { RiDeleteBin6Line } from "react-icons/ri";
 
 const SubSections = ({
   _id: subSectionId,
@@ -22,18 +19,19 @@ const SubSections = ({
 }) => {
   const [viewSubsection, setViewSubsection] = useState(null);
   const [editSubsection, setEditSubsection] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [confirmationModal, setConfirmationModal] = useState(null);
+
   const dispatch = useDispatch();
   const { token } = useSelector((store) => store.auth);
   const { course } = useSelector((store) => store.course);
-  const [loading, setLoading] = useState(false);
 
   const deleteSubsectionHandler = async (e) => {
     e.preventDefault();
 
     setLoading(true);
     const result = await deleteSubsection(
-      { subSectionId, sectionId, courseId: course._id },
+      { subSectionId, sectionId, courseId: course?._id },
       token
     );
     setLoading(false);

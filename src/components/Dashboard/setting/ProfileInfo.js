@@ -8,17 +8,18 @@ import { setUser } from "../../../Redux/Slices/profileSlice";
 import Loader from "../../common/Loader";
 
 const ProfileInfo = () => {
+  const dispatch = useDispatch();
   const { token } = useSelector((store) => store.auth);
   const { user, loading: profileLoading } = useSelector(
     (store) => store.profile
   );
-  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
-    reset,
+
     formState: { errors },
   } = useForm();
+
   const genders = [
     "Male",
     "Female",
@@ -30,6 +31,7 @@ const ProfileInfo = () => {
   const submitData = (data) => {
     dispatch(setUser(data));
     dispatch(updateProfile(data, token));
+
     const updatedUser = {
       ...user, // Copy the existing properties from the user object
       firstName: data?.firstName,
@@ -67,7 +69,7 @@ const ProfileInfo = () => {
               id="firstName"
               name="firstName"
               placeholder="Enter first name "
-              className=" w-full bg-richblack-700 h-[2rem] md:h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
+              className=" w-full bg-richblack-700 h-[2rem] md:h-[3rem] rounded-md px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
               {...register("firstName", { required: true })}
             />
             {errors.firstName && (
@@ -86,7 +88,7 @@ const ProfileInfo = () => {
               id="lastName"
               name="lastName"
               placeholder="Enter last Name"
-              className="w-full  bg-richblack-700 h-[2rem] md:h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
+              className="w-full  bg-richblack-700 h-[2rem] md:h-[3rem] rounded-md px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
               {...register("lastName", { required: true })}
             />
             {errors.lastName && (
@@ -107,7 +109,7 @@ const ProfileInfo = () => {
               id="dateOfBirth"
               name="dateOfBirth"
               placeholder="mm/dd/yy"
-              className=" w-full bg-richblack-700 h-[2rem] md:h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
+              className=" w-full bg-richblack-700 h-[2rem] md:h-[3rem] rounded-md px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
               {...register("dateOfBirth", { required: true })}
             />
             {errors.dateOfBirth && (
@@ -121,7 +123,7 @@ const ProfileInfo = () => {
             <select
               id="gender"
               name="gender"
-              className=" w-full bg-richblack-700 h-[2rem] md:h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
+              className=" w-full bg-richblack-700 h-[2rem] md:h-[3rem] rounded-md px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
               {...register("gender", { required: true })}
             >
               {genders.map((ele, idx) => {
@@ -151,7 +153,7 @@ const ProfileInfo = () => {
               id="contactNumber"
               name="contactNumber"
               placeholder="Enter Phone Number "
-              className=" w-full bg-richblack-700 h-[2rem] md:h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
+              className=" w-full bg-richblack-700 h-[2rem] md:h-[3rem] rounded-md px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
               {...register("contactNumber", { required: true })}
             />{" "}
             {errors.contactNumber && (
@@ -168,7 +170,7 @@ const ProfileInfo = () => {
               id="about"
               name="about"
               placeholder="Enter Bio Details"
-              className="w-full  bg-richblack-700 h-[2rem] md:h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
+              className="w-full  bg-richblack-700 h-[2rem] md:h-[3rem] rounded-md px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
               {...register("about", { required: true })}
             />
             {errors.about && (

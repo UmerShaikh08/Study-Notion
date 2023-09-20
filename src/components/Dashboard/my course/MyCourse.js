@@ -1,19 +1,18 @@
 import React from "react";
 import IconButton from "../IconBtn";
+import CourseTable from "./CourseTable";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import { BsPlusLg } from "react-icons/bs";
 import { useEffect } from "react";
-import CourseTable from "./CourseTable";
-import { useState } from "react";
+import { useSelector } from "react-redux";
 import { getInstructorCourses } from "../../../services/operations/courses";
-import { useDispatch, useSelector } from "react-redux";
-import { setEditCourse } from "../../../Redux/Slices/courseSlice";
 
 const MyCourse = () => {
   const [courses, setCourses] = useState([]);
   const { token } = useSelector((store) => store.auth);
-  const dispatch = useDispatch();
 
+  //  fetching instructor courses
   const fetchInstructorCourses = async () => {
     const result = await getInstructorCourses(token);
 

@@ -169,6 +169,29 @@ const getCourseFullDetails = async (courseId, token) => {
   return response?.data?.data;
 };
 
+const getAllCourses = async (courseId, token) => {
+  const toastId = toast.loading("loading...");
+
+  let response;
+  try {
+    response = await apiConnector("GET", course.GET_ALL_COURSES);
+
+    console.log("Responnseee ---->", response);
+
+    if (!response.data.success) {
+      toast.error("Failed to Fetch Course ");
+      throw new Error("Failed to Fetch Course ");
+    }
+  } catch (error) {
+    console.log(error);
+    toast.error("Failed to Load Course");
+  }
+
+  toast.dismiss(toastId);
+  console.log("Responnseee ---->", response);
+  return response?.data?.courses;
+};
+
 export {
   EditCourse,
   createCourse,
@@ -176,4 +199,5 @@ export {
   deleteCourse,
   getCourseDetails,
   getCourseFullDetails,
+  getAllCourses,
 };

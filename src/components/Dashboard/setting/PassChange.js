@@ -1,20 +1,21 @@
 import React, { useState } from "react";
 import Button from "./Button";
-import { useForm } from "react-hook-form";
-import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
-import { useDispatch, useSelector } from "react-redux";
-import { updatePassword } from "../../../services/operations/profile";
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { updatePassword } from "../../../services/operations/profile";
+import { useDispatch, useSelector } from "react-redux";
+import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 
 const PassChange = () => {
+  const dispatch = useDispatch();
+  const { token } = useSelector((store) => store.auth);
+
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
-  const dispatch = useDispatch();
-  const { token } = useSelector((store) => store.auth);
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -42,7 +43,7 @@ const PassChange = () => {
               name="password"
               {...register("password", { required: true })}
               placeholder="Enter Password "
-              className="  w-full bg-richblack-700 h-[2rem] md:h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
+              className="  w-full bg-richblack-700 h-[2rem] md:h-[3rem] rounded-md px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
             />
             <button
               type="button"
@@ -70,7 +71,7 @@ const PassChange = () => {
               name="confirmpassword"
               {...register("confirmPassword", { required: true })}
               placeholder="Enter last Name"
-              className="w-full bg-richblack-700 h-[2rem] md:h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
+              className="w-full bg-richblack-700 h-[2rem] md:h-[3rem] rounded-md px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
             />
             <button
               type="button"

@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import { HiOutlineCurrencyRupee } from "react-icons/hi";
-import { MdOutlineNavigateNext } from "react-icons/md";
 import Tags from "./Tags";
 import Upload from "../Upload";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-hot-toast";
 import Requirement from "./Requirement";
+import { toast } from "react-hot-toast";
+import { useForm } from "react-hook-form";
+import { useEffect } from "react";
+import { HiOutlineCurrencyRupee } from "react-icons/hi";
+import { MdOutlineNavigateNext } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
 
 // redux
 import { setCourse, setStep } from "../../../../Redux/Slices/courseSlice";
@@ -62,26 +62,26 @@ const CourseInfo = () => {
     getCategories();
 
     if (editCourse) {
-      setValue("courseName", course.courseName);
-      setValue("courseDescription", course.courseDescription);
-      setValue("category", course.category);
-      setValue("price", course.price);
-      setValue("tags", course.tags);
-      setValue("thumbnail", course.thumbnail);
-      setValue("whatYouWillLearn", course.whatYouWillLearn);
-      setValue("requirements", course.requirements);
+      setValue("courseName", course?.courseName);
+      setValue("courseDescription", course?.courseDescription);
+      setValue("category", course?.category);
+      setValue("price", course?.price);
+      setValue("tags", course?.tags);
+      setValue("thumbnail", course?.thumbnail);
+      setValue("whatYouWillLearn", course?.whatYouWillLearn);
+      setValue("requirements", course?.requirements);
     }
   }, []);
 
   const isFromUpdated = (values) => {
     if (
-      values.courseName !== course.courseName ||
-      values.courseDescription !== course.courseDescription ||
-      values.price !== course.price ||
-      values.tags.toString() !== course.tags.toString() ||
-      values.thumbnail !== course.thumbnail ||
-      values.whatYouWillLearn !== course.whatYouWillLearn ||
-      values.requirements.toString() !== course.requirements.toString()
+      values?.courseName !== course?.courseName ||
+      values?.courseDescription !== course?.courseDescription ||
+      values?.price !== course?.price ||
+      values?.tags.toString() !== course?.tags?.toString() ||
+      values?.thumbnail !== course?.thumbnail ||
+      values?.whatYouWillLearn !== course?.whatYouWillLearn ||
+      values?.requirements.toString() !== course?.requirements?.toString()
     )
       return true;
     else return false;
@@ -89,9 +89,9 @@ const CourseInfo = () => {
 
   const submitData = async (data) => {
     setLoading(true);
+
     if (editCourse) {
       const values = getValues();
-      console.log("price =====>", values.price);
       const isForm = isFromUpdated(values);
 
       if (isForm) {
@@ -124,7 +124,7 @@ const CourseInfo = () => {
   return (
     <form
       onSubmit={handleSubmit(submitData)}
-      className="flex flex-col gap-8 bg-richblack-800 rounded-md text-richblack-5 py-3 px-4"
+      className="flex flex-col gap-8 bg-richblack-800 rounded-md text-richblack-5 py-3 px-4 mb-10"
     >
       {/* title */}
       <div className="flex flex-col w-full gap-2">
@@ -155,7 +155,7 @@ const CourseInfo = () => {
           name="courseDescription"
           {...register("courseDescription", { required: true })}
           placeholder="Enter Description "
-          className=" pt-3 h-[10rem] w-full bg-richblack-700  rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700 placeholder:text-start "
+          className=" pt-3 h-[10rem] w-full bg-richblack-700  rounded-md px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700 placeholder:text-start "
         />
         {errors.courseDescription && (
           <span className="ml-2 text-xs tracking-wide text-yellow-100">
@@ -176,7 +176,7 @@ const CourseInfo = () => {
           name="price"
           {...register("price", { required: true, valueAsNumber: true })}
           placeholder="Enter course Price "
-          className=" w-full bg-richblack-700 h-[2rem] md:h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700 pl-10"
+          className=" w-full bg-richblack-700 h-[2rem] md:h-[3rem] rounded-md px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700 pl-10"
         />
         <HiOutlineCurrencyRupee
           size={30}
@@ -197,7 +197,7 @@ const CourseInfo = () => {
           id="category"
           name="category"
           defaultValue={""}
-          className=" w-full bg-richblack-700 h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
+          className=" w-full bg-richblack-700 h-[3rem] rounded-md px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
           {...register("category", { required: true })}
         >
           <option disabled value={""}>
@@ -248,7 +248,7 @@ const CourseInfo = () => {
           name="whatYouWillLearn"
           {...register("whatYouWillLearn", { required: true })}
           placeholder="Enter Benefits of the course "
-          className="pt-3  h-[10rem] w-full bg-richblack-700  rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700 placeholder:text-start "
+          className="pt-3  h-[10rem] w-full bg-richblack-700  rounded-md px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700 placeholder:text-start "
         />
         {errors.whatYouWillLearn && (
           <span className="ml-2 text-xs tracking-wide text-yellow-100">
@@ -263,11 +263,11 @@ const CourseInfo = () => {
         setValue={setValue}
         errors={errors}
       />
-      <div className="flex flex-row justify-end gap-4">
+      <div className="flex flex-row justify-end gap-4 mb-6">
         {editCourse && (
           <button
             disabled={loading}
-            className="py-2 px-3 bg-richblack-300 rounded-md text-richblack-900 font-semibold transition-all duration-200 hover:scale-95"
+            className="md:py-2 md:px-3 bg-richblack-300 rounded-md text-richblack-900 md:font-semibold transition-all duration-200 hover:scale-95"
             onClick={() => dispatch(setStep(2))}
           >
             Countinue without saving
@@ -276,7 +276,7 @@ const CourseInfo = () => {
         <button
           type="submit"
           disabled={loading}
-          className="py-2 px-3 flex flex-row items-center bg-yellow-50 rounded-md text-richblack-900 font-semibold transition-all duration-200 hover:scale-95"
+          className="p-1 md:py-2 md:px-3 flex flex-row items-center bg-yellow-50 rounded-md text-richblack-900 md:font-semibold transition-all duration-200 hover:scale-95"
         >
           {editCourse ? "Save Changes" : "Next"} <MdOutlineNavigateNext />
         </button>

@@ -1,25 +1,26 @@
-import React, { useState } from "react";
+import React from "react";
+import NestedView from "./NestedView";
+import { toast } from "react-hot-toast";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { MdOutlineNavigateNext } from "react-icons/md";
-import NestedView from "./NestedView";
 
 // redux
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setCourse,
-  setEditCourse,
-  setStep,
-} from "../../../../Redux/Slices/courseSlice";
+import { setCourse, setStep } from "../../../../Redux/Slices/courseSlice";
+import { setEditCourse } from "../../../../Redux/Slices/courseSlice";
 
 // backend
-import {
-  createSection,
-  updateSection,
-} from "../../../../services/operations/section";
-import { toast } from "react-hot-toast";
+import { updateSection } from "../../../../services/operations/section";
+import { createSection } from "../../../../services/operations/section";
 
 const CourseBuilder = () => {
+  const [editSection, setEditSection] = useState(null);
+  const { course } = useSelector((store) => store.course);
+  const { token } = useSelector((store) => store.auth);
+  const dispatch = useDispatch();
+
   const {
     handleSubmit,
     register,
@@ -27,10 +28,6 @@ const CourseBuilder = () => {
     setValue,
     formState: { errors },
   } = useForm();
-  const [editSection, setEditSection] = useState(null);
-  const { course } = useSelector((store) => store.course);
-  const { token } = useSelector((store) => store.auth);
-  const dispatch = useDispatch();
 
   const goback = (e) => {
     e.preventDefault();
@@ -82,12 +79,14 @@ const CourseBuilder = () => {
   };
 
   const nextPage = () => {
-    if (course.courseContent.length === 0) {
+    if (course?.courseContent?.length === 0) {
       toast.error("Please add atleast one section");
       return;
     }
     if (
-      course.courseContent.some((section) => section.subSection.length === 0)
+      course?.courseContent?.some(
+        (section) => section?.subSection?.length === 0
+      )
     ) {
       toast.error("Please add atleast one lecture in each section");
       return;
@@ -113,7 +112,7 @@ const CourseBuilder = () => {
             name="sectionName"
             {...register("sectionName", { required: true })}
             placeholder="Enter course title "
-            className=" w-full bg-richblack-700 h-[3rem] rounded-lg px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
+            className=" w-full bg-richblack-700 h-[3rem] rounded-md px-3 shadow-sm shadow-richblack-200 focus:outline-none focus:bg-richblack-700"
           />
         </div>
 

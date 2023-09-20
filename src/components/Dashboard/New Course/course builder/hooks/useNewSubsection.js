@@ -1,8 +1,4 @@
-import React from "react";
-import { useSelector } from "react-redux";
-
 const useNewSubsection = () => {
-  const { course } = useSelector((store) => store.course);
   const NewSubsection = ({ data, modalData, courseId }) => {
     const formData = new FormData();
     formData.append("title", data.title);

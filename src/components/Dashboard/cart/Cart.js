@@ -1,29 +1,26 @@
 import React from "react";
 import CartCard from "./CartCard";
-
-import { useDispatch, useSelector } from "react-redux";
 import { buyCourse } from "../../../services/operations/payment";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 const Cart = () => {
   const { cart, totalItems, totalPrice } = useSelector((store) => store.cart);
   const { token } = useSelector((store) => store.auth);
   const { user } = useSelector((store) => store.profile);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  console.log("items --->", cart);
 
   const buyAllCourse = async () => {
     const courses = [];
     for (const course of cart) {
       // {id : course._id} i added like this because when i buying  one course  that i take id using prams , params give in form {id : "932034"}
-      courses.push({ id: course._id });
+      courses.push({ id: course?._id });
     }
-    console.log("buying courses list ---->", courses);
-    console.log("user data ----->", user);
-
     const result = await buyCourse(user, courses, navigate, dispatch, token);
   };
+
   return (
     <div className="flex flex-col gap-3">
       <div>
@@ -41,9 +38,10 @@ const Cart = () => {
       {totalItems > 0 ? (
         <div className="flex flex-col lg:flex-row   ">
           <div>
-            {cart?.map((course) => {
-              return <CartCard data={course} key={course._id} />;
-            })}
+            {cart &&
+              cart?.map((course) => (
+                <CartCard data={course} key={course?._id} />
+              ))}
           </div>
           <div className="flex flex-col gap-4 bg-richblack-800 text-white h-[180px]  w-full md:mx-auto md:w-[30%] rounded-md p-3  border border-richblack-600 ">
             <p className="text-richblack-600">Total : </p>

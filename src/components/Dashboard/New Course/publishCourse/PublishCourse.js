@@ -1,25 +1,24 @@
 import React from "react";
+import { toast } from "react-hot-toast";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
+import { useEffect } from "react";
+import { EditCourse } from "../../../../services/operations/courses";
+import { useNavigate } from "react-router-dom";
+import { COURSE_STATUS } from "../../../../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import {
   resetCourseState,
   setStep,
 } from "../../../../Redux/Slices/courseSlice";
-import { useForm } from "react-hook-form";
-import { useEffect } from "react";
-import { COURSE_STATUS } from "../../../../utils/constants";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { EditCourse } from "../../../../services/operations/courses";
-import { toast } from "react-hot-toast";
 
 const PublishCourse = () => {
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const { register, handleSubmit, setValue, getValues } = useForm();
   const { course } = useSelector((store) => store.course);
   const { token } = useSelector((store) => store.auth);
-  const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
 
   const goBack = (e) => {
     e.preventDefault();
@@ -39,20 +38,21 @@ const PublishCourse = () => {
 
   const handlePublishedStatus = async () => {
     if (
-      (course.status === COURSE_STATUS.PUBLISHED &&
+      (course?.status === COURSE_STATUS.PUBLISHED &&
         getValues("public") === true) ||
-      (course.status === COURSE_STATUS.DRAFT && getValues("public") === false)
+      (course?.status === COURSE_STATUS.DRAFT && getValues("public") === false)
     ) {
       gotoMyCourse();
     }
 
-    console.log(getValues("public"));
-
     const formData = new FormData();
-    formData.append("courseId", course._id);
+
+    formData.append("courseId", course?._id);
+
     const courseStatus = getValues("public")
       ? COURSE_STATUS.PUBLISHED
       : COURSE_STATUS.DRAFT;
+
     formData.append("status", courseStatus);
 
     setLoading(true);
@@ -60,8 +60,7 @@ const PublishCourse = () => {
     setLoading(false);
 
     if (result) {
-      toast.success("Course Published Successfully");
-      console.log("corse ===>", result);
+      toast.success("Course Published ");
       gotoMyCourse();
     }
   };

@@ -16,7 +16,9 @@ const Courses = ({ course }) => {
         {course &&
           course
             ?.splice(0, 3)
-            ?.map((cour) => <CourseCardInstructor course={cour} />)}
+            ?.map((cour) => (
+              <CourseCardInstructor course={cour} key={cour?._id} />
+            ))}
       </div>
     </div>
   );
