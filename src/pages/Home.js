@@ -16,12 +16,14 @@ import CourseSlider from "../components/catalog/CourseSlider";
 import { useEffect } from "react";
 import CourseCardShimmer from "../components/shimmer/CourseCardShimmer";
 import RatingCardShimmer from "../components/shimmer/RatingCardShimmer";
+import { useErrorBoundary } from "react-error-boundary";
 
 const Home = () => {
   const [courses, setCourses] = useState(null);
+  const { showBoundary, ErrorBoundary } = useErrorBoundary();
 
   const fetchCourses = async () => {
-    const result = await getAllCourses();
+    const result = await getAllCourses(showBoundary);
     if (result) {
       setCourses(result);
       console.log("result ", result);

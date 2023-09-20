@@ -11,9 +11,11 @@ import {
   setEntireCourseData,
   setTotalNoOfLectures,
 } from "../Redux/Slices/viewCourseSlice";
+import { useErrorBoundary } from "react-error-boundary";
 
 const VideoPage = () => {
   const { courseId } = useParams();
+  const { showBoundary } = useErrorBoundary();
   const { token } = useSelector((store) => store.auth);
 
   const [showSidebar, setShowSidebar] = useState(true);
@@ -23,7 +25,7 @@ const VideoPage = () => {
 
   // fetching all course details and lectures
   const fetchCoursDetails = async () => {
-    const result = await getCourseFullDetails(courseId, token);
+    const result = await getCourseFullDetails(courseId, token, showBoundary);
 
     if (result) {
       //  fetch details in view course slice

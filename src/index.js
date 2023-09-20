@@ -7,13 +7,20 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import Store from "./Redux/Store";
 import { Toaster } from "react-hot-toast";
+import { ErrorBoundary } from "react-error-boundary";
+import ErrorPage from "./pages/ErrorPage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={Store}>
     <BrowserRouter>
-      <App />
-      <Toaster />
+      <ErrorBoundary
+        fallbackRender={ErrorPage}
+        onReset={() => window.location.reload()}
+      >
+        <App />
+        <Toaster />
+      </ErrorBoundary>
     </BrowserRouter>
   </Provider>
 );

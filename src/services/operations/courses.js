@@ -137,7 +137,7 @@ const getCourseDetails = async (courseId, token) => {
   return response?.data?.data;
 };
 
-const getCourseFullDetails = async (courseId, token) => {
+const getCourseFullDetails = async (courseId, token, showBoundary) => {
   const toastId = toast.loading("loading...");
 
   let response;
@@ -160,6 +160,7 @@ const getCourseFullDetails = async (courseId, token) => {
 
     toast.success("Course Fetched");
   } catch (error) {
+    showBoundary(error);
     console.log(error);
     toast.error("Failed to Load Course");
   }
@@ -169,7 +170,7 @@ const getCourseFullDetails = async (courseId, token) => {
   return response?.data?.data;
 };
 
-const getAllCourses = async (courseId, token) => {
+const getAllCourses = async (showBoundary) => {
   const toastId = toast.loading("loading...");
 
   let response;
@@ -184,6 +185,7 @@ const getAllCourses = async (courseId, token) => {
     }
   } catch (error) {
     console.log(error);
+    // showBoundary(error);
     toast.error("Failed to Load Course");
   }
 

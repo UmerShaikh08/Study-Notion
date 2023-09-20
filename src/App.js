@@ -1,3 +1,4 @@
+"use client";
 import "./App.css";
 import LoadingBar from "react-top-loading-bar";
 import { setProgress } from "./Redux/Slices/loadingbarSlice";
@@ -37,6 +38,7 @@ import VideoPlay from "./components/video page/VideoPlay";
 import InstructorDashboard from "./components/Dashboard/InstructorDashboard";
 import ContactUsPage from "./pages/ContactUsPage";
 import NotFound from "./pages/NotFound";
+import ErrorPage from "./pages/ErrorPage";
 
 function App() {
   const { progress } = useSelector((store) => store.loadingBar);

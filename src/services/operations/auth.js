@@ -30,7 +30,7 @@ const generatePasswordToken = (email, setEmailSend) => {
       dispatch(setLoading(false));
     } catch (error) {
       toast.error("failed to send link");
-      console.log("erroe occured generating token", error);
+      console.log("error occured generating token", error);
       dispatch(setLoading(false));
     }
   };
