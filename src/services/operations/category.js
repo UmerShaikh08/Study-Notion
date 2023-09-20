@@ -21,6 +21,7 @@ const getAllCategories = async () => {
 };
 
 const getCategoriesPageDetails = async (categoryId) => {
+  console.log("category id --->", categoryId);
   const toastId = toast.loading("Loading...");
   let response;
   try {
@@ -33,11 +34,11 @@ const getCategoriesPageDetails = async (categoryId) => {
     );
 
     if (!response.data.success) {
-      toast.error("category not found");
+      // toast.error("category not found");
       throw new Error("category not found");
     }
   } catch (error) {
-    toast.error("category not found");
+    // toast.error("category not found");
     console.log(error);
   }
 

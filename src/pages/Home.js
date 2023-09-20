@@ -15,6 +15,7 @@ import { getAllCourses } from "../services/operations/courses";
 import CourseSlider from "../components/catalog/CourseSlider";
 import { useEffect } from "react";
 import CourseCardShimmer from "../components/shimmer/CourseCardShimmer";
+import RatingCardShimmer from "../components/shimmer/RatingCardShimmer";
 
 const Home = () => {
   const [courses, setCourses] = useState(null);
@@ -22,10 +23,7 @@ const Home = () => {
   const fetchCourses = async () => {
     const result = await getAllCourses();
     if (result) {
-      setTimeout(() => {
-        setCourses(result);
-      }, 2000);
-
+      setCourses(result);
       console.log("result ", result);
     }
   };

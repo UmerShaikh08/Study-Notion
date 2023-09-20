@@ -9,11 +9,13 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { getCourseDetails } from "../services/operations/courses";
 import { convertSecondsToDuration } from "../utils/secToDuration";
+import BuyCardShimmer from "../components/shimmer/BuyCardShimmer";
 
 const CoursePage = () => {
   const [course, setCourse] = useState(null);
   const [totalNoOfLectures, setTotalNoOfLectures] = useState(0);
   const [courseDuration, setCourseDuration] = useState("");
+  const [shimmer, setShimmer] = useState(true);
 
   const { id } = useParams();
   const { token } = useSelector((store) => store.auth);
@@ -29,6 +31,10 @@ const CoursePage = () => {
 
   useEffect(() => {
     fetchCourse();
+
+    setTimeout(() => {
+      setShimmer(false);
+    }, 1000);
   }, []);
 
   useEffect(() => {
@@ -49,12 +55,16 @@ const CoursePage = () => {
         {/* section 1 */}
         <section className="bg-richblack-800 w-full pt-[4rem] mb-[5rem] pb-[5rem]">
           <div className="w-11/12 mx-auto max-w-maxContent  md:ml-auto ">
-            <div className=" flex flex-col md:flex-row relative w-full gap-5 justify-center">
+            <div className=" flex flex-col md:flex-row relative w-full gap-5 justify-between">
               {/* details of course */}
               <CourseDetails course={course} />
 
               {/* buy course card */}
-              <CourseBuyCard course={course} />
+              {!shimmer && course ? (
+                <CourseBuyCard course={course} />
+              ) : (
+                <BuyCardShimmer />
+              )}
             </div>
           </div>
         </section>

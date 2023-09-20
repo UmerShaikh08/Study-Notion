@@ -9,9 +9,11 @@ import "swiper/css/free-mode";
 import "swiper/css/pagination";
 import { Autoplay, Keyboard, Mousewheel } from "swiper/modules";
 import RatingStars from "../common/RatingStars";
+import RatingCardShimmer from "../shimmer/RatingCardShimmer";
 
 const Reviews = () => {
   const [allReview, setAllReview] = useState([]);
+  const [shimmer, setShimmer] = useState(true);
   const delayTime = 2000;
   const onlyShow = 15;
 
@@ -26,6 +28,11 @@ const Reviews = () => {
   };
   useEffect(() => {
     fetchReview();
+
+    setShimmer(true);
+    setTimeout(() => {
+      setShimmer(false);
+    }, 1500);
   }, []);
 
   return (
@@ -68,36 +75,40 @@ const Reviews = () => {
               1024: { slidesPerView: 3.1 },
             }}
           >
-            {allReview?.map((review, index) => (
-              <SwiperSlide key={index}>
-                <div className="flex flex-col gap-3 min-h-[150px] bg-richblack-800 p-3 text-[14px] text-richblack-25">
-                  <div className="flex items-center gap-4">
-                    <img
-                      src={
-                        review?.user?.[0]?.img
-                          ? review?.user?.[0]?.img
-                          : `https://api.dicebear.com/5.x/initials/svg?seed=${review?.user?.[0]?.firstName}%20${review?.user[0].lastName}`
-                      }
-                      alt="user"
-                      className="h-9 w-9 rounded-full object-cover"
-                    />
-                    <div className="flex flex-col">
-                      <h3 className="font-semibold text-richblack-5">
-                        {review?.user?.[0]?.firstName}{" "}
-                        {review?.user[0].lastName}
-                      </h3>
-                      <p className="text-[12px] font-medium text-richblack-500">
-                        {review?.course?.courseName}
-                      </p>
+            {!shimmer && allReview ? (
+              allReview?.map((review, index) => (
+                <SwiperSlide key={index}>
+                  <div className="flex flex-col gap-3 min-h-[150px] bg-richblack-800 p-3 text-[14px] text-richblack-25">
+                    <div className="flex items-center gap-4">
+                      <img
+                        src={
+                          review?.user?.[0]?.img
+                            ? review?.user?.[0]?.img
+                            : `https://api.dicebear.com/5.x/initials/svg?seed=${review?.user?.[0]?.firstName}%20${review?.user[0].lastName}`
+                        }
+                        alt="user"
+                        className="h-9 w-9 rounded-full object-cover"
+                      />
+                      <div className="flex flex-col">
+                        <h3 className="font-semibold text-richblack-5">
+                          {review?.user?.[0]?.firstName}{" "}
+                          {review?.user[0].lastName}
+                        </h3>
+                        <p className="text-[12px] font-medium text-richblack-500">
+                          {review?.course?.courseName}
+                        </p>
+                      </div>
                     </div>
+                    <div className="font-medium text-richblack-25">
+                      {review?.review.slice(0, 70)}...
+                    </div>
+                    <RatingStars Review_Count={review?.rating} />
                   </div>
-                  <div className="font-medium text-richblack-25">
-                    {review?.review.slice(0, 70)}...
-                  </div>
-                  <RatingStars Review_Count={review?.rating} />
-                </div>
-              </SwiperSlide>
-            ))}
+                </SwiperSlide>
+              ))
+            ) : (
+              <RatingCardShimmer />
+            )}
           </Swiper>
         </div>
       </div>

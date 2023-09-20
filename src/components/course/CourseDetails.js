@@ -35,9 +35,11 @@ const CourseDetails = ({ course }) => {
             <p>({course?.RatingAndReviews.length} reviews) </p>
             <p>{course?.studentsEnrolled.length} Students enrolled</p>
           </div>
-          <p className="md:text-lg">
-            Create By {course?.instructor?.firstName}{" "}
-            {course?.instructor?.lastName}{" "}
+          <p className="md:text-lg ">
+            Create By{" "}
+            <span className="text-yellow-100 capitalize">
+              {course?.instructor?.firstName} {course?.instructor?.lastName}
+            </span>{" "}
           </p>
           <div className="flex  flex-col md:flex-row gap-3  md:text-lg">
             <div className="flex flex-row items-center  gap-3">

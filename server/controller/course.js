@@ -311,6 +311,7 @@ const getCourseDetails = async (req, res) => {
       })
       .populate("RatingAndReviews")
       .populate("category")
+      .populate("instructor")
 
       .exec();
 

@@ -9,7 +9,6 @@ import CourseCard from "./CourseCard";
 import { Link } from "react-router-dom";
 
 const CourseSlider = ({ courses, delayTime }) => {
-  console.log(courses);
   return (
     <>
       <Swiper

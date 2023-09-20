@@ -41,16 +41,15 @@ const Catalog = () => {
     }
   };
 
-  //  calling fetchCategories
   useEffect(() => {
     fetchCategories();
+    setShowShimmer(true);
+    setTimeout(() => {
+      setShowShimmer(false);
+    }, 1500);
     dispatch(setProgress(100));
-  }, [catalogName]);
-
-  // fetchCatalogPagedata
-  useEffect(() => {
     fetchCatalogPagedata();
-  }, [categoryId]);
+  }, [catalogName, categoryId]);
 
   return (
     <>
@@ -109,7 +108,7 @@ const Catalog = () => {
                 />
               </div>
             ) : (
-              <div className="flex flex-row">
+              <div className="flex mx-auto gap-6 w-[80%] sm:w-[50%] md:w-full flex-col md:flex-row">
                 <CourseCardShimmer />
                 <CourseCardShimmer />
                 <CourseCardShimmer />
@@ -122,9 +121,19 @@ const Catalog = () => {
               Top courses in {catalogPageData?.differentCategory?.name}
             </div>
             <div className="py-8">
-              <CourseSlider
-                courses={catalogPageData?.differentCategory?.course}
-              />
+              {!showShimmer ? (
+                <div>
+                  <CourseSlider
+                    courses={catalogPageData?.differentCategory?.course}
+                  />
+                </div>
+              ) : (
+                <div className="flex mx-auto gap-6 w-[80%] sm:w-[50%] md:w-full flex-col md:flex-row">
+                  <CourseCardShimmer />
+                  <CourseCardShimmer />
+                  <CourseCardShimmer />
+                </div>
+              )}
             </div>
           </div>
 
@@ -135,7 +144,8 @@ const Catalog = () => {
             </div>
             <div className="py-8">
               <div className="grid grid-cols-1 gap-6 lg:grid-cols-2  md:mx-auto ">
-                {catalogPageData &&
+                {!showShimmer ? (
+                  catalogPageData &&
                   catalogPageData?.mostSellingCourses
                     ?.slice(0, 4)
                     .map((course) => (
@@ -146,7 +156,15 @@ const Catalog = () => {
                           Height={"h-[400px]"}
                         />
                       </Link>
-                    ))}
+                    ))
+                ) : (
+                  <div className="grid grid-cols-1 gap-6 lg:grid-cols-2  md:mx-auto lg:w-[1000px]">
+                    <CourseCardShimmer />
+                    <CourseCardShimmer />
+                    <CourseCardShimmer />
+                    <CourseCardShimmer />
+                  </div>
+                )}
               </div>
             </div>
           </div>

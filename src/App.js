@@ -36,6 +36,7 @@ import VideoPage from "./pages/VideoPage";
 import VideoPlay from "./components/video page/VideoPlay";
 import InstructorDashboard from "./components/Dashboard/InstructorDashboard";
 import ContactUsPage from "./pages/ContactUsPage";
+import NotFound from "./pages/NotFound";
 
 function App() {
   const { progress } = useSelector((store) => store.loadingBar);
@@ -57,6 +58,7 @@ function App() {
         <Route path="/about" element=<About /> />
         <Route path="/course/:id" element=<CoursePage /> />
         <Route path="/contact" element=<ContactUsPage /> />
+        <Route path="*" element={<NotFound />} />
 
         <Route
           path="/login"

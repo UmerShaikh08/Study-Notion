@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import EnrolleCourseCard from "./Enrolled Course/EnrolleCourseCard";
 import { getEnrolledCourse } from "../../services/operations/profile";
 import { useDispatch, useSelector } from "react-redux";
+import EnrolledShimmer from "../shimmer/EnrolledShimmer";
 
 const EnrolledCourse = () => {
   const [enrolleList, setEnrolleList] = useState([]);
   const [progress, setProgress] = useState([]);
+  const [shimmer, setShimmer] = useState(true);
   const { token } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
 
@@ -18,6 +20,11 @@ const EnrolledCourse = () => {
 
   useEffect(() => {
     getData();
+
+    setShimmer(true);
+    setTimeout(() => {
+      setShimmer(false);
+    }, 1500);
   }, []);
 
   return (
@@ -46,7 +53,7 @@ const EnrolledCourse = () => {
               <div className="grid col-span-2   ">Progress</div>
             </div>
             <div className="border-2  border-richblack-600 rounded-b-md flex flex-col ">
-              {enrolleList &&
+              {!shimmer && enrolleList ? (
                 enrolleList?.map((ele, idx) =>
                   enrolleList.length === idx + 1 ? (
                     <EnrolleCourseCard
@@ -65,7 +72,10 @@ const EnrolledCourse = () => {
                       progress={progress}
                     />
                   )
-                )}
+                )
+              ) : (
+                <EnrolledShimmer />
+              )}
             </div>
           </div>
         </>

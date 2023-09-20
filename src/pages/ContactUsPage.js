@@ -1,6 +1,7 @@
 import React from "react";
 import ContactUsForm from "../components/contact/ContactUsForm";
 import Reviews from "../components/home/Reviews";
+import Footer from "../components/common/Footer";
 
 const ContactUsPage = () => {
   return (
@@ -93,6 +94,7 @@ const ContactUsPage = () => {
       <div className=" mx-auto my-20 flex flex-row w-11/12 ">
         <Reviews />
       </div>
+      <Footer />
     </div>
   );
 };

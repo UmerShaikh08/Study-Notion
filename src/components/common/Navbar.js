@@ -12,10 +12,10 @@ import { setProgress } from "../../Redux/Slices/loadingbarSlice";
 
 const Navbar = () => {
   const [SubLinks, setSubLinks] = useState([]);
-  const dispatch = useDispatch();
   const location = useLocation();
   const show = useRef();
   const overlay = useRef();
+  const dispatch = useDispatch();
 
   const { user } = useSelector((store) => store.profile);
   const { totalItems } = useSelector((store) => store.cart);
@@ -38,6 +38,7 @@ const Navbar = () => {
 
     if (result) {
       setSubLinks(result);
+      return;
     }
   };
 

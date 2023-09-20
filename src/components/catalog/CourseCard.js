@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { lazy, useEffect, useState } from "react";
 import RatingStars from "../common/RatingStars";
 import { GetAvgRating } from "../../utils/avgRating";
 import CourseCardShimmer from "../shimmer/CourseCardShimmer";
@@ -8,7 +8,6 @@ const CourseCard = ({ course, Height }) => {
 
   useEffect(() => {
     const count = GetAvgRating(course?.RatingAndReviews);
-    console.log(course);
     setAverageReviewCount(count);
   }, [course]);
 
@@ -17,6 +16,7 @@ const CourseCard = ({ course, Height }) => {
       <div className="  lg:w-full rounded-md flex flex-col gap-2n transition-all duration-200  hover:scale-105 ">
         <img
           src={course?.thumbnail}
+          loading="lazy"
           className={` ${Height}  w-full object-cover rounded-md`}
         />
         <h1 className="text-richblack-5 md:text-lg">{course?.courseName}</h1>
