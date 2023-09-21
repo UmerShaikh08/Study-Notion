@@ -1,11 +1,11 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import loginPage from "../assets/Images/login.webp";
 import frame from "../assets/Images/frame.png";
 import { useForm } from "react-hook-form";
 
 // redux
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setLoading } from "../Redux/Slices/authSlice";
 
 // backend call
@@ -15,6 +15,8 @@ const Login = () => {
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const { loading } = useSelector((store) => store.auth);
 
   const submitDetails = async (data) => {
     await dispatch(login(data, navigate));
@@ -77,7 +79,10 @@ const Login = () => {
             </Link>
           </div>
 
-          <button className="bg-yellow-50 text-black py-2  rounded-md ">
+          <button
+            className="bg-yellow-50 text-black py-2  rounded-md "
+            disabled={loading}
+          >
             Sing In
           </button>
         </form>

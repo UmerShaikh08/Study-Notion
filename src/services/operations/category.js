@@ -21,8 +21,7 @@ const getAllCategories = async () => {
 };
 
 const getCategoriesPageDetails = async (categoryId) => {
-  console.log("category id --->", categoryId);
-  const toastId = toast.loading("Loading...");
+  // const toastId = toast.loading("Loading...");
   let response;
   try {
     response = await apiConnector(
@@ -42,7 +41,7 @@ const getCategoriesPageDetails = async (categoryId) => {
     console.log(error);
   }
 
-  toast.dismiss(toastId);
+  // toast.dismiss(toastId);
   return response?.data?.data;
 };
 

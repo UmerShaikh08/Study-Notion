@@ -227,6 +227,7 @@ const Signup = () => {
               </div>
             </div>
             <button
+              disabled={loading}
               type="sumbit"
               className=" w-full bg-yellow-50 text-black py-2  rounded-md "
             >

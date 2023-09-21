@@ -7,7 +7,7 @@ import { BiMenu } from "react-icons/bi";
 import { RxCross2 } from "react-icons/rx";
 import { VscSignOut } from "react-icons/vsc";
 import { useNavigate } from "react-router-dom";
-import { sidebarLinks } from "../../Data/dashboard-links";
+import { sidebarLinks } from "../../utils/data/dashboard-links";
 import { useDispatch, useSelector } from "react-redux";
 
 const Sidebar = () => {

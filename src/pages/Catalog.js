@@ -35,7 +35,11 @@ const Catalog = () => {
   };
 
   const fetchCatalogPagedata = async () => {
-    const result = await getCategoriesPageDetails(categoryId);
+    let result = null;
+    if (categoryId) {
+      result = await getCategoriesPageDetails(categoryId);
+    }
+
     if (result) {
       setCatalogPageData(result);
       setShowShimmer(true);

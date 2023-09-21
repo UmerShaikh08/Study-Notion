@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import countryCode from "../../Data/countrycode.json";
-import { toast } from "react-hot-toast";
-import { contactUs } from "../../services/operations/contactUs";
+import React, { useState } from "react";
 import Loader from "../common/Loader";
+import countryCode from "../../utils/data/countrycode.json";
+import { useForm } from "react-hook-form";
+import { contactUs } from "../../services/operations/contactUs";
 
 const ContactUsForm = () => {
   const {
