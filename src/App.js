@@ -1,44 +1,49 @@
 "use client";
 import "./App.css";
+import Loader from "./components/common/Loader";
+import Navbar from "./components/common/Navbar";
 import LoadingBar from "react-top-loading-bar";
+import { lazy } from "react";
+import { Suspense } from "react";
 import { setProgress } from "./Redux/Slices/loadingbarSlice";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+
 // Pages
 import Home from "./pages/Home";
+import About from "./pages/About";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import ForgotPassword from "./pages/ForgotPassword";
-import UpdatePassword from "./pages/UpdatePassword";
-import Otp from "./pages/Otp";
-import About from "./pages/About";
-import Dashboard from "./pages/Dashboard";
-
-// common
-import Navbar from "./components/common/Navbar";
 
 // Auth routes
 import OpenRoute from "./components/auth/OpenRoute";
+import PrivateRoute from "./components/auth/PrivateRoute";
 import StudentRoute from "./components/auth/StudentRoute";
 import InstructorRoute from "./components/auth/InstructorRoute";
-import PrivateRoute from "./components/auth/PrivateRoute";
 
 // profile or profile sidebar
-import MyProfile from "./components/Dashboard/MyProfile";
-import Setting from "./components/Dashboard/setting/Setting";
-import EnrolledCourse from "./components/Dashboard/EnrolledCourse";
 import Cart from "./components/Dashboard/cart/Cart";
-import AddCourse from "./components/Dashboard/New Course/AddCourse";
-import MyCourse from "./components/Dashboard/my course/MyCourse";
-import EditCourse from "./components/Dashboard/EditCourse/EditCourse";
 import Catalog from "./pages/Catalog";
-import CoursePage from "./pages/CoursePage";
-import VideoPage from "./pages/VideoPage";
+import Setting from "./components/Dashboard/setting/Setting";
+import MyCourse from "./components/Dashboard/my course/MyCourse";
 import VideoPlay from "./components/video page/VideoPlay";
-import InstructorDashboard from "./components/Dashboard/InstructorDashboard";
-import ContactUsPage from "./pages/ContactUsPage";
 import NotFound from "./pages/NotFound";
-import ErrorPage from "./pages/ErrorPage";
+import MyProfile from "./components/Dashboard/MyProfile";
+import CoursePage from "./pages/CoursePage";
+import EditCourse from "./components/Dashboard/EditCourse/EditCourse";
+import ContactUsPage from "./pages/ContactUsPage";
+import EnrolledCourse from "./components/Dashboard/EnrolledCourse";
+import InstructorDashboard from "./components/Dashboard/InstructorDashboard";
+
+//  code splitting
+const Otp = lazy(() => import("./pages/Otp"));
+const VideoPage = lazy(() => import("./pages/VideoPage"));
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const UpdatePassword = lazy(() => import("./pages/UpdatePassword"));
+const ForgotPassword = lazy(() => import("./pages/ForgotPassword"));
+const AddCourse = lazy(() =>
+  import("./components/Dashboard/New Course/AddCourse")
+);
 
 function App() {
   const { progress } = useSelector((store) => store.loadingBar);
@@ -84,7 +89,9 @@ function App() {
           path="/forgot-password"
           element={
             <OpenRoute>
-              <ForgotPassword />{" "}
+              <Suspense fallback=<Loader />>
+                <ForgotPassword />{" "}
+              </Suspense>
             </OpenRoute>
           }
         />
@@ -93,7 +100,9 @@ function App() {
           path="/update-password/:id"
           element={
             <OpenRoute>
-              <UpdatePassword />{" "}
+              <Suspense fallback=<Loader />>
+                <UpdatePassword />{" "}
+              </Suspense>
             </OpenRoute>
           }
         />
@@ -102,7 +111,9 @@ function App() {
           path="/verify-otp"
           element={
             <OpenRoute>
-              <Otp />{" "}
+              <Suspense fallback=<Loader />>
+                <Otp />{" "}
+              </Suspense>
             </OpenRoute>
           }
         />
@@ -112,7 +123,9 @@ function App() {
           path="/dashboard"
           element=<PrivateRoute>
             {" "}
-            <Dashboard />
+            <Suspense fallback=<Loader />>
+              <Dashboard />
+            </Suspense>
           </PrivateRoute>
         >
           {" "}
@@ -136,7 +149,9 @@ function App() {
           <Route
             path="/dashboard/add-course"
             element=<InstructorRoute>
-              <AddCourse />
+              <Suspense fallback=<Loader />>
+                <AddCourse />
+              </Suspense>
             </InstructorRoute>
           />
           <Route
@@ -163,7 +178,9 @@ function App() {
         <Route
           path="/view-course/:courseId/section/:sectionId/sub-section/:subsectionId"
           element=<StudentRoute>
-            <VideoPage />
+            <Suspense fallback=<Loader />>
+              <VideoPage />
+            </Suspense>
           </StudentRoute>
         >
           <Route

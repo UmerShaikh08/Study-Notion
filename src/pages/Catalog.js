@@ -38,15 +38,15 @@ const Catalog = () => {
     const result = await getCategoriesPageDetails(categoryId);
     if (result) {
       setCatalogPageData(result);
+      setShowShimmer(true);
+      setTimeout(() => {
+        setShowShimmer(false);
+      }, 1500);
     }
   };
 
   useEffect(() => {
     fetchCategories();
-    setShowShimmer(true);
-    setTimeout(() => {
-      setShowShimmer(false);
-    }, 1500);
     dispatch(setProgress(100));
     fetchCatalogPagedata();
   }, [catalogName, categoryId]);
@@ -101,7 +101,7 @@ const Catalog = () => {
                 New
               </p>
             </div>
-            {!showShimmer ? (
+            {!showShimmer && catalogPageData ? (
               <div>
                 <CourseSlider
                   courses={catalogPageData?.selectedCategory?.course}

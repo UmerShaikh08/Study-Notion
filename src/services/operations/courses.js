@@ -170,9 +170,7 @@ const getCourseFullDetails = async (courseId, token, showBoundary) => {
   return response?.data?.data;
 };
 
-const getAllCourses = async (showBoundary) => {
-  const toastId = toast.loading("loading...");
-
+const getAllCourses = async () => {
   let response;
   try {
     response = await apiConnector("GET", course.GET_ALL_COURSES);
@@ -189,7 +187,6 @@ const getAllCourses = async (showBoundary) => {
     toast.error("Failed to Load Course");
   }
 
-  toast.dismiss(toastId);
   console.log("Responnseee ---->", response);
   return response?.data?.courses;
 };

@@ -8,8 +8,7 @@ import { toast } from "react-hot-toast";
 import signupImg from "../assets/Images/signup.webp";
 import frame from "../assets/Images/frame.png";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
-// env data
-import { REACT_APP_INSTRUCTOR, REACT_APP_STUDENT } from "../data";
+
 // backend call
 import { sendOtp } from "../services/operations/auth";
 // redux
@@ -21,7 +20,7 @@ import { isStrongPassword } from "../custom hooks/useStrongPassoword";
 
 const Signup = () => {
   const { register, handleSubmit } = useForm();
-  const [userType, setUserType] = useState(REACT_APP_STUDENT);
+  const [userType, setUserType] = useState(process.env.REACT_APP_STUDENT);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { loading } = useSelector((store) => store.auth);
@@ -71,27 +70,27 @@ const Signup = () => {
           <div className="flex flex-row bg-richblack-800  max-w-max   gap-6 py-1 px-4 items-center rounded-full  justify-around shadow-richblack-500 shadow-sm transition-all duration-200">
             <div
               className={`cursor-pointer ${
-                userType === REACT_APP_STUDENT
+                userType === process.env.REACT_APP_STUDENT
                   ? "bg-richblack-900 rounded-full px-4 py-2 "
                   : ""
               } `}
               onClick={() => {
-                setUserType(REACT_APP_STUDENT);
+                setUserType(process.env.REACT_APP_STUDENT);
               }}
             >
-              {REACT_APP_STUDENT}
+              {process.env.REACT_APP_STUDENT}
             </div>
             <div
               className={` cursor-pointer  ${
-                userType === REACT_APP_INSTRUCTOR
+                userType === process.env.REACT_APP_INSTRUCTOR
                   ? "bg-richblack-900 rounded-full px-4 py-2 "
                   : ""
               } `}
               onClick={() => {
-                setUserType(REACT_APP_INSTRUCTOR);
+                setUserType(process.env.REACT_APP_INSTRUCTOR);
               }}
             >
-              {REACT_APP_INSTRUCTOR}
+              {process.env.REACT_APP_INSTRUCTOR}
             </div>
           </div>
 

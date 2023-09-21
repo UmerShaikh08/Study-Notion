@@ -23,16 +23,14 @@ const Reviews = () => {
     if (result) {
       const reviewList = result.splice(0, onlyShow);
       setAllReview(reviewList);
-      console.log(result);
+      setShimmer(true);
+      setTimeout(() => {
+        setShimmer(false);
+      }, 1500);
     }
   };
   useEffect(() => {
     fetchReview();
-
-    setShimmer(true);
-    setTimeout(() => {
-      setShimmer(false);
-    }, 1500);
   }, []);
 
   return (

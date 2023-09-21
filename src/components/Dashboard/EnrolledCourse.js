@@ -16,6 +16,7 @@ const EnrolledCourse = () => {
 
     setEnrolleList(data?.student?.courses);
     setProgress(data?.student?.courseProgress);
+    console.log(enrolleList);
   };
 
   useEffect(() => {
@@ -32,7 +33,7 @@ const EnrolledCourse = () => {
       <div className="text-3xl font-inter">
         <h1>Enrolled Courses </h1>
       </div>
-      {!enrolleList ? (
+      {enrolleList.length === 0 ? (
         <div className=" text-center text-richblack-5 ">
           You have not enrolled in any course yet.
         </div>

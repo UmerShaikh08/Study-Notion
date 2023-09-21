@@ -47,33 +47,36 @@ const VideoPage = () => {
   }, []);
 
   return (
-    <div className="relative flex  md:min-h-[calc(100vh-3.5rem)] ">
-      {/* sidebar permanant */}
-      <VideoSidebar
-        showSidebar={showSidebar}
-        setShowSidebar={setShowSidebar}
-        setReviewModal={setReviewModal}
-      />
-      <div
-        className={` ${
-          showSidebar ? "hidden md:block " : "hidden"
-        }  w-[240px] max-w-[240px]`}
-      ></div>
-      <div className=" h-[calc(100vh-3.5rem)] flex-1 overflow-y-auto overflow-x-hidden md:ml-[5rem]">
+    <>
+      <div className="relative flex  md:min-h-[calc(100vh-3.5rem)] ">
+        {/* sidebar permanant */}
+        <VideoSidebar
+          showSidebar={showSidebar}
+          setShowSidebar={setShowSidebar}
+          setReviewModal={setReviewModal}
+        />
         <div
-          className={`flex   ${
-            showSidebar
-              ? " md:w-[calc(100vw-320px)]"
-              : "w-full md:w-[calc(100vw-320px)] mx-auto"
-          } `}
-        >
-          {/* changing dynamically */}
-          <Outlet />
+          className={` ${
+            showSidebar ? "hidden md:flex " : "hidden"
+          }  w-[240px] max-w-[240px] h-[300px]`}
+        ></div>
+        <div className=" h-[calc(100vh-3.5rem)] flex-1 overflow-y-auto overflow-x-hidden md:ml-[5rem]">
+          <div
+            className={`flex   ${
+              showSidebar
+                ? " md:w-[calc(100vw-320px)]"
+                : "w-full md:w-[calc(100vw-320px)] mx-auto"
+            } `}
+          >
+            {/* changing dynamically */}
+            <Outlet />
+          </div>
+          <Footer />
         </div>
-        <Footer />
+
+        {reviewModal && <AddReviewModal setReviewModal={setReviewModal} />}
       </div>
-      {reviewModal && <AddReviewModal setReviewModal={setReviewModal} />}
-    </div>
+    </>
   );
 };
 

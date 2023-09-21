@@ -8,7 +8,6 @@ import { RxCross2 } from "react-icons/rx";
 import { VscSignOut } from "react-icons/vsc";
 import { useNavigate } from "react-router-dom";
 import { sidebarLinks } from "../../Data/dashboard-links";
-import { REACT_APP_STUDENT } from "../../data";
 import { useDispatch, useSelector } from "react-redux";
 
 const Sidebar = () => {
@@ -26,7 +25,7 @@ const Sidebar = () => {
     id: 1,
     name: "Setting",
     path: "/dashboard/setting",
-    type: REACT_APP_STUDENT,
+    type: process.env.REACT_APP_STUDENT,
     icon: "VscSettingsGear",
   };
 

@@ -5,7 +5,6 @@ import { toast } from "react-hot-toast";
 import { addToCart } from "../../Redux/Slices/cartSlice";
 import { buyCourse } from "../../services/operations/payment";
 import { AiFillCaretRight } from "react-icons/ai";
-import { REACT_APP_INSTRUCTOR } from "../../data";
 import { FaRegShareSquare } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -27,7 +26,7 @@ const CourseBuyCard = ({ course }) => {
 
   const handleBuyCourse = async () => {
     // check use instuctor or not
-    if (user && user.accountType === REACT_APP_INSTRUCTOR) {
+    if (user && user.accountType === process.env.REACT_APP_INSTRUCTOR) {
       toast.error("Instructor dont have permission to buy course");
       return;
     }
@@ -83,7 +82,10 @@ const CourseBuyCard = ({ course }) => {
           </button>
           <button
             onClick={() => {
-              if (user && user.accountType === REACT_APP_INSTRUCTOR) {
+              if (
+                user &&
+                user.accountType === process.env.REACT_APP_INSTRUCTOR
+              ) {
                 toast.error("Instructor dont have permission to buy course");
                 return;
               }

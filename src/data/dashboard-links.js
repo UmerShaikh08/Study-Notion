@@ -1,5 +1,3 @@
-import { REACT_APP_INSTRUCTOR, REACT_APP_STUDENT } from "../data";
-
 export const sidebarLinks = [
   {
     id: 1,

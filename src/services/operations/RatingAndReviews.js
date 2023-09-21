@@ -30,7 +30,6 @@ const addRatingAndReview = async (data, token) => {
 };
 
 const getAllRatingReviews = async (token) => {
-  const toastId = toast.loading("Loading...");
   let result = null;
   try {
     result = await apiConnector("GET", ratingAndReviews.GET_ALL_REVIEW, null);
@@ -45,7 +44,6 @@ const getAllRatingReviews = async (token) => {
     toast.error("Failed to review ");
   }
 
-  toast.dismiss(toastId);
   return result?.data?.data;
 };
 

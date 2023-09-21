@@ -21,20 +21,18 @@ const CoursePage = () => {
   const { token } = useSelector((store) => store.auth);
 
   const fetchCourse = async () => {
-    console.log("i called cours details fuction");
     const result = await getCourseDetails(id, token);
 
     if (result) {
       setCourse(result);
+      setTimeout(() => {
+        setShimmer(false);
+      }, 1000);
     }
   };
 
   useEffect(() => {
     fetchCourse();
-
-    setTimeout(() => {
-      setShimmer(false);
-    }, 1000);
   }, []);
 
   useEffect(() => {
@@ -60,7 +58,7 @@ const CoursePage = () => {
               <CourseDetails course={course} />
 
               {/* buy course card */}
-              {!shimmer && course ? (
+              {!shimmer ? (
                 <CourseBuyCard course={course} />
               ) : (
                 <BuyCardShimmer />
