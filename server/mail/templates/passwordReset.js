@@ -1,4 +1,4 @@
-const resetPasswordTemplate = (url) => {
+export const passwordReset = (url) => {
   return `<!DOCTYPE html>
   <html lang="en">
   <head>
@@ -25,5 +25,3 @@ const resetPasswordTemplate = (url) => {
   </body>
   </html>`;
 };
-
-export { resetPasswordTemplate };

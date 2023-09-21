@@ -1,10 +1,8 @@
 import { User } from "../model/User.js";
-import crypto from "crypto";
 import { mailSender } from "../utils/mailSender.js";
 import { v4 as uuid } from "uuid";
 import bcrypt from "bcrypt";
-import { Profile } from "../model/Profile.js";
-import { resetPasswordTemplate } from "../mail/templates/passWordReset.js";
+import { passwordReset } from "../mail/templates/passwordReset.js";
 
 // forget password   or create reset password token and send to user mail
 const CreateResetPasswordToken = async (req, res) => {
@@ -15,7 +13,7 @@ const CreateResetPasswordToken = async (req, res) => {
     if (!email) {
       return res.status(400).json({
         success: false,
-        massage: "please fill the bracket",
+        massage: "please fill the brackett",
       });
     }
 
@@ -41,11 +39,10 @@ const CreateResetPasswordToken = async (req, res) => {
     console.log("Details ", addToken);
 
     const url = `http://localhost:3000/update-password/${token}`;
-    const template = resetPasswordTemplate(url);
-    const send = mailSender(
+    const template = passwordReset(url);
+    const send = await mailSender(
       email,
-
-      template,
+      "<div>hi</div>",
       "Reset password link"
     );
 
