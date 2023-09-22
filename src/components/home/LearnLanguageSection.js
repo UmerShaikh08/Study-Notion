@@ -1,9 +1,9 @@
 import React from "react";
 import { Highlight } from "./Highlight";
+import { CTAButton } from "./Button";
 import Know_your_progress from "../../assets/Images/Know_your_progress.png";
 import Compare_with_others from "../../assets/Images/Compare_with_others.png";
 import Plan_your_lesson from "../../assets/Images/Plan_your_lessons.png";
-import { CTAButton } from "./Button";
 
 const LearnLanguageSection = () => {
   return (

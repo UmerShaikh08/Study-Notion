@@ -1,5 +1,4 @@
 import React from "react";
-import { Highlight } from "../components/home/Highlight";
 import HighlightGold from "../components/about/HighlightGold";
 import about1 from "../assets/Images/aboutus1.webp";
 import about2 from "../assets/Images/aboutus2.webp";
@@ -11,6 +10,7 @@ import LearningGrid from "../components/about/LearningGrid";
 import ContactFormSection from "../components/about/ContactFormSection";
 import Footer from "./../components/common/Footer";
 import Reviews from "../components/home/Reviews";
+import { Highlight } from "../components/home/Highlight";
 
 const About = () => {
   const ourData = [

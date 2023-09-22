@@ -22,7 +22,6 @@ const AddReviewModal = ({ setReviewModal }) => {
 
   const handleRating = (newRating) => {
     setValue("rating", newRating);
-    console.log(getValues("rating"));
   };
 
   const submitReview = async (data) => {

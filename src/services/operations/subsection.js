@@ -7,12 +7,11 @@ const createSubsection = async (data, token) => {
   const toastId = toast.loading("Loading...");
 
   try {
-    console.log("i am in subsection");
     response = await apiConnector("POST", subsection.CREATE_SUBSECTION, data, {
       Authorization: `Bearer ${token}`,
     });
 
-    console.log("Create SubSection Response -----> ", response);
+    // console.log("Create SubSection Response -----> ", response);
 
     if (!response) {
       toast.error("Failed to create Subsection");
@@ -34,12 +33,11 @@ const updateSubsection = async (data, token) => {
   const toastId = toast.loading("Loading...");
 
   try {
-    console.log("i am in subsection");
     response = await apiConnector("POST", subsection.UPDATE_SUBSECTION, data, {
       Authorization: `Bearer ${token}`,
     });
 
-    console.log("Update SubSection Response -----> ", response);
+    // console.log("Update SubSection Response -----> ", response);
 
     if (!response) {
       toast.error("Failed to update Subsection");
@@ -59,13 +57,12 @@ const updateSubsection = async (data, token) => {
 const deleteSubsection = async (data, token) => {
   let response = null;
   const toastId = toast.loading("Loading...");
-  console.log(token);
   try {
     response = await apiConnector("POST", subsection.DELETE_SUBSECTION, data, {
       Authorization: `Bearer ${token}`,
     });
 
-    console.log("Delete SubSection Response -----> ", response);
+    // console.log("Delete SubSection Response -----> ", response);
 
     if (!response) {
       toast.error("Failed to delete Subsection");

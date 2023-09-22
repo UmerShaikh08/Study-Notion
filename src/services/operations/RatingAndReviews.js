@@ -15,7 +15,7 @@ const addRatingAndReview = async (data, token) => {
       }
     );
 
-    console.log("result -->", result);
+    console.log(" add rating response -->", result);
     if (!result.data.success) {
       toast.error("Failed to add rating and reviews");
       throw new Error("Failed to add rating and reviews");
@@ -34,7 +34,7 @@ const getAllRatingReviews = async (token) => {
   try {
     result = await apiConnector("GET", ratingAndReviews.GET_ALL_REVIEW, null);
 
-    console.log("result -->", result);
+    // console.log("get all rating response  -->", result);
     if (!result.data.success) {
       toast.error("Failed to get rating and reviews");
       throw new Error("Failed get add rating and reviews");

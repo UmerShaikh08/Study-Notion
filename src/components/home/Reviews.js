@@ -1,15 +1,15 @@
 import React from "react";
+import RatingStars from "../common/RatingStars";
+import RatingCardShimmer from "../shimmer/RatingCardShimmer";
+import { useState } from "react";
 import { useEffect } from "react";
 import { getAllRatingReviews } from "../../services/operations/RatingAndReviews";
-import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Keyboard, Mousewheel } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
-import { Autoplay, Keyboard, Mousewheel } from "swiper/modules";
-import RatingStars from "../common/RatingStars";
-import RatingCardShimmer from "../shimmer/RatingCardShimmer";
 
 const Reviews = () => {
   const [allReview, setAllReview] = useState([]);

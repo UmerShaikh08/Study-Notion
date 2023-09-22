@@ -1,9 +1,9 @@
 import React, { useState } from "react";
+import Loader from "../components/common/Loader";
 import { Link } from "react-router-dom";
 import { BsArrowLeft } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { generatePasswordToken } from "../services/operations/auth";
-import Loader from "../components/common/Loader";
 
 const ForgotPassword = () => {
   const [emailSend, setEmailSend] = useState(false);

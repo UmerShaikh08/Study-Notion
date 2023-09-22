@@ -1,14 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
 import logo from "../../assets/Logo/Logo-Full-Light.png";
-import { NavbarLinks } from "../../utils/data/navbar-links";
-import { Link, matchPath, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux/es/hooks/useSelector";
-import { AiOutlineShoppingCart } from "react-icons/ai";
-import { GiHamburgerMenu } from "react-icons/gi";
+import React, { useEffect, useRef, useState } from "react";
 import ProfileDropdown from "../auth/ProfileDropdrown";
-import { getAllCategories } from "../../services/operations/category";
+import { useSelector } from "react-redux/es/hooks/useSelector";
+import { NavbarLinks } from "../../utils/data/navbar-links";
 import { useDispatch } from "react-redux";
 import { setProgress } from "../../Redux/Slices/loadingbarSlice";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { getAllCategories } from "../../services/operations/category";
+import { AiOutlineShoppingCart } from "react-icons/ai";
+import { Link, matchPath, useLocation } from "react-router-dom";
 
 const Navbar = () => {
   const [SubLinks, setSubLinks] = useState([]);
@@ -298,7 +298,6 @@ const Navbar = () => {
               <button className="rounded-[8px] border border-richblack-700 bg-richblack-800 px-[12px] py-[7px] text-richblack-100">
                 Login
               </button>
-              {console.log("hi")}
             </Link>
           )}
           {token == null && (

@@ -1,9 +1,9 @@
-import { toast } from "react-hot-toast";
+import logo from "../../assets/Logo/Logo-Small-Dark.png";
 import apiConnector from "../apiConnector";
+import { toast } from "react-hot-toast";
 import { payment } from "../apis";
-import logo from "../../assets/Logo/Logo-Small-Light.png";
-import { setPaymentLoading } from "../../Redux/Slices/courseSlice";
 import { clearCart } from "../../Redux/Slices/cartSlice";
+import { setPaymentLoading } from "../../Redux/Slices/courseSlice";
 
 const loadScript = (src) => {
   return new Promise((resolve) => {
@@ -104,7 +104,7 @@ const paymentSuccessfullEmail = async (res, amount, token) => {
       }
     );
 
-    console.log("Response --->", response);
+    // console.log("payment success Response --->", response);
 
     if (!response) {
       toast.error("Failed to send email");
@@ -130,7 +130,7 @@ const verifyPayment = async (bodyData, navigate, dispatch, token) => {
         Authorization: `Bearer ${token}`,
       }
     );
-    console.log("Payment Verify Response --->", response);
+    // console.log("Payment Verify Response --->", response);
 
     if (!response) {
       toast.error("Payment Failed");

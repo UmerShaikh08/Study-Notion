@@ -2,13 +2,13 @@ import React from "react";
 import Footer from "../components/common/Footer";
 import CourseCard from "../components/catalog/CourseCard";
 import CourseSlider from "../components/catalog/CourseSlider";
+import CourseCardShimmer from "../components/shimmer/CourseCardShimmer";
 import { setProgress } from "../Redux/Slices/loadingbarSlice";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCategories } from "../services/operations/category";
 import { getCategoriesPageDetails } from "../services/operations/category";
-import CourseCardShimmer from "../components/shimmer/CourseCardShimmer";
 
 const Catalog = () => {
   const [active, setActive] = useState(1);

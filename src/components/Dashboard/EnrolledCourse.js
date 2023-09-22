@@ -16,7 +16,6 @@ const EnrolledCourse = () => {
 
     setEnrolleList(data?.student?.courses);
     setProgress(data?.student?.courseProgress);
-    console.log(enrolleList);
   };
 
   useEffect(() => {

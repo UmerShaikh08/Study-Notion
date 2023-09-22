@@ -3,13 +3,13 @@ import Footer from "../components/common/Footer";
 import Section from "../components/course/Section";
 import CourseBuyCard from "../components/course/CourseBuyCard";
 import CourseDetails from "../components/course/CourseDetails";
+import BuyCardShimmer from "../components/shimmer/BuyCardShimmer";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { getCourseDetails } from "../services/operations/courses";
 import { convertSecondsToDuration } from "../utils/secToDuration";
-import BuyCardShimmer from "../components/shimmer/BuyCardShimmer";
 
 const CoursePage = () => {
   const [course, setCourse] = useState(null);

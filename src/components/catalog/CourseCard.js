@@ -1,7 +1,6 @@
-import React, { lazy, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import RatingStars from "../common/RatingStars";
 import { GetAvgRating } from "../../utils/avgRating";
-import CourseCardShimmer from "../shimmer/CourseCardShimmer";
 
 const CourseCard = ({ course, Height }) => {
   const [avgReviewCount, setAverageReviewCount] = useState(0);

@@ -34,15 +34,12 @@ const Signup = () => {
       return;
     }
 
-    console.log(data);
     if (data.password !== data.confirmPassword) {
       toast.error("Password Not Match");
       return;
     }
     dispatch(setSignup(data));
     dispatch(sendOtp(data, navigate));
-
-    console.log(data);
   };
   return loading ? (
     <Loader />

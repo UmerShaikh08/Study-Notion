@@ -1,7 +1,7 @@
 import React from "react";
-import ContactUsForm from "../components/contact/ContactUsForm";
 import Reviews from "../components/home/Reviews";
 import Footer from "../components/common/Footer";
+import ContactUsForm from "../components/contact/ContactUsForm";
 
 const ContactUsPage = () => {
   return (

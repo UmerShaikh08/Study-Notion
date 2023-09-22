@@ -1,9 +1,9 @@
 import apiConnector from "../apiConnector";
-import { endpointes } from "../apis";
-import { setLoading, setToken } from "../../Redux/Slices/authSlice";
 import { toast } from "react-hot-toast";
 import { setUser } from "../../Redux/Slices/profileSlice";
 import { clearCart } from "../../Redux/Slices/cartSlice";
+import { endpointes } from "../apis";
+import { setLoading, setToken } from "../../Redux/Slices/authSlice";
 
 const generatePasswordToken = (email, setEmailSend) => {
   return async (dispatch) => {
@@ -73,6 +73,7 @@ const login = (data, navigate) => {
   return async (dispatch) => {
     try {
       // show loader
+
       dispatch(setLoading(true));
 
       // call db for login
@@ -109,7 +110,7 @@ const sendOtp = (data, navigate) => {
       const response = await apiConnector("POST", endpointes.SEND_OTP, {
         email,
       });
-      // console.log(response);
+      // console.log("otp response --->" ,response);
       if (!response.data.success) {
         dispatch(setLoading(false));
         throw new Error("otp not send");

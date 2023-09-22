@@ -1,4 +1,3 @@
-import { toast } from "react-hot-toast";
 import apiConnector from "../apiConnector";
 import { category } from "../apis";
 
@@ -31,6 +30,8 @@ const getCategoriesPageDetails = async (categoryId) => {
         categoryId,
       }
     );
+
+    // console.log("get Categories PageDetails response --->" , response)
 
     if (!response.data.success) {
       // toast.error("category not found");

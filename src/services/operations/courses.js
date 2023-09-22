@@ -1,5 +1,5 @@
-import { toast } from "react-hot-toast";
 import apiConnector from "../apiConnector";
+import { toast } from "react-hot-toast";
 import { course } from "../apis";
 
 const EditCourse = async (data, token) => {
@@ -8,14 +8,13 @@ const EditCourse = async (data, token) => {
       "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${token}`,
     });
-    console.log("jo");
     if (!response.data.success) {
       toast.error("failed to edit course");
       throw new Error("failed to edit course");
     }
 
     const ans = response?.data?.data;
-    console.log("response ---> ", response);
+    // console.log(" edit course response  ---> ", response);
     return ans;
   } catch (error) {
     console.log(error);
@@ -25,13 +24,15 @@ const EditCourse = async (data, token) => {
 
 const createCourse = async (data, token) => {
   const toastId = toast.loading("loading...");
-  console.log(data);
+
   let response;
   try {
     response = await apiConnector("POST", course.CREATE_COURSE, data, {
       "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${token}`,
     });
+
+    // console.log("create course response --->" , createCourse)
 
     if (!response.data.success) {
       toast.error("failed to create course");
@@ -57,7 +58,7 @@ const getInstructorCourses = async (token) => {
       Authorization: `Bearer ${token}`,
     });
 
-    console.log("Responnseee ---->", response);
+    // console.log(" instructor course Responnseee ---->", response);
 
     if (!response.data.success) {
       toast.error("Courses not found");
@@ -69,7 +70,7 @@ const getInstructorCourses = async (token) => {
   }
 
   toast.dismiss(toastId);
-  console.log("Responnseee ---->", response);
+
   return response?.data?.Instructor?.courses;
 };
 
@@ -87,7 +88,7 @@ const deleteCourse = async (courseId, token) => {
       }
     );
 
-    console.log("Responnseee ---->", response);
+    // console.log(" delete course Responnseee ---->", response);
 
     if (!response.data.success) {
       toast.error("failed to Delete course ");
@@ -101,7 +102,6 @@ const deleteCourse = async (courseId, token) => {
   }
 
   toast.dismiss(toastId);
-  console.log("Responnseee ---->", response);
   return response?.data?.Instructor?.courses;
 };
 
@@ -119,7 +119,7 @@ const getCourseDetails = async (courseId, token) => {
       }
     );
 
-    console.log("Responnseee ---->", response);
+    // console.log(" get course details Responnseee ---->", response);
 
     if (!response.data.success) {
       toast.error("Failed to Load Course ");
@@ -133,7 +133,6 @@ const getCourseDetails = async (courseId, token) => {
   }
 
   toast.dismiss(toastId);
-  console.log("Responnseee ---->", response);
   return response?.data?.data;
 };
 
@@ -151,7 +150,7 @@ const getCourseFullDetails = async (courseId, token, showBoundary) => {
       }
     );
 
-    console.log("Responnseee ---->", response);
+    // console.log("get course full details Responnseee ---->", response);
 
     if (!response.data.success) {
       toast.error("Failed to Fetch Course ");
@@ -166,7 +165,6 @@ const getCourseFullDetails = async (courseId, token, showBoundary) => {
   }
 
   toast.dismiss(toastId);
-  console.log("Responnseee ---->", response);
   return response?.data?.data;
 };
 
@@ -175,7 +173,7 @@ const getAllCourses = async () => {
   try {
     response = await apiConnector("GET", course.GET_ALL_COURSES);
 
-    console.log("Responnseee ---->", response);
+    // console.log(" get all course Responnseee ---->", response);
 
     if (!response.data.success) {
       toast.error("Failed to Fetch Course ");
@@ -183,11 +181,10 @@ const getAllCourses = async () => {
     }
   } catch (error) {
     console.log(error);
-    // showBoundary(error);
+
     toast.error("Failed to Load Course");
   }
 
-  console.log("Responnseee ---->", response);
   return response?.data?.courses;
 };
 

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { BsArrowLeft } from "react-icons/bs";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+import { BsArrowLeft } from "react-icons/bs";
 import { resetPassword } from "../services/operations/auth";
+import { Link, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
 const UpdatePassword = () => {

@@ -1,11 +1,11 @@
 import React from "react";
 import CartCard from "./CartCard";
+import CartShimmer from "../../shimmer/CartShimmer";
 import { buyCourse } from "../../../services/operations/payment";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { useEffect } from "react";
-import CartShimmer from "../../shimmer/CartShimmer";
 
 const Cart = () => {
   const { cart, totalItems, totalPrice } = useSelector((store) => store.cart);

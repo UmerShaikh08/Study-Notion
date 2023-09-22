@@ -506,7 +506,7 @@ const removeCourseFromStudent = async (req, res) => {
     }
 
     const updateStudent = await User.findByIdAndUpdate(
-      userId,
+      { _id: userId },
       {
         $pull: { courses: courseId },
       },
@@ -514,7 +514,7 @@ const removeCourseFromStudent = async (req, res) => {
     );
 
     const updateCourse = await Course.findByIdAndUpdate(
-      courseId,
+      { _id: courseId },
       {
         $pull: { studentsEnrolled: userId },
       },

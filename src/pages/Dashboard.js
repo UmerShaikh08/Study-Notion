@@ -1,7 +1,7 @@
 import React from "react";
 import Sidebar from "../components/Dashboard/Sidebar";
-import { Outlet } from "react-router-dom";
 import Loader from "../components/common/Loader";
+import { Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const Dashboard = () => {

@@ -9,7 +9,6 @@ export const deleteAccount = (token, nevigate) => {
   return async (dispatch) => {
     try {
       dispatch(setLoading(true));
-      console.log("token -->", token);
       // db call for delete account
       const response = await apiConnector(
         "DELETE",
@@ -19,6 +18,8 @@ export const deleteAccount = (token, nevigate) => {
           Authorization: `Bearer ${token}`,
         }
       );
+
+      // console.log("delete account response --->" , response)
 
       // check req
       if (!response.data.success) {
@@ -46,7 +47,6 @@ export const deleteAccount = (token, nevigate) => {
 };
 
 export const updateProfileImg = (image, token, user) => {
-  console.log(image);
   return async (dispatch) => {
     try {
       // db call to upload img
@@ -62,7 +62,7 @@ export const updateProfileImg = (image, token, user) => {
         throw new Error("Image not updated");
       }
 
-      console.log("resoponse ---->", response);
+      // console.log(" update img resoponse ---->", response);
       // updating user
 
       dispatch(setUser(response?.data?.user));
@@ -99,7 +99,7 @@ export const updateProfile = (data, token) => {
         throw new Error("profile not updated");
       }
 
-      console.log("resoponse ---->", response);
+      // console.log(" update profile resoponse ---->", response);
       toast.success("Profile Updated Successfully");
       dispatch(setLoading(false));
       // navigate("/dashboard/my-profile");
@@ -131,7 +131,7 @@ export const updatePassword = (data, token) => {
         throw new Error("Password not updated");
       }
 
-      console.log("resoponse ---->", response);
+      // console.log(" update  password resoponse ---->", response);
       toast.success("Password Updated Successfully");
       dispatch(setLoading(false));
       // navigate("/dashboard/my-profile");
@@ -156,15 +156,15 @@ export const getEnrolledCourse = (token) => {
         }
       );
 
+      // console.log("get enrolled course response -->", response);
       // check req
       if (!response.data.success) {
         toast.error("Failed to get Enrolled Courses");
         dispatch(setLoading(false));
-        console.log(response);
+
         throw new Error("Failed to get Enrolled Courses");
       }
 
-      console.log("response -->", response);
       setLoading(false);
       return response.data;
     } catch (error) {
@@ -188,15 +188,15 @@ export const removeEnrolledCourse = (courseId, token) => {
         }
       );
 
+      // console.log("remove enrolled course response -->", response);
+
       // check req
       if (!response.data.success) {
         toast.error("Failed to Delete");
         dispatch(setLoading(false));
-        console.log(response);
         throw new Error("Failed to Delete");
       }
 
-      console.log("response -->", response);
       toast.success("Removed Course");
       setLoading(false);
       return response.data?.courses;

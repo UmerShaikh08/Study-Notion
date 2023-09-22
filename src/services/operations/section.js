@@ -1,12 +1,11 @@
-import { toast } from "react-hot-toast";
 import apiConnector from "../apiConnector";
+import { toast } from "react-hot-toast";
 import { section } from "../apis";
 
 const createSection = async (sectionName, courseId, token) => {
   const toastId = toast.loading("Loading...");
   let response;
   try {
-    console.log(courseId);
     response = await apiConnector(
       "POST",
       section.CREATE_SECTION,
@@ -16,12 +15,13 @@ const createSection = async (sectionName, courseId, token) => {
       }
     );
 
+    // console.log("create section response -->", response);
+
     if (!response.data.success) {
       toast.error("failed to create section ");
       throw new Error("failed to create section ");
     }
 
-    console.log(response);
     toast.success("Section created successfully");
   } catch (error) {
     console.log(error);
@@ -36,7 +36,6 @@ const updateSection = async (sectionName, sectionId, courseId, token) => {
   const toastId = toast.loading("Loading...");
   let response;
   try {
-    console.log(sectionId);
     response = await apiConnector(
       "POST",
       section.UPDATE_SECTION,
@@ -45,13 +44,13 @@ const updateSection = async (sectionName, sectionId, courseId, token) => {
         Authorization: `Bearer ${token}`,
       }
     );
+    // console.log("update section response -->", response);
 
     if (!response.data.success) {
       toast.error("failed to update section ");
       throw new Error("failed to update section ");
     }
 
-    console.log(response);
     toast.success("Section updated successfully");
   } catch (error) {
     console.log(error);
@@ -66,8 +65,6 @@ const deleteSection = async (sectionId, courseId, token) => {
   const toastId = toast.loading("Loading...");
   let response;
   try {
-    console.log(courseId);
-    console.log("before deletion call ");
     response = await apiConnector(
       "POST",
       section.DELETE_SECTION,
@@ -77,14 +74,13 @@ const deleteSection = async (sectionId, courseId, token) => {
       }
     );
 
-    console.log("after deletion call");
+    // console.log("delete section response -->", response);
 
     if (!response.data.success) {
       toast.error("failed to delete section ");
       throw new Error("failed to delete section ");
     }
 
-    console.log(response);
     toast.success("Section deleted successfully");
   } catch (error) {
     console.log(error);

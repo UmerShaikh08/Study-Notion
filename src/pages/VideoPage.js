@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
+import Footer from "./../components/common/Footer";
+import VideoSidebar from "../components/video page/VideoSidebar";
+import AddReviewModal from "../components/video page/AddReviewModal";
 import { Outlet, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getCourseFullDetails } from "../services/operations/courses";
-import VideoSidebar from "../components/video page/VideoSidebar";
-import AddReviewModal from "../components/video page/AddReviewModal";
-import Footer from "./../components/common/Footer";
 import {
   setCompletedLectures,
   setCourseSectionData,

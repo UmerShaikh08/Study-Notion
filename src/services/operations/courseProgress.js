@@ -16,7 +16,7 @@ const markCourseLecture = async (courseId, subsectionId, token) => {
       }
     );
 
-    console.log("course progress data ----->", response);
+    // console.log("course progress data response ----->", response);
 
     if (!response.data.success) {
       toast.error("failed to mark  lectures");
