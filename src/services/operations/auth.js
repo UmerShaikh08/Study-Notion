@@ -17,7 +17,7 @@ const generatePasswordToken = (email, setEmailSend) => {
         endpointes.RESETPASSTOKEN_API,
         { email }
       );
-      // console.log("Response---> ", response);
+      console.log("generate pass Response---> ", response);
 
       // check req
       if (!response.data.success) {

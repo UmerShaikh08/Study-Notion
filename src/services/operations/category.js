@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import apiConnector from "../apiConnector";
 import { category } from "../apis";
 
@@ -20,7 +21,7 @@ const getAllCategories = async () => {
 };
 
 const getCategoriesPageDetails = async (categoryId) => {
-  // const toastId = toast.loading("Loading...");
+  const toastId = toast.loading("Loading...");
   let response;
   try {
     response = await apiConnector(
@@ -31,7 +32,7 @@ const getCategoriesPageDetails = async (categoryId) => {
       }
     );
 
-    // console.log("get Categories PageDetails response --->" , response)
+    console.log("get Categories PageDetails response --->", response);
 
     if (!response.data.success) {
       // toast.error("category not found");

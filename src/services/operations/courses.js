@@ -14,7 +14,7 @@ const EditCourse = async (data, token) => {
     }
 
     const ans = response?.data?.data;
-    // console.log(" edit course response  ---> ", response);
+    console.log(" edit course response  ---> ", response);
     return ans;
   } catch (error) {
     console.log(error);
@@ -32,9 +32,10 @@ const createCourse = async (data, token) => {
       Authorization: `Bearer ${token}`,
     });
 
-    // console.log("create course response --->" , createCourse)
+    console.log("create course response --->", createCourse);
 
     if (!response.data.success) {
+      toast.dismiss(toastId);
       toast.error("failed to create course");
       throw new Error("failed to create course");
     }
@@ -58,7 +59,7 @@ const getInstructorCourses = async (token) => {
       Authorization: `Bearer ${token}`,
     });
 
-    // console.log(" instructor course Responnseee ---->", response);
+    console.log(" instructor course Responnseee ---->", response);
 
     if (!response.data.success) {
       toast.error("Courses not found");
@@ -88,7 +89,7 @@ const deleteCourse = async (courseId, token) => {
       }
     );
 
-    // console.log(" delete course Responnseee ---->", response);
+    console.log(" delete course Responnseee ---->", response);
 
     if (!response.data.success) {
       toast.error("failed to Delete course ");
@@ -119,7 +120,7 @@ const getCourseDetails = async (courseId, token) => {
       }
     );
 
-    // console.log(" get course details Responnseee ---->", response);
+    console.log(" get course details Responnseee ---->", response);
 
     if (!response.data.success) {
       toast.error("Failed to Load Course ");
@@ -150,7 +151,7 @@ const getCourseFullDetails = async (courseId, token, showBoundary) => {
       }
     );
 
-    // console.log("get course full details Responnseee ---->", response);
+    console.log("get course full details Responnseee ---->", response);
 
     if (!response.data.success) {
       toast.error("Failed to Fetch Course ");
@@ -173,7 +174,7 @@ const getAllCourses = async () => {
   try {
     response = await apiConnector("GET", course.GET_ALL_COURSES);
 
-    // console.log(" get all course Responnseee ---->", response);
+    console.log(" get all course Responnseee ---->", response);
 
     if (!response.data.success) {
       toast.error("Failed to Fetch Course ");

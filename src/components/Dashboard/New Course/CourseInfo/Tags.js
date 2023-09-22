@@ -13,7 +13,7 @@ const Tags = ({ register, setValue, name, errors }) => {
   // tag handlers
   const handleTagList = (e) => {
     e.preventDefault();
-    if (e.key === "Enter" || e.keyCode === 13) {
+    if (e.keyCode === 13 || e.key === "Enter") {
       if (tag.length === 0) return;
       else if (tagList?.includes(tag)) {
         setTag("");
@@ -48,7 +48,10 @@ const Tags = ({ register, setValue, name, errors }) => {
               className="flex flex-row gap-1 bg-yellow-200 rounded-full items-center  py-1 px-3"
             >
               <div>{data}</div>
-              <RxCross2 className="cursor-pointer" onClick={removeTag} />
+              <RxCross2
+                className="cursor-pointer"
+                onClick={() => removeTag(idx)}
+              />
             </div>
           ))}
       </div>
