@@ -3,6 +3,7 @@ import { mailSender } from "../utils/mailSender.js";
 import { v4 as uuid } from "uuid";
 import bcrypt from "bcrypt";
 import { passwordReset } from "../mail/templates/passwordReset.js";
+import crypto from "crypto";
 
 // forget password   or create reset password token and send to user mail
 const CreateResetPasswordToken = async (req, res) => {
@@ -29,7 +30,8 @@ const CreateResetPasswordToken = async (req, res) => {
     }
 
     // create token
-    const token = await uuid();
+    const token = crypto.randomBytes(20).toString("hex");
+    // await uuid();
 
     const addToken = await User.findOneAndUpdate(
       { email: email },

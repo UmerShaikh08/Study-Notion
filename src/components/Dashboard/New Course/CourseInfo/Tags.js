@@ -13,7 +13,7 @@ const Tags = ({ register, setValue, name, errors }) => {
   // tag handlers
   const handleTagList = (e) => {
     e.preventDefault();
-    if (e.key === "Enter") {
+    if (e.key === "Enter" || e.keyCode === 13) {
       if (tag.length === 0) return;
       else if (tagList?.includes(tag)) {
         setTag("");
