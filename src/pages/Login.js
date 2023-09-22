@@ -22,7 +22,7 @@ const Login = () => {
     await dispatch(login(data, navigate));
   };
   return (
-    <div className="w-11/12 max-w-maxContent flex flex-col-reverse md:flex-row items-center my-auto gap-20 ">
+    <div className="w-11/12 max-w-maxContent flex flex-col-reverse md:flex-row items-center my-auto gap-20 mb-10">
       <div className=" w-11/12 max-w-[450px] font-inter text-richblack-5 flex flex-col  lg:gap-10 mx-auto ">
         <div className="flex flex-col gap-3">
           <div className="text-richblack-5 text-3xl font-semibold ">

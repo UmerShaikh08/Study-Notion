@@ -58,7 +58,7 @@ const ProfileInfo = () => {
         <h1 className="text-xl font-bold">Profile Information</h1>
 
         {/* first name last name */}
-        <div className="flex w-full flex-row gap-7">
+        <div className="flex w-full flex-row gap-4">
           <div className="flex flex-col w-full">
             <label htmlFor="firstName">
               First Name <span className="text-red-200">*</span>
@@ -118,7 +118,7 @@ const ProfileInfo = () => {
               </span>
             )}
           </div>
-          <div className="flex w-full flex-col">
+          <div className="flex w-[50%] sm:w-full flex-col">
             <label htmlFor="gender">Gender</label>
             <select
               id="gender"
@@ -144,7 +144,7 @@ const ProfileInfo = () => {
         </div>
 
         {/* phone nuber and about details */}
-        <div className="flex w-full flex-row gap-7">
+        <div className="flex w-full flex-row gap-4">
           <div className="flex flex-col w-full">
             <label htmlFor="contactNumber">Phone No</label>
             <input

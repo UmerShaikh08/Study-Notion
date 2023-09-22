@@ -1,21 +1,21 @@
-import { Link } from "react-router-dom";
-import { FaArrowRight } from "react-icons/fa";
-import { CTAButton } from "../components/home/Button";
 import Banner from "../assets/Images/banner.mp4";
-import { Highlight } from "../components/home/Highlight";
-import CodeBlock from "../components/home/CodeBlock";
-import LearnLanguageSection from "../components/home/LearnLanguageSection";
-import TimeLineSection from "../components/home/TimeLineSection";
-import BecomeInstructor from "../components/home/BecomeInstructor";
-import ExploreMore from "../components/home/ExploreMore";
 import Footer from "../components/common/Footer";
 import Reviews from "../components/home/Reviews";
-import { useState } from "react";
-import { getAllCourses } from "../services/operations/courses";
+import CodeBlock from "../components/home/CodeBlock";
+import ExploreMore from "../components/home/ExploreMore";
 import CourseSlider from "../components/catalog/CourseSlider";
-import { useEffect } from "react";
+import TimeLineSection from "../components/home/TimeLineSection";
+import BecomeInstructor from "../components/home/BecomeInstructor";
 import CourseCardShimmer from "../components/shimmer/CourseCardShimmer";
-import RatingCardShimmer from "../components/shimmer/RatingCardShimmer";
+import LearnLanguageSection from "../components/home/LearnLanguageSection";
+
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useEffect } from "react";
+import { CTAButton } from "../components/home/Button";
+import { Highlight } from "../components/home/Highlight";
+import { FaArrowRight } from "react-icons/fa";
+import { getAllCourses } from "../services/operations/courses";
 import { useErrorBoundary } from "react-error-boundary";
 
 const Home = () => {
@@ -26,7 +26,6 @@ const Home = () => {
     const result = await getAllCourses(showBoundary);
     if (result) {
       setCourses(result);
-      console.log("result ", result);
     }
   };
 

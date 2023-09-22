@@ -18,15 +18,13 @@ const Reviews = () => {
   const onlyShow = 15;
 
   const fetchReview = async () => {
+    setShimmer(true);
     const result = await getAllRatingReviews();
 
     if (result) {
       const reviewList = result.splice(0, onlyShow);
       setAllReview(reviewList);
-      setShimmer(true);
-      setTimeout(() => {
-        setShimmer(false);
-      }, 1500);
+      setShimmer(false);
     }
   };
   useEffect(() => {
@@ -57,7 +55,7 @@ const Reviews = () => {
             modules={[Mousewheel, Keyboard, Autoplay]}
             className="mySwiper md:pt-5"
             autoplay={{
-              delay: 2000,
+              delay: delayTime || 2000,
               disableOnInteraction: false,
             }}
             style={{

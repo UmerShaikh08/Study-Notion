@@ -64,12 +64,9 @@ export const updateProfileImg = (image, token, user) => {
 
       console.log("resoponse ---->", response);
       // updating user
-      const updateUser = {
-        ...user,
-        img: response.data.img,
-      };
 
-      dispatch(setUser(updateUser));
+      dispatch(setUser(response?.data?.user));
+      localStorage.setItem("user", JSON.stringify(response?.data?.user));
       toast.success("Image Updated Successfully");
       dispatch(setLoading(false));
 

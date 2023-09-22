@@ -36,16 +36,14 @@ const Catalog = () => {
 
   const fetchCatalogPagedata = async () => {
     let result = null;
+    setShowShimmer(true);
     if (categoryId) {
       result = await getCategoriesPageDetails(categoryId);
     }
 
     if (result) {
       setCatalogPageData(result);
-      setShowShimmer(true);
-      setTimeout(() => {
-        setShowShimmer(false);
-      }, 1500);
+      setShowShimmer(false);
     }
   };
 

@@ -47,7 +47,7 @@ const Signup = () => {
   return loading ? (
     <Loader />
   ) : (
-    <div className="w-11/12  flex flex-col-reverse md:flex-row items-center mx-auto md:mx-0 gap-20 my-auto">
+    <div className="w-11/12  flex flex-col-reverse md:flex-row items-center mx-auto md:mx-0 gap-20 my-auto mb-10">
       <div className=" w-11/12 max-w-[450px]     font-inter text-richblack-5 flex flex-col  mx-auto ">
         <div className="flex flex-col gap-3">
           <div className="text-richblack-5 text-3xl font-semibold ">

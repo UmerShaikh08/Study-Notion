@@ -20,6 +20,7 @@ const Sidebar = () => {
   const dispatch = useDispatch();
   const [confirmationModal, setConfirmationModal] = useState(null);
   const [showSidebar, setShowSidebar] = useState(false);
+  console.log("side bar links --", sidebarLinks);
 
   const setting = {
     id: 1,
