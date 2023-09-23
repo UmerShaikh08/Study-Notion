@@ -70,6 +70,9 @@ const Tags = ({ register, setValue, name, errors }) => {
         onKeyUp={(e) => {
           handleTagList(e);
         }}
+        onKeyDown={(e) => {
+          handleTagList(e);
+        }}
       />
       {errors.tags && (
         <span className="ml-2 text-xs tracking-wide text-yellow-100">

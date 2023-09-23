@@ -139,17 +139,16 @@ const Home = () => {
         <div className="text-4xl text-richblack-5">
           Courses to get you started
         </div>
-        <div className="lg:py-8">
-          {courses ? (
-            <CourseSlider courses={courses} />
-          ) : (
-            <div className="flex flex-row">
-              <CourseCardShimmer />
-              <CourseCardShimmer />
-              <CourseCardShimmer />
-            </div>
-          )}
-        </div>
+
+        {courses ? (
+          <CourseSlider courses={courses} />
+        ) : (
+          <div className="flex flex-row">
+            <CourseCardShimmer />
+            <CourseCardShimmer />
+            <CourseCardShimmer />
+          </div>
+        )}
       </div>
 
       <ExploreMore />

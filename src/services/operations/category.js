@@ -43,7 +43,7 @@ const getCategoriesPageDetails = async (categoryId) => {
     console.log(error);
   }
 
-  // toast.dismiss(toastId);
+  toast.dismiss(toastId);
   return response?.data?.data;
 };
 

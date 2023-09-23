@@ -1,12 +1,17 @@
 import React from "react";
 import CourseCard from "./CourseCard";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Keyboard, Mousewheel } from "swiper/modules";
+import {
+  Autoplay,
+  Keyboard,
+  Mousewheel,
+  Navigation,
+  Pagination,
+} from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/free-mode";
-import "swiper/css/pagination";
 
 const CourseSlider = ({ courses, delayTime }) => {
   return (
@@ -21,27 +26,27 @@ const CourseSlider = ({ courses, delayTime }) => {
           onlyInViewport: true,
         }}
         allowSlidePrev={true}
-        slidesPerView={1}
+        slidesPerView={1.1}
+        breakpoints={{
+          300: { slidesPerView: 2.2, spaceBetween: 10 },
+          640: { slidesPerView: 2.2 },
+          1024: { slidesPerView: 3 },
+        }}
+        modules={[Navigation, Pagination, Mousewheel, Keyboard, Autoplay]}
         loop={true}
-        spaceBetween={30}
+        spaceBetween={20}
         pagination={false}
-        modules={[Mousewheel, Keyboard, Autoplay]}
-        className="mySwiper md:pt-5"
+        freeMode={true}
+        rewind={false}
+        centeredSlides={false}
+        navigation={false}
+        className="mySwiper mb-4"
         autoplay={{
-          delay: 1000,
+          delay: delayTime || 2000,
           disableOnInteraction: false,
         }}
         style={{
           "--swiper-navigation-size": "20px",
-        }}
-        freeMode={false}
-        rewind={false}
-        centeredSlides={true}
-        navigation={false}
-        breakpoints={{
-          300: { slidesPerView: 1.1, spaceBetween: 10 },
-          640: { slidesPerView: 2.2 },
-          1024: { slidesPerView: 3.1 },
         }}
       >
         {courses &&
@@ -49,7 +54,7 @@ const CourseSlider = ({ courses, delayTime }) => {
             <SwiperSlide key={course?._id}>
               {" "}
               <Link to={`/course/${course?._id}`}>
-                <CourseCard course={course} Height={"h-[250px]"} />
+                <CourseCard course={course} Height={"h-[100px] sm:h-[250px]"} />
               </Link>
             </SwiperSlide>
           ))}

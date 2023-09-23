@@ -59,7 +59,7 @@ const Catalog = () => {
       {catalogPageData && (
         <>
           <div className=" box-content bg-richblack-800 px-4 ">
-            <div className="mx-auto flex min-h-[260px] max-w-maxContentTab flex-col justify-center gap-4 lg:max-w-maxContent ">
+            <div className=" w-11/12 mx-auto flex min-h-[260px] max-w-maxContentTab flex-col justify-center gap-4 lg:max-w-maxContent ">
               <p className="text-sm text-richblack-300">
                 {`Home / Catalog / `}
                 <span className="text-yellow-25">
@@ -104,11 +104,9 @@ const Catalog = () => {
               </p>
             </div>
             {!showShimmer && catalogPageData ? (
-              <div>
-                <CourseSlider
-                  courses={catalogPageData?.selectedCategory?.course}
-                />
-              </div>
+              <CourseSlider
+                courses={catalogPageData?.selectedCategory?.course}
+              />
             ) : (
               <div className="flex mx-auto gap-6 w-[80%] sm:w-[50%] md:w-full flex-col md:flex-row">
                 <CourseCardShimmer />
