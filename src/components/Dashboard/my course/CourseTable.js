@@ -32,6 +32,8 @@ const CourseTable = ({ courses, setCourses }) => {
     setConfirmationModal(null);
   };
 
+  console.log("my course --->", courses);
+
   return (
     <div className="text-richblack-5 overflow-x-hidden ">
       <div className="rounded-xl lg:border border-richblack-700 mx-auto">
@@ -53,7 +55,7 @@ const CourseTable = ({ courses, setCourses }) => {
         </div>
         <div className="flex flex-col gap-10 ">
           {courses &&
-            courses?.toReversed()?.map((course) => (
+            courses?.map((course) => (
               <div
                 key={course?._id}
                 className="flex flex-col md:flex-row gap-y-2 lg:gap-x-10 justify-between  border border-richblack-700 md:border-none px-6 py-8 m-3 "

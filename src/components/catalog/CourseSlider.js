@@ -54,7 +54,7 @@ const CourseSlider = ({ courses, delayTime }) => {
             <SwiperSlide key={course?._id}>
               {" "}
               <Link to={`/course/${course?._id}`}>
-                <CourseCard course={course} Height={"h-[100px] sm:h-[250px]"} />
+                <CourseCard course={course} Height={"h-[150px] sm:h-[250px]"} />
               </Link>
             </SwiperSlide>
           ))}
