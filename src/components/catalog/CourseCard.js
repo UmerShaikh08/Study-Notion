@@ -12,7 +12,7 @@ const CourseCard = ({ course, Height }) => {
 
   return (
     course && (
-      <div className=" z-auto mb-5  lg:w-full    transition-all duration-200  hover:scale-105 ">
+      <div className=" z-auto mb-5 md:p-7   lg:w-full    transition-all duration-200  md:hover:scale-105 ">
         <img
           src={course?.thumbnail}
           loading="lazy"
@@ -30,7 +30,7 @@ const CourseCard = ({ course, Height }) => {
           <RatingStars Review_Count={avgReviewCount} />
           <p className="text-yellow-50"> {course?.RatingAndReviews?.length}</p>
         </div>
-        <p className="text-richblack-5">{course?.price} Rs</p>
+        <p className="text-richblack-5">Rs {course?.price}</p>
       </div>
     )
   );

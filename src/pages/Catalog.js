@@ -77,7 +77,7 @@ const Catalog = () => {
           </div>
 
           {/* Section 1 */}
-          <div className=" mx-auto box-content w-full max-w-maxContentTab px-4 py-12 lg:max-w-maxContent">
+          <div className=" mx-auto box-content w-full max-w-maxContentTab px-2 py-12 lg:max-w-maxContent">
             <div className="section_heading text-richblack-5 text-4xl font-semibold">
               Courses to get you started
             </div>
@@ -138,11 +138,11 @@ const Catalog = () => {
           </div>
 
           {/* Section 3 */}
-          <div className=" mx-auto box-content  max-w-maxContentTab p-2 md:px-4 2 md:py-12 lg:max-w-maxContent">
+          <div className="  mx-auto box-content w-full max-w-maxContentTab px-4 py-12 lg:max-w-maxContent">
             <div className="font-semibold text-4xl text-richblack-5">
               Frequently Bought
             </div>
-            <div className="py-8">
+            <div className="hidden md:block py-8">
               <div className="grid grid-cols-1 gap-6 lg:grid-cols-2  md:mx-auto ">
                 {!showShimmer ? (
                   catalogPageData &&
@@ -166,6 +166,20 @@ const Catalog = () => {
                   </div>
                 )}
               </div>
+            </div>
+            <div className="block  md:hidden py-8 ">
+              {!showShimmer ? (
+                catalogPageData && (
+                  <CourseSlider courses={catalogPageData?.mostSellingCourses} />
+                )
+              ) : (
+                <div className="grid grid-cols-1 gap-6 lg:grid-cols-2  md:mx-auto lg:w-[1000px]">
+                  <CourseCardShimmer />
+                  <CourseCardShimmer />
+                  <CourseCardShimmer />
+                  <CourseCardShimmer />
+                </div>
+              )}
             </div>
           </div>
         </>

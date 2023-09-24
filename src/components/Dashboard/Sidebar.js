@@ -36,7 +36,7 @@ const Sidebar = () => {
   return (
     <>
       <div
-        className={`hidden  fixed lg:flex z-30 h-[calc(100vh-3.2rem)] transition-transform duration-200 ease-in-out flex-row gap-2  ${
+        className={`hidden  fixed lg:flex z-30 h-[calc(100vh-3.2rem)] transition-transform duration-500 ease-in-out flex-row gap-2  ${
           showSidebar ? "translate-x-[0px]" : "translate-x-[-220px]"
         } `}
       >

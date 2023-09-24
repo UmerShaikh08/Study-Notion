@@ -1,4 +1,4 @@
-import Upload from "../Upload";
+import Upload from "./Upload";
 import { toast } from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { RxCross2 } from "react-icons/rx";

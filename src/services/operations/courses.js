@@ -32,7 +32,7 @@ const createCourse = async (data, token) => {
       Authorization: `Bearer ${token}`,
     });
 
-    console.log("create course response --->", createCourse);
+    console.log("create course response --->", response);
 
     if (!response.data.success) {
       toast.dismiss(toastId);

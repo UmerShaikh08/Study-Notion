@@ -12,6 +12,7 @@ const Tags = ({ register, setValue, name, errors }) => {
 
   // tag handlers
   const handleTagList = (e) => {
+    console.log("key code --->", e.keyCode);
     e.preventDefault();
     if (e.keyCode === 13 || e.key === "Enter") {
       if (tag.length === 0) return;
@@ -32,7 +33,7 @@ const Tags = ({ register, setValue, name, errors }) => {
   };
 
   useEffect(() => {
-    register(name, { required: true });
+    register(name);
   }, []);
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Tags from "./Tags";
-import Upload from "../Upload";
+import Upload from "./Upload";
 import Requirement from "./Requirement";
 import { toast } from "react-hot-toast";
 import { useForm } from "react-hook-form";
