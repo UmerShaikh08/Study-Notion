@@ -15,7 +15,7 @@ const InstructorDashboard = () => {
 
   const fetchCourse = async () => {
     setLoading(true);
-    const result = await getInstructorCourses(token);
+    const result = await getInstructorCourses(token, "a");
     setLoading(false);
 
     if (result) {
@@ -25,6 +25,7 @@ const InstructorDashboard = () => {
 
   useEffect(() => {
     fetchCourse();
+    console.log("je");
   }, []);
   return course ? (
     <div className="flex flex-col gap-3">

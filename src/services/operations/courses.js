@@ -50,8 +50,9 @@ const createCourse = async (data, token) => {
   return response?.data?.data;
 };
 
-const getInstructorCourses = async (token) => {
+const getInstructorCourses = async (token, a = "d") => {
   const toastId = toast.loading("loading...");
+  console.log("call from instructor dashboard ", a);
 
   let response;
   try {

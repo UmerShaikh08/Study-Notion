@@ -7,6 +7,7 @@ Chart.register(...registerables);
 const PieChart = ({ course }) => {
   const [showEarning, setShowEarning] = useState(true);
 
+  console.log("courses -->", course);
   const randomColor = (noOfColor) => {
     const color = [];
     for (let i = 0; i < noOfColor; i++) {
