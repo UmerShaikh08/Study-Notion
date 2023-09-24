@@ -1,9 +1,10 @@
-import { Player } from "video-react";
-import { useSelector } from "react-redux";
+import { useEffect, useRef, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { FiUploadCloud } from "react-icons/fi";
-import { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
+
 import "video-react/dist/video-react.css";
+import { Player } from "video-react";
 
 export default function Upload({
   name,
@@ -92,24 +93,27 @@ export default function Upload({
             )}
           </div>
         ) : (
-          <div
-            className="flex w-full flex-col items-center p-6"
-            {...getRootProps()}
-          >
-            <input {...getInputProps()} ref={inputRef} />
-            <div className="grid aspect-square w-14 place-items-center rounded-full bg-pure-greys-800">
-              <FiUploadCloud className="text-2xl text-yellow-50" />
+          <label htmlFor="video" className="">
+            <div
+              className="flex w-full flex-col items-center p-6"
+              {...getRootProps()}
+            >
+              <input {...getInputProps()} ref={inputRef} id="video" />
+
+              <div className="grid aspect-square w-14 place-items-center rounded-full bg-pure-greys-800">
+                <FiUploadCloud className="text-2xl text-yellow-50" />
+              </div>
+              <p className="mt-2 max-w-[200px] text-center text-sm text-richblack-200">
+                Drag and drop an {!video ? "image" : "video"}, or click to{" "}
+                <span className="font-semibold text-yellow-50">Browse</span> a
+                file
+              </p>
+              <ul className="mt-10 flex list-disc justify-between space-x-12 text-center  text-xs text-richblack-200">
+                <li>Aspect ratio 16:9</li>
+                <li>Recommended size 1024x576</li>
+              </ul>
             </div>
-            <p className="mt-2 max-w-[200px] text-center text-sm text-richblack-200">
-              Drag and drop an {!video ? "image" : "video"}, or click to{" "}
-              <span className="font-semibold text-yellow-50">Browse</span> a
-              file
-            </p>
-            <ul className="mt-10 flex list-disc justify-between space-x-12 text-center  text-xs text-richblack-200">
-              <li>Aspect ratio 16:9</li>
-              <li>Recommended size 1024x576</li>
-            </ul>
-          </div>
+          </label>
         )}
       </div>
       {errors[name] && (
