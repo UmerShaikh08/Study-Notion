@@ -24,7 +24,7 @@ const addCourseProgress = async (req, res) => {
         userId,
         courseId,
       });
-      console.log("course progress after creating --->", courseProgress);
+      //console.log("course progress after creating --->", courseProgress);
 
       const updateUser = await User.findByIdAndUpdate(
         userId,
@@ -53,7 +53,7 @@ const addCourseProgress = async (req, res) => {
       { new: true }
     );
 
-    console.log("course progress after updating --->", updateCourseProgress);
+    //console.log("course progress after updating --->", updateCourseProgress);
 
     if (!updateCourseProgress) {
       return res.status(400).json({

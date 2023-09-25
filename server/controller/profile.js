@@ -14,7 +14,7 @@ const updateProfile = async (req, res) => {
       firstName,
       lastName,
     } = req.body;
-    console.log(req.body);
+    //console.log(req.body);
     // get userId from req ,  it added in auth middleware
     // matlab instructor course create karra he use phele log in kiye hoga , login karte waqt middlwear excecute hua hoga or usme hume req ke andar  decode send kiya tha
     const userId = req.user.id;
@@ -63,6 +63,7 @@ const updateProfile = async (req, res) => {
       updatedProfile,
     });
   } catch (error) {
+    console.log(error);
     return res.status(400).json({
       success: false,
       massage: "error occured while updating profile",
@@ -83,17 +84,17 @@ const updatePassword = async (req, res) => {
         massage: "password not matching",
       });
     }
-    console.log("password ---> ", password);
+    //console.log("password ---> ", password);
     // hash password
     const hashPassword = await bcrypt.hash(password, 10);
-    console.log("hashpass ---> ", hashPassword);
+    //console.log("hashpass ---> ", hashPassword);
     // update password in db
     const updatePassword = await User.findByIdAndUpdate(
       userId,
       { password: hashPassword },
       { new: true }
     );
-    console.log("password updated --> ", updatePassword);
+    //console.log("password updated --> ", updatePassword);
 
     // send response
     return res.status(200).json({
@@ -138,6 +139,7 @@ const deleteAccount = async (req, res) => {
       massage: "profile deleted successfully",
     });
   } catch (error) {
+    console.log(error);
     return res.status(400).json({
       success: false,
       massage: "error occured while deleting  profile",
@@ -155,7 +157,7 @@ const getUserData = async (req, res) => {
       .populate("additionalDetails")
       .exec(); // because of populate we get profile data (gender , contacr numberr etc)
 
-    console.log(UserDetails);
+    //console.log(UserDetails);
     // send res
     return res.status(200).json({
       success: true,
@@ -163,6 +165,7 @@ const getUserData = async (req, res) => {
       UserDetails,
     });
   } catch (error) {
+    console.log(error);
     return res.status(400).json({
       success: false,
       massage: "error occured while getting all user , profile data",
@@ -174,18 +177,18 @@ const updateProfileImg = async (req, res) => {
   try {
     // get data
     const file = req.files.image;
-    console.log("file ---> ", file);
+    //console.log("file ---> ", file);
     const userId = req.user.id;
-    console.log(userId);
+    //console.log(userId);
     const options = {
       folder: "Study Notion",
     };
     // upload data
     const response = await imgUploadToCloudinary(file, options);
-    console.log("cloudinary img -->", response);
+    //console.log("cloudinary img -->", response);
 
     const oldUser = await User.findById(userId);
-    console.log("before update url ---->", oldUser?.img);
+    //console.log("before update url ---->", oldUser?.img);
 
     // update user
     const updateUser = await User.findByIdAndUpdate(
@@ -195,8 +198,8 @@ const updateProfileImg = async (req, res) => {
       },
       { new: true }
     );
-    console.log("resoonse ", response?.secure_url);
-    console.log("update url ---->", updateUser?.img);
+    //console.log("resoonse ", response?.secure_url);
+    //console.log("update url ---->", updateUser?.img);
 
     // return res
     return res.status(200).json({

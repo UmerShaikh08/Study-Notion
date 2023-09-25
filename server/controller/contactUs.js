@@ -7,7 +7,7 @@ const contactUs = async (req, res) => {
       req.body;
 
     dotenv.config();
-    console.log("body --->", req.body);
+    //console.log("body --->", req.body);
     const sendToStudyNotion = await mailSender(
       process.env.EMAIL_USER,
       `<h1>User name ${firstName}  ${lastName}  </h1> 
@@ -18,7 +18,7 @@ const contactUs = async (req, res) => {
       "help"
     );
 
-    console.log("done ---> ", sendToStudyNotion);
+    //console.log("done ---> ", sendToStudyNotion);
     const sendToUser = await mailSender(
       email,
       "<h1> thanks to contacting for us</h1>",

@@ -8,7 +8,7 @@ const courseEnrollmentEmail = (courseName, name) => {
     </head>
     <body style="background-color: #ffffff; font-family: Arial, sans-serif; font-size: 16px; line-height: 1.4; color: #333333; margin: 0; padding: 0;">
         <div style="max-width: 600px; margin: 0 auto; padding: 20px; text-align: center;">
-            <a href="https://studynotion-edtech-project.vercel.app"><img style="max-width: 600px; margin-bottom: 20px;" src="https://i.ibb.co/7Xyj3PC/logo.png" alt="Study Notion logo"/></a>
+            <a href="https://study-notion-ed-tech-project.vercel.app"><img style="max-width: 600px; margin-bottom: 20px;" src="https://i.ibb.co/7Xyj3PC/logo.png" alt="Study Notion logo"/></a>
             <div style="font-size: 18px; font-weight: bold; margin-bottom: 20px;">Course Registration Confirmation</div>
             <div style="font-size: 16px; margin-bottom: 20px;">
                      <p>Dear ${name},</p>

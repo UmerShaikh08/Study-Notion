@@ -9,8 +9,8 @@ const createRatingReviews = async (req, res) => {
     const { courseId, rating, review } = req.body;
     const userId = req.user.id;
 
-    console.log("req body ", req.body);
-    console.log(userId);
+    //console.log("req body ", req.body);
+    //console.log(userId);
     if (!courseId || !rating || !review || !userId) {
       return res.status(400).json({
         success: false,
@@ -31,7 +31,7 @@ const createRatingReviews = async (req, res) => {
 
     // validate student enrolled or not
     const userEnrolled = await Course.findOne({ _id: courseId });
-    console.log(userEnrolled);
+    //console.log(userEnrolled);
     if (!userEnrolled.studentsEnrolled.includes(userId)) {
       return res.status(400).json({
         success: false,
@@ -47,7 +47,7 @@ const createRatingReviews = async (req, res) => {
       course: courseId,
     });
 
-    console.log(newRatingReviews);
+    //console.log(newRatingReviews);
 
     // update course
     const updateCourse = await Course.findByIdAndUpdate(
@@ -95,7 +95,7 @@ const getAvgrating = async (req, res) => {
       },
     ]);
 
-    console.log("hi");
+    //console.log("hi");
     if (result.length == 0) {
       return res.status(400).json({
         success: false,
@@ -130,7 +130,7 @@ const getAllRatingReviews = async (req, res) => {
         select: "firstName lastName email img",
       });
 
-    console.log(allReviews);
+    //console.log(allReviews);
 
     return res.status(200).json({
       success: true,

@@ -9,7 +9,7 @@ import crypto from "crypto";
 
 const capturePayment = async (req, res) => {
   try {
-    console.log("i am in capture payment");
+    //console.log("i am in capture payment");
     const userId = req.user.id;
     const { courses } = req.body;
 
@@ -23,7 +23,7 @@ const capturePayment = async (req, res) => {
     const UID = new mongoose.Types.ObjectId(userId);
 
     let totalPrice = 0;
-    console.log("courses--->", courses);
+    //console.log("courses--->", courses);
     for (const courseId of courses) {
       try {
         const course = await Course.findById(courseId?.id);
@@ -43,6 +43,7 @@ const capturePayment = async (req, res) => {
         }
         totalPrice += course.price;
       } catch (error) {
+        console.log(error);
         return res.json({
           success: false,
           massage: "Something went wrong while buying course",
@@ -64,7 +65,7 @@ const capturePayment = async (req, res) => {
     };
 
     const paymentResponse = await instance.orders.create(options);
-    console.log("Payment response --->", paymentResponse);
+    //console.log("Payment response --->", paymentResponse);
 
     if (!paymentResponse) {
       return res.status(401).json({
@@ -78,7 +79,7 @@ const capturePayment = async (req, res) => {
       data: paymentResponse,
     });
   } catch (error) {
-    console.log(error);
+    //console.log(error);
     return res.status(401).json({
       success: false,
       massage: "error occured while capturing payment",
@@ -93,7 +94,7 @@ const verifyPaymentSignature = async (req, res) => {
   const { courses } = req.body;
   const userId = req.user.id;
 
-  console.log("verify data---->", courses);
+  //console.log("verify data---->", courses);
   if (
     !razorpay_order_id ||
     !razorpay_payment_id ||
@@ -121,7 +122,7 @@ const verifyPaymentSignature = async (req, res) => {
     // add all courses in student enrolled courses list because he buyed all course
     // add student in course student enrolled list
     for (const courseId of courses) {
-      console.log("course id--->", courseId?.id);
+      //console.log("course id--->", courseId?.id);
       try {
         // add user id in Course.studentEnrolled list
         const course = await Course.findByIdAndUpdate(
@@ -156,7 +157,7 @@ const verifyPaymentSignature = async (req, res) => {
         );
 
         // send response
-        console.log("Email send successfully --->", email);
+        //console.log("Email send successfully --->", email);
       } catch (error) {
         console.log(error);
         return res.status(400).json({

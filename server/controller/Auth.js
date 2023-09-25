@@ -13,7 +13,7 @@ const sendOtp = async (req, res) => {
 
     // check user already present or not
     if (checkUserPresent) {
-      console.log(checkUserPresent);
+      ////console.log(checkUserPresent);
       return res.status(401).json({
         success: false,
         message: "User already registered...",
@@ -45,7 +45,7 @@ const sendOtp = async (req, res) => {
       otp,
     });
 
-    console.log(otpBody);
+    ////console.log(otpBody);
 
     return res.status(200).json({
       success: true,
@@ -119,7 +119,7 @@ const signUp = async (req, res) => {
       });
     }
 
-    console.log(otp, "-- > ", checkOtp);
+    //console.log(otp, "-- > ", checkOtp);
     // validate otp same or not
     if (otp !== checkOtp.otp) {
       return res.status(400).json({
@@ -138,11 +138,11 @@ const signUp = async (req, res) => {
       about: null,
     });
 
-    console.log(" profile entery created successfully");
-    console.log(
-      "my img link ",
-      `https://api.dicebear.com/5.x/initials/svg?seed=${firstName}%20${lastName}`
-    );
+    //console.log(" profile entery created successfully");
+    //console.log(
+    //   "my img link ",
+    //   `https://api.dicebear.com/5.x/initials/svg?seed=${firstName}%20${lastName}`
+    // );
     // create entry in db
     const user = await User.create({
       firstName,
@@ -153,9 +153,9 @@ const signUp = async (req, res) => {
       additionalDetails: profile._id,
       img: `https://api.dicebear.com/5.x/initials/svg?seed=${firstName}%20${lastName}`,
     });
-    console.log(user.img);
+    //console.log(user.img);
 
-    console.log(user, " user entery created successfully");
+    //console.log(user, " user entery created successfully");
 
     return res.status(200).json({
       success: true,
@@ -186,8 +186,8 @@ const logIn = async (req, res) => {
       });
     }
 
-    console.log("email -- > ", email);
-    console.log("password -- > ", password);
+    //console.log("email -- > ", email);
+    //console.log("password -- > ", password);
     // finding object of email
     const user = await User.findOne({ email }).populate("additionalDetails");
 
@@ -197,18 +197,18 @@ const logIn = async (req, res) => {
         massage: "Please signUp first",
       });
     }
-    console.log("user --- > ", user);
+    //console.log("user --- > ", user);
     // add role in token
     const payload = {
       email: user.email,
       id: user._id,
       accountType: user.accountType,
     };
-    console.log("user passwrod -- > ", user.password);
+    //console.log("user passwrod -- > ", user.password);
     // generate JWT token after matching password
     if (await bcrypt.compare(password, user.password)) {
       //creating token
-      console.log("same password");
+      //console.log("same password");
       const token = JWT.sign(payload, "UMER78", {
         expiresIn: "72h",
       });
@@ -242,6 +242,7 @@ const logIn = async (req, res) => {
       });
     }
   } catch (error) {
+    console.log(error);
     return res.status(400).json({
       success: false,
       massage: "You cannot login. Please try again",
@@ -278,12 +279,13 @@ const changePassword = async (req, res) => {
       password: hashPassword,
     });
     updatePassword.password = null;
-    console.log(updatePassword);
+    //console.log(updatePassword);
     return res.status(200).json({
       success: true,
       massage: "password change successfully",
     });
   } catch (error) {
+    console.log(error);
     return res.status(403).jsos({
       success: false,
       massage: "error occured while changing password",

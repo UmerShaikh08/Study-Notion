@@ -17,7 +17,7 @@ const createCourse = async (req, res) => {
 
     // get img from file
     const img = req.files.ImgFile;
-    console.log(req.body);
+    //console.log(req.body);
     // get data
     const {
       courseName,
@@ -75,7 +75,7 @@ const createCourse = async (req, res) => {
       folder: process.env.FOLDER_NAME,
     });
 
-    console.log(thumbnailImg);
+    //console.log(thumbnailImg);
 
     // create new course
     let newCourse = await Course.create({
@@ -92,7 +92,7 @@ const createCourse = async (req, res) => {
       status,
     });
 
-    console.log("new  course --->", newCourse);
+    //console.log("new  course --->", newCourse);
 
     // add new course in User instructor course List
     await User.findByIdAndUpdate(
@@ -131,7 +131,7 @@ const editCourse = async (req, res) => {
   try {
     const { courseId } = req.body;
     const updates = req.body;
-    console.log("updates ---> ", updates);
+    //console.log("updates ---> ", updates);
     const course = await Course.findById(courseId);
 
     if (!course) {
@@ -140,7 +140,7 @@ const editCourse = async (req, res) => {
 
     // If Thumbnail Image is found, update it
     if (req.files) {
-      console.log("thumbnail update");
+      //console.log("thumbnail update");
       const thumbnail = req.files.thumbnailImage;
       const options = {
         folder: "Study Notion",
@@ -214,7 +214,7 @@ const getAllCourses = async (req, res) => {
     )
       .populate("instructor")
       .exec();
-    console.log("all courses : --> ", allCourses);
+    //console.log("all courses : --> ", allCourses);
 
     // return res
     return res.status(200).json({
@@ -259,7 +259,7 @@ const getCourseFullDetails = async (req, res) => {
       });
     }
 
-    console.log(courseDetails);
+    //console.log(courseDetails);
 
     let courseProgressCount = null;
     courseProgressCount = await CourseProgress.findOne({
@@ -321,7 +321,7 @@ const getCourseDetails = async (req, res) => {
         massage: `could not find the code with ${courseId}`,
       });
     }
-    console.log("course Details ---> ", courseDetails);
+    //console.log("course Details ---> ", courseDetails);
 
     //TODO remove  extra code i already handle in subsection creation time
     let totalDurationInSeconds = 0;
@@ -438,7 +438,7 @@ const deleteCourse = async (req, res) => {
     }
 
     const course = await Course.findById(courseId);
-    console.log("course ====>", course);
+    //console.log("course ====>", course);
 
     const category = await Category.findOneAndUpdate(
       { _id: course.category },
@@ -448,7 +448,7 @@ const deleteCourse = async (req, res) => {
       { new: true }
     );
 
-    console.log("after course removed from catrgory ---->", category);
+    //console.log("after course removed from catrgory ---->", category);
 
     // delete course
     const deletedCourse = await Course.findByIdAndDelete(courseId);
@@ -495,8 +495,8 @@ const removeCourseFromStudent = async (req, res) => {
       });
     }
 
-    console.log("student courses ----> ", student.courses);
-    console.log("course Id --->", courseId);
+    //console.log("student courses ----> ", student.courses);
+    //console.log("course Id --->", courseId);
 
     if (!student.courses.includes(courseId)) {
       return res.status(400).json({
@@ -521,7 +521,7 @@ const removeCourseFromStudent = async (req, res) => {
       { new: true }
     );
 
-    console.log("removed courses --->", updateStudent);
+    //console.log("removed courses --->", updateStudent);
 
     if (!updateStudent) {
       return res.status(400).json({
@@ -543,6 +543,7 @@ const removeCourseFromStudent = async (req, res) => {
       courses: updateStudent?.courses,
     });
   } catch (error) {
+    console.log(error);
     return res.status(400).json({
       success: false,
       massage: "This course is not enrolled by student",

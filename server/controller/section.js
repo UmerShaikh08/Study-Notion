@@ -33,7 +33,7 @@ const createSection = async (req, res) => {
       })
       .exec();
 
-    console.log(updateCourse);
+    //console.log(updateCourse);
     // send res
     return res.status(200).json({
       success: true,
@@ -52,7 +52,7 @@ const createSection = async (req, res) => {
 const updateSection = async (req, res) => {
   try {
     const { sectionName, sectionId, courseId } = req.body;
-    console.log(req.body);
+    //console.log(req.body);
     if (!sectionName || !sectionId || !courseId) {
       return res.status(400).json({
         success: false,
@@ -96,6 +96,7 @@ const updateSection = async (req, res) => {
       massag: "section updated successfully",
     });
   } catch (error) {
+    console.log(error);
     return res.status(400).json({
       success: false,
       massag: "error occured while updating section",
@@ -106,7 +107,7 @@ const updateSection = async (req, res) => {
 const deleteSection = async (req, res) => {
   try {
     const { courseId, sectionId } = req.body;
-    console.log(req.body);
+    //console.log(req.body);
 
     if (!sectionId || !courseId) {
       return res.status(400).json({
@@ -116,7 +117,7 @@ const deleteSection = async (req, res) => {
     }
 
     const deleteSection = await Section.findOneAndDelete({ _id: sectionId });
-    console.log("hi");
+    //console.log("hi");
 
     const updateCourse = await Course.findOneAndUpdate(
       { _id: courseId },

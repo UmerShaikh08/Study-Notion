@@ -8,7 +8,7 @@ export const passwordReset = (url) => {
   </head>
   <body style="background-color: #ffffff; font-family: Arial, sans-serif; font-size: 16px; line-height: 1.4; color: #333333; margin: 0; padding: 0;">
       <div style="max-width: 600px; margin: 0 auto; padding: 20px; text-align: center;">
-          <a href="https://studynotion-edtech-project.vercel.app"><img style="max-width: 600px; margin-bottom: 20px;" src="https://i.ibb.co/7Xyj3PC/logo.png" alt="Study Notion logo"/></a>
+          <a href="https://study-notion-ed-tech-project.vercel.app"><img style="max-width: 600px; margin-bottom: 20px;" src="https://i.ibb.co/7Xyj3PC/logo.png" alt="Study Notion logo"/></a>
           <div style="font-size: 18px; font-weight: bold; margin-bottom: 20px;">Password Reset Link</div>
           <div style="font-size: 16px; margin-bottom: 20px;">
               <p>Dear User,</p>
@@ -19,7 +19,7 @@ export const passwordReset = (url) => {
               <p>This link is valid for 5 minutes. If you did not request this Verification, you are not able to reset your password.</p>
           </div>
           <div style="font-size: 14px; color: #999999; margin-top: 20px;">
-            If you have any questions or need assistance, please feel free to reach out to Study Notion <a href="mailto:info@studynotion.som">here</a>. We are here to help!
+            If you have any questions or need assistance, please feel free to reach out to Study Notion <a href="mailto:studynotioneducation@gmail.com">here</a>. We are here to help!
           </div>
       </div>
   </body>

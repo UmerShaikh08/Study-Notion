@@ -9,7 +9,7 @@ import crypto from "crypto";
 const CreateResetPasswordToken = async (req, res) => {
   try {
     const { email } = req.body;
-    console.log(email);
+    //console.log(email);
     // validate email
     if (!email) {
       return res.status(400).json({
@@ -20,7 +20,7 @@ const CreateResetPasswordToken = async (req, res) => {
 
     // get user from db using email
     const user = await User.findOne({ email: email });
-    console.log("email find successfuly");
+    //console.log("email find successfuly");
     // validate user
     if (!user) {
       return res.status(400).json({
@@ -38,7 +38,7 @@ const CreateResetPasswordToken = async (req, res) => {
       { token: token, resetPasswordExpires: Date.now() },
       { new: true }
     );
-    console.log("Details ", addToken);
+    //console.log("Details ", addToken);
 
     const url = `http://localhost:3000/update-password/${token}`;
     const template = passwordReset(url);
@@ -48,7 +48,7 @@ const CreateResetPasswordToken = async (req, res) => {
       "Reset password link"
     );
 
-    console.log(send);
+    //console.log(send);
     return res.status(200).json({
       success: true,
       massage: "password reset token created  successfully",
@@ -80,7 +80,7 @@ const resetPassword = async (req, res) => {
     const userDetails = await User.findOne({ token: token });
 
     // check user present or not based on token
-    console.log(token);
+    //console.log(token);
     if (!userDetails) {
       return res.status(400).json({
         success: false,
@@ -105,7 +105,7 @@ const resetPassword = async (req, res) => {
       { password: hashPassword },
       { new: true }
     );
-    console.log("password updated --> ", updatePassword);
+    //console.log("password updated --> ", updatePassword);
 
     // send response
     return res.status(200).json({

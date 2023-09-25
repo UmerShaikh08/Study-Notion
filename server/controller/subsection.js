@@ -14,9 +14,9 @@ const createSubsection = async (req, res) => {
       description,
       courseId,
     } = req.body;
-    console.log(req.body);
+    //console.log(req.body);
     const file = req.files.videoFile;
-    console.log(file);
+    //console.log(file);
 
     if (!sectionId || !title || !description || !courseId) {
       return res.status(400).json({
@@ -27,7 +27,7 @@ const createSubsection = async (req, res) => {
 
     const videoDetails = await videoUploader(file, process.env.FOLDER_NAME);
 
-    console.log("video details ---->", videoDetails);
+    //console.log("video details ---->", videoDetails);
 
     const newSubsection = await SubSection.create({
       title,
@@ -60,7 +60,7 @@ const createSubsection = async (req, res) => {
       });
     }
 
-    console.log("update section -->", updateSection);
+    //console.log("update section -->", updateSection);
     const course = await Course.findById(courseId)
       .populate({
         path: "courseContent",
@@ -108,7 +108,7 @@ const updateSubsection = async (req, res) => {
         message: "SubSection not found",
       });
     }
-    console.log("req body ---->", req.body);
+    //console.log("req body ---->", req.body);
     if (title !== undefined) {
       subsection.title = title;
     }
@@ -124,7 +124,7 @@ const updateSubsection = async (req, res) => {
       subsection.timeDuration = uploadDetails.duration;
     }
 
-    console.log("subsection ---> ", subsection);
+    //console.log("subsection ---> ", subsection);
     const newSubsection = await SubSection.findOneAndUpdate(
       { _id: subSectionId },
 
@@ -194,7 +194,7 @@ const deleteSubsection = async (req, res) => {
       new: true,
     });
 
-    console.log("deleted subsection -->>", deleteSubsection);
+    //console.log("deleted subsection -->>", deleteSubsection);
     if (!deletedSubsection) {
       return res.status(400).json({
         success: false,
@@ -224,6 +224,7 @@ const deleteSubsection = async (req, res) => {
       massage: "subsection deleted successfully",
     });
   } catch (error) {
+    console.log(error);
     return res.status(400).json({
       success: false,
       massage: "error occured while deleting subsection",

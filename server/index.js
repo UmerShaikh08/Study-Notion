@@ -15,8 +15,6 @@ dotenv.config({ path: ".env" });
 
 const app = express();
 
-// db connect
-connectDB();
 connectCloudinary();
 // middlewares
 app.use(express.json());
@@ -53,3 +51,6 @@ app.get("/", (req, res) => {
 app.listen(process.env.PORT || "4000", () => {
   console.log("server run successfully");
 });
+
+// db connect
+connectDB();
