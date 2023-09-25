@@ -41,7 +41,7 @@ const getAllRatingReviews = async (token) => {
     }
   } catch (error) {
     console.log("error", error);
-    toast.error("Failed to review ");
+    toast.error("Failed to get All reviews ");
   }
 
   return result?.data?.data;
