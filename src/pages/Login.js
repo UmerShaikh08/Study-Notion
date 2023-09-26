@@ -61,6 +61,7 @@ const Login = () => {
             </p>
             <div>
               <button
+                disabled={loading}
                 onClick={() => {
                   const data = {
                     password: "Pass@123",
@@ -76,6 +77,7 @@ const Login = () => {
             </div>
             <div>
               <button
+                disabled={loading}
                 onClick={() => {
                   const data = {
                     password: "123456",

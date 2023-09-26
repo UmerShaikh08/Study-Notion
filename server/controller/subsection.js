@@ -7,16 +7,10 @@ import dotenv from "dotenv";
 const createSubsection = async (req, res) => {
   try {
     dotenv.config({ path: ".env" });
-    const {
-      sectionId,
-      title,
-
-      description,
-      courseId,
-    } = req.body;
-    //console.log(req.body);
+    const { sectionId, title, description, courseId } = req.body;
+    console.log("subsection req --->", req.body);
     const file = req.files.videoFile;
-    //console.log(file);
+    console.log(file);
 
     if (!sectionId || !title || !description || !courseId) {
       return res.status(400).json({
@@ -27,7 +21,7 @@ const createSubsection = async (req, res) => {
 
     const videoDetails = await videoUploader(file, process.env.FOLDER_NAME);
 
-    //console.log("video details ---->", videoDetails);
+    console.log("video details ---->", videoDetails);
 
     const newSubsection = await SubSection.create({
       title,
@@ -35,6 +29,8 @@ const createSubsection = async (req, res) => {
       videoUrl: videoDetails?.secure_url,
       timeDuration: videoDetails?.duration,
     });
+
+    console.log("subsection created");
 
     if (!newSubsection) {
       return res.status(400).json({
@@ -60,7 +56,7 @@ const createSubsection = async (req, res) => {
       });
     }
 
-    //console.log("update section -->", updateSection);
+    console.log("update section -->", updateSection);
     const course = await Course.findById(courseId)
       .populate({
         path: "courseContent",
