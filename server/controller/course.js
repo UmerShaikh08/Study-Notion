@@ -392,16 +392,19 @@ const getInstructorCourses = async (req, res) => {
     const userId = req.user.id;
 
     // get user data and populate instructor created courses
-    const instructorCourses = await User.findById(userId).populate("courses");
+    const instructorCourses = await Course.find({
+      instructor: userId,
+    }).sort({ createdAt: -1 });
 
     // check user student or not
-    if (instructorCourses.accountType !== "Instructor") {
-      return res.status(400).json({
-        success: false,
-        massage: "User is not a Instructor  ",
-      });
-    }
+    // if (instructorCourses.accountType !== "Instructor") {
+    //   return res.status(400).json({
+    //     success: false,
+    //     massage: "User is not a Instructor  ",
+    //   });
+    // }
 
+    console.log(instructorCourses);
     // return response
 
     return res.status(200).json({

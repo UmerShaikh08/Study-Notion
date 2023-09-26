@@ -152,7 +152,7 @@ const Login = () => {
             </div>
 
             <button
-              className="bg-yellow-50 text-black py-2  rounded-md "
+              className="bg-yellow-50 text-black py-2  rounded-md cursor-pointer "
               disabled={loading}
             >
               Sing In

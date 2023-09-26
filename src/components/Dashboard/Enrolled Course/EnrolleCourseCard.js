@@ -100,7 +100,11 @@ const EnrolleCourseCard = (
       {/* progress */}
       <div className="grid col-span-2 md:col-span-1 font-semibold my-auto ">
         <p className="text-xs text-richblack-50">
-          Progress {(courseProgress?.length / totalNoOfLectures()) * 100 || 0}%
+          Progress{" "}
+          {((courseProgress?.length / totalNoOfLectures()) * 100 || 0).toFixed(
+            0
+          )}
+          %
         </p>
         <ProgressBar
           transitionDuration="150"

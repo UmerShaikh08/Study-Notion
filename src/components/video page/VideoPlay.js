@@ -159,7 +159,7 @@ const VideoPlay = () => {
   const handleCompleteLecture = async () => {
     setLoading(true);
     const result = await markCourseLecture(courseId, subsectionId, token);
-
+    setLoading(false);
     if (result) {
       dispatch(setCompletedLectures(result));
     }

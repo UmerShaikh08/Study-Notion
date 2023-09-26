@@ -28,7 +28,7 @@ const CourseSlider = ({ courses, delayTime }) => {
         allowSlidePrev={true}
         slidesPerView={1.1}
         breakpoints={{
-          300: { slidesPerView: 2.1, spaceBetween: 10 },
+          300: { slidesPerView: 2.1, spaceBetween: 20 },
           640: { slidesPerView: 2.2 },
           1024: { slidesPerView: 3 },
         }}

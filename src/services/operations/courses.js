@@ -50,11 +50,10 @@ const createCourse = async (data, token) => {
   return response?.data?.data;
 };
 
-const getInstructorCourses = async (token, a = "d") => {
+const getInstructorCourses = async (token) => {
   const toastId = toast.loading("loading...");
-  console.log("call from instructor dashboard ", a);
 
-  let response;
+  let response = null;
   try {
     response = await apiConnector("GET", course.GET_INSTRUCTOR_COURSES, null, {
       Authorization: `Bearer ${token}`,
@@ -73,7 +72,7 @@ const getInstructorCourses = async (token, a = "d") => {
 
   toast.dismiss(toastId);
 
-  return response?.data?.Instructor?.courses;
+  return response?.data?.Instructor;
 };
 
 const deleteCourse = async (courseId, token) => {

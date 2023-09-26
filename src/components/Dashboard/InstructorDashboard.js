@@ -8,22 +8,24 @@ import Courses from "./Instructor Dashboard/Courses";
 import PieChart from "./Instructor Dashboard/PieChart";
 
 const InstructorDashboard = () => {
-  const [course, setCourse] = useState(null);
+  const [course, setCourse] = useState([]);
   const [loading, setLoading] = useState(false);
   const { token } = useSelector((store) => store.auth);
   const { user } = useSelector((store) => store.profile);
 
-  const fetchCourse = async () => {
-    setLoading(true);
-    const result = await getInstructorCourses(token, "a");
-    setLoading(false);
-
-    if (result) {
-      setCourse(result);
-    }
-  };
+  console.log("courses 000", course);
 
   useEffect(() => {
+    const fetchCourse = async () => {
+      setLoading(true);
+      const result = await getInstructorCourses(token);
+      setLoading(false);
+
+      if (result) {
+        setCourse(result);
+        console.log("result --->", result, "length -->", result.length);
+      }
+    };
     fetchCourse();
     console.log("je");
   }, []);
