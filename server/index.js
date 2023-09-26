@@ -21,13 +21,17 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: [
-      "https://study-notion-ed-tech-project.vercel.app",
-      "study-notion-ed-tech-project.vercel.app",
-    ],
-    credential: true,
+    origin: "*", // Replace with the origin you want to allow
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true, // If you need to allow cookies, set this to true
+    optionsSuccessStatus: 204, // Some legacy browsers (IE11) choke on 204
   })
 );
+
+// [
+//   "https://study-notion-ed-tech-project.vercel.app",
+//   "study-notion-ed-tech-project.vercel.app",
+// ];
 app.use(
   fileUpload({
     useTempFiles: true,

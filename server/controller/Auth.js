@@ -174,6 +174,8 @@ const signUp = async (req, res) => {
 
 const logIn = async (req, res) => {
   try {
+    console.log("login body -->", req.body);
+
     dotenv.config({ path: ".env" });
     //get data from req body
     const { email, password } = req.body;
@@ -186,8 +188,8 @@ const logIn = async (req, res) => {
       });
     }
 
-    //console.log("email -- > ", email);
-    //console.log("password -- > ", password);
+    console.log("email -- > ", email);
+    console.log("password -- > ", password);
     // finding object of email
     const user = await User.findOne({ email }).populate("additionalDetails");
 
@@ -197,18 +199,18 @@ const logIn = async (req, res) => {
         massage: "Please signUp first",
       });
     }
-    //console.log("user --- > ", user);
+    console.log("user --- > ", user);
     // add role in token
     const payload = {
       email: user.email,
       id: user._id,
       accountType: user.accountType,
     };
-    //console.log("user passwrod -- > ", user.password);
+    console.log("user passwrod -- > ", user.password);
     // generate JWT token after matching password
     if (await bcrypt.compare(password, user.password)) {
       //creating token
-      //console.log("same password");
+      console.log("same password");
       const token = JWT.sign(payload, "UMER78", {
         expiresIn: "72h",
       });

@@ -25,7 +25,7 @@ const createCourse = async (req, res) => {
       whatYouWillLearn,
       category,
       price,
-      tags,
+      tags = "",
       courseDuration = 0,
       requirements,
       status,
