@@ -4,7 +4,7 @@ import { HiOutlineVideoCamera } from "react-icons/hi";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 
 const Section = ({ section }) => {
-  const [showLectures, setShowLectures] = useState(true);
+  const [showLectures, setShowLectures] = useState(false);
 
   return (
     <>
