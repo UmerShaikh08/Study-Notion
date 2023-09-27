@@ -15,7 +15,7 @@ const Tags = ({ register, setValue, name, errors }) => {
     e.preventDefault();
     console.log("key code --->", e.keyCode);
     e.preventDefault();
-    if (e.keyCode === 13 || e.key === "Enter") {
+    if (e.charCode === 13 || e.key === "Enter") {
       if (tag.length === 0) return;
       else if (tagList?.includes(tag)) {
         setTag("");

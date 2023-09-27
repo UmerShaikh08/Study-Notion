@@ -14,7 +14,7 @@ const courseEnrollmentEmail = (courseName, name) => {
                      <p>Dear ${name},</p>
                     <p>You have successfully registered for the course <span style="font-weight: bold;">"${courseName}"</span>. We are excited to have you as a participant!</p>
                     <p>Please log in to your learning dashboard to access the course materials and start your learning.</p>
-                    <a style="display: inline-block; padding: 10px 20px; background-color: #ffd60a; text-decoration: none; border-radius: 5px; font-size: 16px; font-weight: bold; margin-top: 20px;" href="https://studynotion-edtech-project.vercel.app/dashboard">Go to Dashboard</a>
+                    <a style="display: inline-block; padding: 10px 20px; background-color: #ffd60a; text-decoration: none; border-radius: 5px; font-size: 16px; font-weight: bold; margin-top: 20px;" href="https://study-notion-ed-tech-project.vercel.app/dashboard">Go to Dashboard</a>
             </div>
             <div style="font-size: 14px; color: #999999; margin-top: 20px;">
               If you have any questions or need assistance, please feel free to reach out to Study Notion <a href="mailto:info@studynotion.som">here</a>. We are here to help!
