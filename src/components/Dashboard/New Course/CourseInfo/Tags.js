@@ -27,6 +27,18 @@ const Tags = ({ register, setValue, name, errors }) => {
     }
   };
 
+  const handleBlur = () => {
+    console.log(tag);
+    if (tag.length === 0) return;
+    else if (tagList?.includes(tag)) {
+      setTag("");
+    } else {
+      const list = [...tagList, tag];
+      setTagList(list);
+      setTag("");
+    }
+  };
+
   const removeTag = (idx) => {
     const list = [...tagList];
     list.splice(idx, 1);
@@ -76,6 +88,8 @@ const Tags = ({ register, setValue, name, errors }) => {
         //   handleTagList(e);
 
         // }}
+
+        onBlur={handleBlur}
       />
       {errors.tags && (
         <span className="ml-2 text-xs tracking-wide text-yellow-100">
