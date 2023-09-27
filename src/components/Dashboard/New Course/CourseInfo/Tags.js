@@ -12,10 +12,9 @@ const Tags = ({ register, setValue, name, errors }) => {
 
   // tag handlers
   const handleTagList = (e) => {
-    e.preventDefault();
     console.log(e);
     console.log("key code --->", e.keyCode);
-    e.preventDefault();
+
     if (e.charCode === 13 || e.key === "Enter") {
       if (tag.length === 0) return;
       else if (tagList?.includes(tag)) {
