@@ -44,7 +44,7 @@ const PieChart = ({ course }) => {
 
   return (
     course && (
-      <div className="text-ricblack-5  w-[100%]  md:w-[70%] bg-richblack-800 rounded-md py-11">
+      <div className="text-ricblack-5  w-[100%]   md:w-[70%] bg-richblack-800 rounded-md py-11">
         <div className="  flex flex-row justify-between px-3 mt-3">
           <h1 className="text-xl font-semibold text-richblack-5">Visualize</h1>
           <div className="flex flex-row gap-2   ">
