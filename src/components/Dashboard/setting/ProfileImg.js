@@ -27,6 +27,7 @@ const ProfileImg = () => {
     <div className="text-white bg-richblack-800 p-2 sm:p-10 rounded-md shadow-sm shadow-richblack-500">
       <div className="flex flex-row items-end gap-4">
         <img
+          loading="lazy"
           src={image ? URL.createObjectURL(image) : user?.img}
           alt="profile img"
           className="aspect-square w-[78px] rounded-full object-cover"

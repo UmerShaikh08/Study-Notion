@@ -57,6 +57,7 @@ const MyProfile = () => {
         <div className="  flex  md:justify-between flex-col  md:flex-row  gap-5 bg-richblack-800 p-2 sm:p-10 rounded-md shadow-sm shadow-richblack-500">
           <div className="flex flex-row items-center sm:gap-6">
             <img
+              loading="lazy"
               src={user?.img}
               className="aspect-square  max-w-14 max-h-14  sm:max-h-20  sm:max-w-20    rounded-full"
             />
