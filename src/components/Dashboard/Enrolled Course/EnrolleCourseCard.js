@@ -27,7 +27,7 @@ const EnrolleCourseCard = (
   active
 ) => {
   const [open, setOpen] = useState(false);
-  const [courseProgress, setCourseProgress] = useState([]);
+  const [courseProgress, setCourseProgress] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const ref = useRef(null);
@@ -101,15 +101,20 @@ const EnrolleCourseCard = (
       <div className="grid col-span-2 md:col-span-1 font-semibold my-auto ">
         <p className="text-xs text-richblack-50">
           Progress{" "}
-          {((courseProgress?.length / totalNoOfLectures()) * 100 || 0).toFixed(
-            0
-          )}
+          {(
+            (courseProgress?.[0]?.completedVideos?.length /
+              totalNoOfLectures()) *
+              100 || 0
+          ).toFixed(0)}
           %
         </p>
         <ProgressBar
           transitionDuration="150"
-          completed={(courseProgress?.length / totalNoOfLectures()) * 100 || 0}
-          total={totalNoOfLectures()}
+          completed={
+            (courseProgress?.[0]?.completedVideos?.length /
+              totalNoOfLectures()) *
+              100 || 0
+          }
           height="8px"
           isLabelVisible={false}
         />

@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import EnrolledShimmer from "../shimmer/EnrolledShimmer";
 
 const EnrolledCourse = () => {
-  const [enrolleList, setEnrolleList] = useState([]);
-  const [progress, setProgress] = useState([]);
+  const [enrolleList, setEnrolleList] = useState(null);
+  const [progress, setProgress] = useState(null);
   const [shimmer, setShimmer] = useState(true);
   const { token } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
@@ -16,6 +16,8 @@ const EnrolledCourse = () => {
 
     setEnrolleList(data?.student?.courses);
     setProgress(data?.student?.courseProgress);
+
+    console.log("data -->", data);
   };
 
   useEffect(() => {
@@ -32,7 +34,7 @@ const EnrolledCourse = () => {
       <div className="text-3xl font-inter">
         <h1>Enrolled Courses </h1>
       </div>
-      {enrolleList.length === 0 ? (
+      {!enrolleList ? (
         <div className=" text-center text-richblack-5 ">
           You have not enrolled in any course yet.
         </div>

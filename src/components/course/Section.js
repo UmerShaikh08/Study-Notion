@@ -16,7 +16,7 @@ const Section = ({ section }) => {
           {showLectures ? <IoIosArrowDown /> : <IoIosArrowUp />}
           <p>{section?.sectionName} 1</p>
         </div>
-        <div className="hidden md:block">
+        <div className="hidden md:block text-yellow-50">
           {section?.subSection?.length} lecture(s)
         </div>
       </div>
