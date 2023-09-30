@@ -167,12 +167,9 @@ details > summary {
 
 
 
-/* jkhjk */
 
 
-
-/* change scroll bar for large screen devices */
-
+@media (min-width: 1024px) {
   ::-webkit-scrollbar {
     width: 7px;
   }
@@ -186,6 +183,7 @@ details > summary {
   ::-webkit-scrollbar-thumb:hover {
     background: #6E727F;
   }
+}
 
 
 

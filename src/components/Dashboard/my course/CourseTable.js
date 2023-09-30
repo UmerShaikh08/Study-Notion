@@ -64,7 +64,7 @@ const CourseTable = ({ courses, setCourses }) => {
                 <section className="flex flex-col w-[65%] md:flex-row gap-x-4 gap-y-3">
                   <img
                     src={course?.thumbnail}
-                    className=" h-[200px] md:h-[148px] w-[80vw] sm:w-[50vw] md:w-[220px] rounded-lg object-cover"
+                    className=" h-[200px] md:min-h-[148px] md:max-h-[148px] w-[80vw] sm:w-[50vw] md:min-w-[220px]  md:max-w-[220px] rounded-lg object-cover"
                   />
                   <div className="flex flex-col justify-between gap-1">
                     <p className="text-lg font-semibold text-richblack-5">

@@ -83,9 +83,14 @@ const EnrolleCourseCard = (
         }
       >
         <div className="flex flex-col md:flex-row gap-3 text md:items-center ">
-          <img src={thumbnail} className="w-[45px] h-[45px] rounded-md" />
+          <img src={thumbnail} className="  w-[45px] h-[45px] rounded-md" />
           <div>
-            <div className="text-richblack-25 ">{courseName}</div>
+            <div className=" hidden md:block text-richblack-25 ">
+              {courseName}
+            </div>
+            <div className="  md:hidden text-richblack-25 ">
+              {courseName.substr(0, 10)}...
+            </div>
             <div className="text-richblack-300 text-xs hidden md:block">
               {discription}
             </div>

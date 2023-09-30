@@ -134,11 +134,17 @@ const Catalog = () => {
                   />
                 </div>
               ) : (
-                <div className="flex mx-auto gap-6 w-[80%] sm:w-[50%] md:w-full flex-col md:flex-row">
-                  <CourseCardShimmer />
-                  <CourseCardShimmer />
-                  <CourseCardShimmer />
-                </div>
+                <>
+                  <div className="hidden  md:flex mx-auto gap-6 w-[50%] sm:w-[50%] md:w-full flex-col md:flex-row">
+                    <CourseCardShimmer />
+                    <CourseCardShimmer />
+                    <CourseCardShimmer />
+                  </div>
+                  <div className=" md:hidden flex mx-auto gap-2  md:w-full flex-row">
+                    <CourseCardShimmer />
+                    <CourseCardShimmer />
+                  </div>
+                </>
               )}
             </div>
           </div>
