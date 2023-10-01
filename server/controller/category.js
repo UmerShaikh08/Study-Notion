@@ -97,10 +97,7 @@ const categoryPageDetails = async (req, res) => {
       .populate({
         path: "course",
         match: { status: "Published" },
-        populate: "RatingAndReviews",
-        populate: {
-          path: "instructor",
-        },
+        populate: [{ path: "RatingAndReviews" }, { path: "instructor" }],
       })
       .exec();
 
@@ -132,20 +129,17 @@ const categoryPageDetails = async (req, res) => {
       .populate({
         path: "course",
         match: { status: "Published" },
-        populate: {
-          path: "instructor",
-        },
+        populate: [{ path: "RatingAndReviews" }, { path: "instructor" }],
       })
       .exec();
+
     //console.log("Different COURSE", differentCategory)
     // Get top-selling courses across all categories
     const allCategories = await Category.find()
       .populate({
         path: "course",
         match: { status: "Published" },
-        populate: {
-          path: "instructor",
-        },
+        populate: [{ path: "RatingAndReviews" }, { path: "instructor" }],
       })
       .exec();
     const allCourses = allCategories.flatMap((category) => category.course);

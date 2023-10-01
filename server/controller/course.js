@@ -396,16 +396,7 @@ const getInstructorCourses = async (req, res) => {
       instructor: userId,
     }).sort({ createdAt: -1 });
 
-    // check user student or not
-    // if (instructorCourses.accountType !== "Instructor") {
-    //   return res.status(400).json({
-    //     success: false,
-    //     massage: "User is not a Instructor  ",
-    //   });
-    // }
-
-    console.log(instructorCourses);
-    // return response
+    // console.log(instructorCourses);
 
     return res.status(200).json({
       success: true,

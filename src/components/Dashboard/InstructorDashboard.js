@@ -13,8 +13,6 @@ const InstructorDashboard = () => {
   const { token } = useSelector((store) => store.auth);
   const { user } = useSelector((store) => store.profile);
 
-  console.log("courses 000", course);
-
   useEffect(() => {
     const fetchCourse = async () => {
       setLoading(true);
@@ -23,12 +21,12 @@ const InstructorDashboard = () => {
 
       if (result) {
         setCourse(result);
-        console.log("result --->", result, "length -->", result.length);
+        // console.log("result --->", result, "length -->", result.length);
       }
     };
     fetchCourse();
-    console.log("je");
   }, []);
+
   return course ? (
     <div className="flex flex-col gap-3">
       <div className="text-2xl font-semibold text-richblack-5">
