@@ -17,6 +17,7 @@ const CourseSlider = ({ courses, delayTime }) => {
   return (
     <>
       <Swiper
+        cssMode={true}
         mousewheel={{
           enabled: true,
           forceToAxis: true,
@@ -32,19 +33,10 @@ const CourseSlider = ({ courses, delayTime }) => {
           640: { slidesPerView: 2.2 },
           1024: { slidesPerView: 3 },
         }}
-        modules={[Navigation, Pagination, Mousewheel, Keyboard, Autoplay]}
-        loop={true}
+        modules={[Mousewheel]}
         spaceBetween={20}
-        pagination={false}
         freeMode={true}
-        rewind={false}
-        centeredSlides={false}
-        navigation={false}
         className="mySwiper mb-4"
-        autoplay={{
-          delay: delayTime || 2000,
-          disableOnInteraction: false,
-        }}
         style={{
           "--swiper-navigation-size": "20px",
         }}

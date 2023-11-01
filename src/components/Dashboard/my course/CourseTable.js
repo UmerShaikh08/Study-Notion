@@ -53,7 +53,7 @@ const CourseTable = ({ courses, setCourses }) => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col gap-10 ">
+        <div className="flex flex-col gap-10  ">
           {courses &&
             courses?.map((course) => (
               <div

@@ -49,7 +49,9 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    getCategories();
+    if (SubLinks?.length === 0) {
+      getCategories();
+    }
   }, []);
   return (
     <div

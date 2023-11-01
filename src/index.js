@@ -9,6 +9,7 @@ import Store from "./Redux/Store";
 import { Toaster } from "react-hot-toast";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorPage from "./pages/ErrorPage";
+import ScrollToTop from "./components/common/ScrollToTop";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -18,6 +19,7 @@ root.render(
         fallbackRender={ErrorPage}
         onReset={() => window.location.reload()}
       >
+        <ScrollToTop />
         <App />
         <Toaster />
       </ErrorBoundary>

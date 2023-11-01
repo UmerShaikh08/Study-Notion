@@ -15,9 +15,13 @@ const SideLinks = ({ name, path, icon }) => {
 
   const handleLoadingbar = () => {
     dispatch(setProgress(40));
-    setTimeout(() => {
+    const time = setTimeout(() => {
       dispatch(setProgress(100));
     }, 1000);
+
+    return () => {
+      clearTimeout(time);
+    };
   };
 
   return (
