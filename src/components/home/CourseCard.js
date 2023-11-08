@@ -4,9 +4,15 @@ import React from "react";
 import { HiUsers } from "react-icons/hi";
 import { ImTree } from "react-icons/im";
 
-const CourseCard = ({ cardData, currentCard, setCurrentCard }) => {
+const CourseCard = ({
+  cardData,
+  currentCard,
+  setCurrentCard,
+  animationType,
+}) => {
   return (
     <div
+      data-aos={animationType}
       className={`w-[360px] lg:w-[30%] ${
         currentCard === cardData?.heading
           ? "bg-white shadow-[12px_12px_0_0] shadow-yellow-50"

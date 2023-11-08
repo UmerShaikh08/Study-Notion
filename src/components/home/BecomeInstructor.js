@@ -7,10 +7,10 @@ import { FaArrowRight } from "react-icons/fa";
 const BecomeInstructor = () => {
   return (
     <div className="w-11/12 max-w-maxContent mt-[3rem] mb-[3rem] flex flex-col lg:flex-row items-center text-white mx-auto gap-4">
-      <div className=" shadow-[-20px_-20px_white] ">
+      <div data-aos="fade-right" className=" shadow-[-20px_-20px_white] ">
         <img src={Instructor} />
       </div>
-      <div className=" w-[80%] lg:w-[40%] mx-auto ">
+      <div data-aos="fade-left" className=" w-[80%] lg:w-[40%] mx-auto ">
         <div className="font-bold font-inter text-4xl  ">
           <p>Become an</p>
           <Highlight text={"Instructor"} />

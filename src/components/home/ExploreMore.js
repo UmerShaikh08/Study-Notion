@@ -57,6 +57,9 @@ const ExploreMore = () => {
         {courses.map((course, idx) => {
           return (
             <CourseCard
+              animationType={
+                idx === 0 ? "fade-right" : idx === 1 ? "fade-up" : "fade-left"
+              }
               key={idx}
               cardData={course}
               currentCard={currentCard}

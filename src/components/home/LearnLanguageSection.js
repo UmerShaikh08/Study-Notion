@@ -17,11 +17,20 @@ const LearnLanguageSection = () => {
       </div>
       <div className=" mt-[2rem] flex flex-col lg:flex-row mx-auto">
         <img
+          data-aos="fade-right"
           src={Know_your_progress}
           className="object-contain lg:mr-[-8rem]"
         />
-        <img src={Compare_with_others} className="object-contain" />
-        <img src={Plan_your_lesson} className="object-contain lg:ml-[-9rem]" />
+        <img
+          data-aos="fade-up"
+          src={Compare_with_others}
+          className="object-contain"
+        />
+        <img
+          data-aos="fade-left"
+          src={Plan_your_lesson}
+          className="object-contain lg:ml-[-9rem]"
+        />
       </div>
       <div className="mb-[4rem]">
         <CTAButton active={true} linkTo={"/singup"}>

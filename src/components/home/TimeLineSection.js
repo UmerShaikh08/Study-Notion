@@ -45,7 +45,10 @@ const TimeLineSection = () => {
           );
         })}
       </div>
-      <div className="relative w-[90%] lg:w-[50%] mb-5 shadow-[0px_0px_30px_0px]  shadow-gradientBlue-200 mx-auto">
+      <div
+        data-aos="fade-left"
+        className="relative w-[90%] lg:w-[50%] mb-5 shadow-[0px_0px_30px_0px]  shadow-gradientBlue-200 mx-auto"
+      >
         <img
           alt="time line img"
           src={TimeLineImg}
