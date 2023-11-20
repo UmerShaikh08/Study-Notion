@@ -34,8 +34,9 @@ const Home = () => {
   useEffect(() => {
     fetchCourses();
     Aos.init({
-      duration: 1500,
+      duration: 1200,
       delay: 250,
+      once: true,
     });
   }, []);
   return (
