@@ -40,7 +40,7 @@ const CreateResetPasswordToken = async (req, res) => {
     );
     //console.log("Details ", addToken);
 
-    const url = `http://localhost:3000/update-password/${token}`;
+    const url = `https://study-notion-ed-tech-project.vercel.app/update-password/${token}`;
     const template = passwordReset(url);
     const send = await mailSender(email, template, "Reset password link");
 
