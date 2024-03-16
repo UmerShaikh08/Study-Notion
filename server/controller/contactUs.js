@@ -21,7 +21,7 @@ const contactUs = async (req, res) => {
     //console.log("done ---> ", sendToStudyNotion);
     const sendToUser = await mailSender(
       email,
-      "<h1> thanks to contacting for us</h1>",
+      "Thanks to contacting for us",
       "Study notion"
     );
 

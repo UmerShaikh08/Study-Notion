@@ -30,7 +30,7 @@ const buyCourse = async (user, courses, navigate, dispatch, token) => {
 
     if (!load) {
       toast.error("Payment Failed");
-      throw new Error("Razonpay sdk failed to execute");
+      throw new Error("Razorpay sdk failed to execute");
     }
 
     const response = await apiConnector(

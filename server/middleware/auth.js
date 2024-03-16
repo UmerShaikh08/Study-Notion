@@ -14,7 +14,6 @@ const auth = async (req, res, next) => {
 
     console.log("token---->", token);
 
-    console.log("hi");
     // check token empty or not
     if (!token) {
       return res.status(400).json({
