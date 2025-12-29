@@ -1,0 +1,85 @@
+# Darshan sir account
+
+name: Deploy Cherie-Work-Hub Frontend (Dev Env)
+
+on:
+    push:
+        branches:
+            - prod
+
+jobs:
+    deploy_frontend:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v2
+
+            - name: Load environment variables from .env
+              run: |
+                  cat .env | grep -v '^#' >> $GITHUB_ENV
+              shell: bash
+
+            - name: Print Loaded Environment Variables
+              run: |
+                  echo "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}"
+                  echo "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}"
+                  echo "AWS_REGION=${AWS_REGION}"
+                  echo "DEPLOYMENT_ENV=${DEPLOYMENT_ENV}"
+                  echo "ACCOUNT_ID=${ACCOUNT_ID}"
+                  echo "STACK_ID=${STACK_ID}"
+                  echo "VITE_APP_BASE_URL=${VITE_APP_BASE_URL}"
+              shell: bash
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: "20"
+
+            - name: Install AWS CDK Dependencies
+              run: |
+                  npm install -g aws-cdk
+                  npm install
+
+            - name: Install Frontend Dependencies
+              run: |
+                  cd lib/frontend
+                  rm -rf node_modules package-lock.json
+                  npm install --legacy-peer-deps
+                  cd ../../
+
+            - name: Build UI
+              env:
+                  NODE_OPTIONS: --max_old_space_size=2048 # Reduce memory allocation
+
+              run: |
+                  cd lib/frontend
+                  npm run build
+                  cd ../../
+
+            - name: Synthesize CDK
+              run: |
+                  cdk synth
+              id: cdk_synthesize
+
+            - name: Bootstrap AWS Account for CDK
+              run: |
+                  cdk bootstrap
+
+            - name: Deploy Frontend
+              run: |
+                  cdk deploy --require-approval never
+
+            - name: Invalidate Frontend Cache
+              run: |
+                  DISTRIBUTION_ID=$(aws cloudformation describe-stacks --stack-name ${DEPLOYMENT_ENV}-${STACK_ID}-frontend-stack --region ${AWS_REGION} --query "Stacks[0].Outputs[?OutputKey=='${DEPLOYMENT_ENV}cloudfrontdistributionid'].OutputValue" --output text)
+                  echo "DISTRIBUTION_ID=${DISTRIBUTION_ID}"
+                  aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths "/*"
+
+            - name: Frontend Domain Link
+              run: |
+                  DISTRIBUTION_ID=$(aws cloudformation describe-stacks --stack-name ${DEPLOYMENT_ENV}-${STACK_ID}-frontend-stack --region ${AWS_REGION} --query "Stacks[0].Outputs[?OutputKey=='${DEPLOYMENT_ENV}cloudfrontdistributionid'].OutputValue" --output text)
+                  echo "DISTRIBUTION_ID=${DISTRIBUTION_ID}"
+
+                  cloudfront_domain=$(aws cloudfront list-distributions --query "DistributionList.Items[?Id=='$DISTRIBUTION_ID'].DomainName" --output text)
+                  echo "CloudFront Domain Link: https://${cloudfront_domain}"
