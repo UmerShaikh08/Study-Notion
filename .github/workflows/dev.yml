@@ -1,46 +1,59 @@
-# Darshan sir account
-
-name: Deploy Cherie-Work-Hub Frontend (Dev Env)
+name: Deploy study-notion Frontend (Dev Env)
 
 on:
     push:
         branches:
-            - prod
+            - main
+
+concurrency:
+    group: frontend-dev-${{ github.ref }}
+    cancel-in-progress: true
 
 jobs:
     deploy_frontend:
         runs-on: ubuntu-latest
+        environment: study-notion
 
         steps:
             - name: Checkout repository
               uses: actions/checkout@v2
 
-            - name: Load environment variables from .env
-              run: |
-                  cat .env | grep -v '^#' >> $GITHUB_ENV
-              shell: bash
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "20"
 
             - name: Print Loaded Environment Variables
               run: |
-                  echo "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}"
-                  echo "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}"
+                  echo "AWS_ACCESS_KEY_ID is set: $([ -n "$AWS_ACCESS_KEY_ID" ] && echo 'yes' || echo 'no')"
+                  echo "AWS_SECRET_ACCESS_KEY is set: $([ -n "$AWS_SECRET_ACCESS_KEY" ] && echo 'yes' || echo 'no')"
                   echo "AWS_REGION=${AWS_REGION}"
                   echo "DEPLOYMENT_ENV=${DEPLOYMENT_ENV}"
                   echo "ACCOUNT_ID=${ACCOUNT_ID}"
                   echo "STACK_ID=${STACK_ID}"
-                  echo "VITE_APP_BASE_URL=${VITE_APP_BASE_URL}"
+                  echo "REACT_APP_BASE_URL=${REACT_APP_BASE_URL}"
+                  echo "REACT_APP_RAZOR_KEY_SECRET=${REACT_APP_RAZOR_KEY_SECRET}"
+              env:
+                  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                  AWS_REGION: ${{ secrets.AWS_REGION }}
+                  DEPLOYMENT_ENV: ${{ secrets.DEPLOYMENT_ENV }}
+                  ACCOUNT_ID: ${{ secrets.ACCOUNT_ID }}
+                  STACK_ID: ${{ secrets.STACK_ID }}
+                  REACT_APP_BASE_URL: ${{ secrets.REACT_APP_BASE_URL }}
+                  REACT_APP_RAZOR_KEY_SECRET: ${{ secrets.REACT_APP_RAZOR_KEY_SECRET }}
               shell: bash
 
-            - name: Setup Node.js
-              uses: actions/setup-node@v3
-              with:
-                  node-version: "20"
+            # Install CDK globally
+            - name: Install AWS CDK
+              run: npm install -g aws-cdk
 
-            - name: Install AWS CDK Dependencies
+            # Install CDK dependencies
+            - name: Install CDK Dependencies
               run: |
-                  npm install -g aws-cdk
-                  npm install
+                  npm ci
 
+            # Install Frontend Dependencies
             - name: Install Frontend Dependencies
               run: |
                   cd lib/frontend
@@ -48,35 +61,83 @@ jobs:
                   npm install --legacy-peer-deps
                   cd ../../
 
+            # Configure AWS credentials for CDK
+            - name: Configure AWS Credentials
+              uses: aws-actions/configure-aws-credentials@v3
+              with:
+                  aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                  aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                  aws-region: ${{ secrets.AWS_REGION }}
+
+            # Build UI
             - name: Build UI
               env:
-                  NODE_OPTIONS: --max_old_space_size=2048 # Reduce memory allocation
-
+                  NODE_OPTIONS: --max_old_space_size=2048
+                  REACT_APP_BASE_URL: ${{ secrets.REACT_APP_BASE_URL }}
+                  REACT_APP_RAZOR_KEY_SECRET: ${{ secrets.REACT_APP_RAZOR_KEY_SECRET }}
               run: |
                   cd lib/frontend
                   npm run build
                   cd ../../
 
+            # Synthesize CDK
             - name: Synthesize CDK
+              env:
+                  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                  AWS_REGION: ${{ secrets.AWS_REGION }}
+                  DEPLOYMENT_ENV: ${{ secrets.DEPLOYMENT_ENV }}
+                  STACK_ID: ${{ secrets.STACK_ID }}
+                  ACCOUNT_ID: ${{ secrets.ACCOUNT_ID }}
+                  REACT_APP_BASE_URL: ${{ secrets.REACT_APP_BASE_URL }}
+                  REACT_APP_RAZOR_KEY_SECRET: ${{ secrets.REACT_APP_RAZOR_KEY_SECRET }}
               run: |
                   cdk synth
               id: cdk_synthesize
 
+            # Bootstrap AWS Account for CDK
             - name: Bootstrap AWS Account for CDK
+              env:
+                  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                  AWS_REGION: ${{ secrets.AWS_REGION }}
+                  DEPLOYMENT_ENV: ${{ secrets.DEPLOYMENT_ENV }}
+                  STACK_ID: ${{ secrets.STACK_ID }}
+                  ACCOUNT_ID: ${{ secrets.ACCOUNT_ID }}
               run: |
                   cdk bootstrap
 
+            # Deploy Frontend
             - name: Deploy Frontend
+              env:
+                  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                  AWS_REGION: ${{ secrets.AWS_REGION }}
+                  DEPLOYMENT_ENV: ${{ secrets.DEPLOYMENT_ENV }}
+                  STACK_ID: ${{ secrets.STACK_ID }}
+                  ACCOUNT_ID: ${{ secrets.ACCOUNT_ID }}
+                  REACT_APP_BASE_URL: ${{ secrets.REACT_APP_BASE_URL }}
+                  REACT_APP_RAZOR_KEY_SECRET: ${{ secrets.REACT_APP_RAZOR_KEY_SECRET }}
               run: |
                   cdk deploy --require-approval never
 
+            # Invalidate Frontend Cache
             - name: Invalidate Frontend Cache
+              env:
+                  AWS_REGION: ${{ secrets.AWS_REGION }}
+                  DEPLOYMENT_ENV: ${{ secrets.DEPLOYMENT_ENV }}
+                  STACK_ID: ${{ secrets.STACK_ID }}
               run: |
                   DISTRIBUTION_ID=$(aws cloudformation describe-stacks --stack-name ${DEPLOYMENT_ENV}-${STACK_ID}-frontend-stack --region ${AWS_REGION} --query "Stacks[0].Outputs[?OutputKey=='${DEPLOYMENT_ENV}cloudfrontdistributionid'].OutputValue" --output text)
                   echo "DISTRIBUTION_ID=${DISTRIBUTION_ID}"
                   aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths "/*"
 
+            # Frontend Domain Link
             - name: Frontend Domain Link
+              env:
+                  AWS_REGION: ${{ secrets.AWS_REGION }}
+                  DEPLOYMENT_ENV: ${{ secrets.DEPLOYMENT_ENV }}
+                  STACK_ID: ${{ secrets.STACK_ID }}
               run: |
                   DISTRIBUTION_ID=$(aws cloudformation describe-stacks --stack-name ${DEPLOYMENT_ENV}-${STACK_ID}-frontend-stack --region ${AWS_REGION} --query "Stacks[0].Outputs[?OutputKey=='${DEPLOYMENT_ENV}cloudfrontdistributionid'].OutputValue" --output text)
                   echo "DISTRIBUTION_ID=${DISTRIBUTION_ID}"
