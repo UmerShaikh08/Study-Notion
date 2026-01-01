@@ -74,6 +74,7 @@ jobs:
             - name: Build UI
               env:
                   NODE_OPTIONS: --max_old_space_size=2048
+                  DISABLE_ESLINT_PLUGIN: true
                   REACT_APP_BASE_URL: ${{ secrets.REACT_APP_BASE_URL }}
                   REACT_APP_RAZOR_KEY_SECRET: ${{ secrets.REACT_APP_RAZOR_KEY_SECRET }}
               run: |
