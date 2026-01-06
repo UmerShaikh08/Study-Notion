@@ -33,6 +33,8 @@ jobs:
                   echo "STACK_ID=${STACK_ID}"
                   echo "REACT_APP_BASE_URL=${REACT_APP_BASE_URL}"
                   echo "REACT_APP_RAZOR_KEY_SECRET=${REACT_APP_RAZOR_KEY_SECRET}"
+                  echo "REACT_APP_STUDENT=${REACT_APP_STUDENT}"
+                  echo "REACT_APP_INSTRUCTOR=${REACT_APP_INSTRUCTOR}"
               env:
                   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
                   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -42,6 +44,8 @@ jobs:
                   STACK_ID: ${{ secrets.STACK_ID }}
                   REACT_APP_BASE_URL: ${{ secrets.REACT_APP_BASE_URL }}
                   REACT_APP_RAZOR_KEY_SECRET: ${{ secrets.REACT_APP_RAZOR_KEY_SECRET }}
+                  REACT_APP_STUDENT: ${{ secrets.REACT_APP_STUDENT }}
+                  REACT_APP_INSTRUCTOR: ${{ secrets.REACT_APP_INSTRUCTOR }}
               shell: bash
 
             # Install CDK globally
@@ -95,6 +99,9 @@ jobs:
                   ACCOUNT_ID: ${{ secrets.ACCOUNT_ID }}
                   REACT_APP_BASE_URL: ${{ secrets.REACT_APP_BASE_URL }}
                   REACT_APP_RAZOR_KEY_SECRET: ${{ secrets.REACT_APP_RAZOR_KEY_SECRET }}
+                  REACT_APP_STUDENT: ${{ secrets.REACT_APP_STUDENT }}
+                  REACT_APP_INSTRUCTOR: ${{ secrets.REACT_APP_INSTRUCTOR }}
+
               run: |
                   cdk synth
               id: cdk_synthesize
@@ -122,6 +129,8 @@ jobs:
                   ACCOUNT_ID: ${{ secrets.ACCOUNT_ID }}
                   REACT_APP_BASE_URL: ${{ secrets.REACT_APP_BASE_URL }}
                   REACT_APP_RAZOR_KEY_SECRET: ${{ secrets.REACT_APP_RAZOR_KEY_SECRET }}
+                  REACT_APP_STUDENT: ${{ secrets.REACT_APP_STUDENT }}
+                  REACT_APP_INSTRUCTOR: ${{ secrets.REACT_APP_INSTRUCTOR }}
               run: |
                   cdk deploy --require-approval never
 
